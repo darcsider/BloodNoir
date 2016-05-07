@@ -1,0 +1,1169 @@
+January 2nd, 2016
+
+Day 1 of Development
+Beginning this whole process with setting up my development environment, including setting my environment paths, 
+output directories and everything else I can think of.
+
+January 5th, 2016
+
+Day 2 of Development
+Today was the second day I was able to get actually working on the project, I decided on a scheme for certain systems.
+I am placing the Windows specific stuff in separate files, 1 for window creation, 1 for input and 1 for sound so far.
+I am going to use a game header and cpp file as the main game logic, these files will call other methods from other objects
+for other game play systems.
+
+January 6th, 2016
+
+Day 3 of Development
+Today I'm working on getting some of my basic code up and running starting to build out my classes.
+My Goals For Today:
+- Complete setting up the .h and .cpp files I have already decided on for the structure of certain components
+- Get a window displaying on the screen by completing the class for the win32 Window
+- If I have time I will complete the Input class and get it working to accept at least keyboard input
+-- I will not be able to test actual XInput functionality on this engine or anything until Friday when
+-- I get my hands on a new XBOX 360 or XBOX One Controller
+So I have reached the end of my day of programming and I have completed getting the Window displaying on the
+screen and I was able to re-purpose an old input setup and got that wired up in this game so that it works.
+I also began stubbing out the Game Class so I could get the Input working.  My goal for the next day of
+development is to get the audio system working in the game, to get everything stubbed out and ready to be
+used in the actual game.  I do anticipate having to modify current systems when I get closer to actual
+release.
+
+January 7th, 2016
+
+Day 4 of Development
+I have begun working on the audio system today I'm hoping to be able to get the main part of it up and running.
+Setting up XAudio2 is a pain in the ass it is very robust and will prove to be beneficial in the end but it this
+sucks to setup and get working.
+So I have reached the end of my day of programming again, today I did not get as much done as I was hoping to,
+I was able to get sound to play on the computer that I started up.  But I had to use exact pathing and that is
+not where I want that to be.  But that is something I can fix tomorrow as well as figuring out how to work with
+the combination of music and sound effects and to not have one stop the other.  So tomorrow will be day 2 of
+sound stuff hopefully I can complete the full sound system tomorrow so I can check that off my list of things
+to be completed in the game.
+
+January 9th, 2016
+
+Day 5 of Development
+Today is the second day of working on the sound code for the game engine.  I got my hands on an xbox one controller
+today so now I can test out my input code to verify that it is working.
+So far I have made great strides on the audio code, I have a very good framework and implementation for audio.
+Tonight I was able to verify that my input controls work both keyboard and controller, I also made some changes to some
+files so that I am able to include constants in every file that I need access to it and I won't get an error when I
+compile it.  I feel like I have everything working really well now.  My goal for tomorrow is to do some rigorous testing
+of the audio system specifically on can I play multiple sounds and have them play simultaneously.
+Notes For Another Day: - Things I want to get worked on
+- Figure out a system for game state - so that I have a system that can be checked anywhere in the game to see what state
+-- the game is in weather it is updating, running, paused, or closing.  This will lead to code for handling when the player
+-- closes the window, checking with them if they want to save there progress before they leave.
+- Once I get the audio system ironed out I want to begin working on the graphics system getting things displaying on the
+-- screen so that once I get some artwork I can get a demo put together for the game to show to potential investors.
+- Figure out a resource management system for the game this will almost have to be done before I can complete the
+-- graphics system because I will have to have a system to handle the artwork for the game.  When I figure out the
+-- resource management system I may have to revisit the audio system for changes potentially to how audio files are handled.
+- Final thought for the night on things to work on in the future is figure out a logging system for errors I need to add
+-- this close to the top of my list so that I can get it implemented right away to help catch bugs early before I get to
+-- in depth into developing various systems.
+
+January 10th, 2016
+
+Day 6 of Development
+The goal for tonight is to test out the sound code and make sure everything is working the way I want it to currently, I do
+anticipate having to make changes to the code in the future when I begin using it in actual gameplay stuff.  The other goal
+is to get a logging system up and running and to have it begin writing out data to a text file every time the program is run.
+OK I have tested out my sound code and after some bugs where worked out I was able to get it working playing multiple sounds
+simultaneously but now I just have to figure out how to make it play over and over when I press a button.
+I am ending my night of development at this point, I have been unable to complete my code for being able to play sound effects
+on command and be able to start and stop them as well.  I am stopping now for the night but tomorrow I will get around to
+completing this I believe I have found a hack that will work for this, I'm going to try to use callback methods for this issue.
+
+January 11th, 2016
+
+Day 7 of Development
+The goal for today is to finish buttoning up the sound code, testing it out, making sure that I can play sound effects on Que
+and replay them over and over as needed.  With that part being completed now my focus will be to get a logging system working
+so I can get it implemented into every system in the game engine to keep an eye out for memory leaks, and other stuff.  I have
+got a logging system working now I just need to iron out some details of how things are done.  I will come back to the Log
+System again another day as I find issues and need to make it work better.  As long as it gives me what I need as an output
+for debugging purposes it really doesn't matter if it does strange stuff, no actual player will ever see the output.
+The next thing I am going to focus my energy and attention on is Resource Management I need to get a very good and robust
+Resource Management system including memory management completed before I move on to graphics and everything else in the
+engine.  I am ending this day of development now I have completed my sound system to a level that I am quite happy with,
+I have also completed a logging system that gives me all sorts of info as I choose to have it do.  I am going to continue
+working on the ResourceManager system for the game engine and will make that my next goal for this.
+
+January 12th, 2016
+
+Day 8 of Development
+The goal for today is to continue working on the Resource Manager and deciding how I want to handle various types of data
+and resources in the game.  One thing that is tripping me up on this that I need to iron out with my business partner is
+how we want the game to look because that will help decide how I want to handle loading resources into memory.  The thing
+I'm trying to decide is at what point can the game load more resources into memory, what are going to be the choke points
+that allow for loading resources.  Also how much do I need to have on the screen, and how much can I reuse other sprites
+because if the background people on the street can be the same sprites over and over than the amount of data having to be
+loaded into memory will be minimal.
+
+January 13th, 2016
+
+Day 9 of Development
+I spent yesterday doing research on memory and resource management, after reading a bunch of stuff on various types of
+memory managers it looks like using a stack allocator for Blood Noir will work best.  I discussed with my business partner
+how we are going to handle areas that the player can go into and we have decided to use a system where the playable sections
+of the larger map will consist of several blocks of areas that can be gone into and between each block.  I am going to use
+the stack allocator and just have it be that when you go to an area of the map it will load all content needed for that
+specific section of the map that way once the area is loaded there will be no loading time.
+
+January 14th, 2016
+
+Day 10 of Development
+I have spent the last few days doing research and figuring out what I'm going to use for my memory manager and my resource
+manager.  I believe I have decided on using a double ended stack allocator for my memory manager and I'm going to attempt
+to use the resource manager concept that I found on gamedev.net that looks really promising but I will continue researching
+today and make my decision between today and tomorrow and start coding it after that.
+
+January 15th, 2016
+
+Day 11 of Development
+I completed my study of the different tech choices and have decided on my system for resource management.  I am going to begin
+programming this system tomorrow after work.  My goal is to get it up and running by the end of the day.
+
+January 16th,2016
+
+Day 12 of Development
+Today is the day that I am going to move forward with the engine I have taken a few days to study resource management systems,
+as well as taking a well deserved rest for a few hours playing games and not focusing on development for a short time.  Today
+when I return home from work my goal is to complete getting this system implemented in code and being used.  Hopefully if
+everything goes well I will be able to check this system off my to-do list and move on to the graphics system starting tomorrow.
+Well I did not get anything done today like I had planned I had all the intentions in the world when I got home from work to
+begin working on coding the Resource Manager.  But I made the decision once I got home that I was to burnt out and needed one
+more night of relaxing before I begin working on things again.
+
+January 18th, 2016
+
+Day 13 of Development
+Today my goal is to get the Resource Manager implemented into my code base and get it working.  The first resource that I will
+look into adding to the resource manager is my sound code, but I need to do more research to see if I even need to worry about
+it.  I'm not sure how xaudio2 handles resources.  If I can get this part of the code implemented and working I will begin work
+on the graphics system today as well.  Well I was not able to focus today and I wasn't able to complete the resource manger
+code I have it moved over to my engine and I started building the resource class for sound resources.  I will complete this
+and get it functional tomorrow and then begin on the graphics code.  No playing games tomorrow until after TaeKwonDo.
+
+January 19th, 2016
+
+Day 14 of Development
+Today my goal is to complete the resource manager implementation and get it working with the sound system.  I have been able to
+complete this section as I was hoping to.  Now my goal is to begin working on the graphics system getting my new graphics class
+planned out and stubbed out.  This will be a multiple day project because the goal is to figure out how to do 2D graphics using
+DirectX 11.  I don't actually need to use DirectX 11 for this system and in all reality I should use DirectX 9 instead but I
+also want to use this as an opportunity to learn more about graphics programming and the various abilities of DirectX.  I'm
+going to however try to use the Feature Level system for DirectX 11 and make it so that if somebody is using hardware that only
+supports DirectX 9 they can still play the game.  This way I shouldn't limit who can play the game.
+
+January 20th, 2016
+
+Day 15 of Development
+Today I am beginning work on the graphics system of this game engine I started writing down some ideas last night and I'm going
+to continue working on figuring out what I want to do for the graphics system of the engine. I have definitely decided on using
+DirectX11 for my graphics system but now I have to decide how I want to represent levels in the game and decide on handling
+textures and what not as well as how to do parallax scrolling in a graphics system.  I do not anticipate finishing this system
+this week I expect it to take a while to figure out exactly what to do for everything I also anticipate that I will have to
+make changes to the graphics system as I go along in the future.
+
+January 25th, 2016
+
+Day 16 of Development
+Today is the day that I will actually begin programming the graphics system for this game engine.  I have take the past few
+days and taken a necessary break from programming to allow my brain to relax a bit.  This project is pushing my programming
+abilities to a new level.  I am forced to learn so much about c++ and about game programming.  It looks like in order to
+make graphics work the way I want to make them work and to make sure that I make the game as robust as I should to make sure
+that some random person playing it can't break it by doing something as simple as resizing the window.  Of course this will
+require a reworking of some of my other code to make it all work, but it will be worth it in the end.  I have completed the
+changes to the code base to make the new graphics code work in the engine.  I have the program compiling again, and I have
+the window being updated by DirectX 11.  Also everything that I had working before works still with the changes to the
+main system for displaying the window to the screen.  Tomorrow my goal is to attempt to get a background on the screen
+and if that goes smoothly then I will attempt to get parallax scrolling working as well.  Nothing standing in my way
+right now with all of the work I have gotten done so far.  This project is actually coming together and it feels amazing
+to be able to say this.  I will down the road attempt to add features related to the feature level system in directx 11
+I can't imagine it will be to difficult, by doing this I will make it so the game works for the largest group of players.
+
+January 26th, 2016
+
+Day 17 of Development
+The goal for today is to get some graphics displaying on the screen, if I am able to do this faster than anticipated then
+I will attempt to get parallax scrolling working today as well.  Well I definitely will not get graphics displaying on the
+screen today.  After doing a lot of research I have decided that I need to involve the DirectXTK into my game engine.  I'm 
+working on integrating the graphics part first but I think I will also probably go ahead and use it for sound and input as
+well which would make sure that my code will work on XBOX One in the future.  This will require another reworking of a lot
+of my code but in the long run it will be worth it when I get things working correctly.  I am reaching the end of my day of
+development I have successfully switched my engine over to using the DirectXTK for input and audio.  I will continue to
+integrate the DirectXTK into my engine tomorrow and hopefully be able to get graphics displaying on the screen and with
+how easy the DirectXTK system appears to be for graphics I may be able to get parallax scrolling working tomorrow as well.
+Overall even though I had to take a step back and make some drastic changes to my engine I'm glad I did it.  This will
+make things much easier in the future when we attempt to get the game running on the XBOXONE.  The other thing I am going
+to accomplish tomorrow is I am going to move the sound controls out of the main game class and put them into a separate
+SoundManager class where it will handle creating new sound effects, playing them and managing the objects related to it.
+This will also clean things up the way I like to see things.  I will also work on setting up the TextureManager class
+tomorrow as well and get things displaying on the screen by the end of the night.
+
+January 27th, 2016
+
+Day 18 of Development
+Today I'm continuing my work on integrating the DirectXTK into the game engine my goal for today is to figure out graphics,
+to get a background displaying on the screen and possibly to get the parallax scrolling working.  Well I did not get a
+scrolling background working yet but I do have graphics displaying on the screen and I have completed upgrading the engine
+to work with the DirectXTK and also I did some major upgrades to make it a much more stable engine with less chances of
+running into any memory leaks in the future.  I did not get to in depth of messing with displaying graphics on the screen
+but I did successfully get an image displayed on the screen and some text on the screen as well.  I am happy with the work
+I have completed today even if I didn't get a scrolling background working yet.  I am hoping that by the end of next week
+to have a character displayed on the screen moving around and to have the parallax scrolling implemented even if it is
+just with my crappy programmer art.  Today was a very productive day and I do not regret spending the past 3 days doing
+the major over haul to my engine.
+
+January 28th, 2016
+
+Day 19 of Development
+Today was not a very productive day as I had to work however during my downtime at work I did start working out the details
+of the map and the levels of the game.  I started working out how I want to handle things, how many layers to my parallax
+scrolling and other details like that.  I did not get any code written yet but that will happen again starting on Monday
+when I'm off work again.  Until then I will work on ironing out the details of these various systems including the texture
+manager system, level system, map area system, as well as tilemaping and animating characters and independent layers of
+the parallax scrolling map even when the player isn't moving.
+
+January 31st, 2016
+
+Day 20 of Development
+Between yesterday and today I have been working on figuring out how to handle textures in a resource manager.  I have gone
+back to some code that I had looked into when I was going to worry about doing all of my own resource management.  This
+code works perfectly for my texture resource manager with some modifications, it is no longer using templates because I'm
+going to have it just worry about textures and thats it.  I have been able to test it and have it work perfectly for me
+with graphics displaying on the screen again.  This is a major step towards getting this project completed with this system
+being complete I can now begin working on the level, and map systems for getting an actual level of the game displayed on
+the screen with parallax scrolling.  Once I get that done I will be very close to having a demo of the game that we can submit
+to steam project green light, submit to investors, submit to Microsoft to get approved for developing on the XBOX One.
+
+February 1st, 2016
+
+Day 21 of Development
+The plan for today is to continue my work on getting map sections working, now that I have figured out the texture manager for
+the engine I can begin working on said level and map system.  Also I had a thought earlier about how to handle buildings.  I
+believe the whole system will look like this Each map will represent a section of the city that a boss will control, inside of
+each map there will be a total of 4 levels but these levels will not be the levels in the traditional sense from other platform
+games.  These levels will be connected vertically and the player can travel between the levels anytime they wish by walking
+down a specific street to get to the next block.  Each level will represent 5 blocks worth horizontally.  Within each level
+there will be several buildings that the player can explore in an attempt to find the boss they are looking for.  Some
+buildings will have nothing of use and others will have little pieces that will tell the whole story of the game through the
+lore.  The location of the boss in the specific map area can change each time the player goes into that area and each play
+through of the game.
+
+The levels of the game will be made up of tiles, the levels can be built in any tilemap editor available.  All of the tiles for
+all of the levels of the game will be located in a single texture and it will be indexed into for building each level of the
+game.  Each actual level will be made up of a set of arrays of integers that will define which tiles to draw at which spot.
+The inside of buildings will also be built with tiles although I will use a separate tilemap texture file for the tiles.  There
+will be another texture that will have all of the character sprites on it including their various animation steps for up down
+left right and turning in circles.  As well as a set of textures for various other characters in the game.  The data for each
+level will be scanned in from a file, where all layers for a specific level, and all the levels for a specific map will be
+in a single file.
+
+February 2nd, 2016
+
+Day 22 of Development
+The plan for today is to continue working on the whole map and level system, I did not get much programming done yesterday but
+I did get a bunch of planning done for the various systems.  My current goal is to get the level and map systems built and then
+get a map displayed on the screen with place holder graphics.  So after doing some more thinking and more discovery about how
+to handle the graphics in the game specifically the backgrounds of the levels.  I have decided to make a change to my original
+thinking of how I will handle things in each level.  So the new plan will be: A Map will represent a specific part of the city
+within each map there 4 levels that are stacked on each other vertically like city blocks.  Each Map will consist of 5 blocks
+horizontally and 4 blocks vertically.  Each Level will consist of multiple layers of graphics.
+- Layer 0 will consist of things like distant buildings/ city sky line and will be made up of tiles from a tilemap / atlas
+- Layer 1 will be a layer that will display things like clouds and birds, etc... and will be made up of tiles as well
+- Layer 2 will be an image of the buildings for that block, it will be the buildings, the parts leading to alleys, and the
+street corner and road that leads up to the next block up and again this layer will be made up of tiles.
+- Layer 3 will be where the player and the NPC's, and the bums that assist you in the game with tips. The player's sprite, the
+sprite's of the NPC's, and the sprite's of the bums will be stored in a tilemap or tile atlas including all of the frame's of
+animation for their movement.  The player will be in its own file because their will be a lot of frames for all of his movement
+and all of his abilities.
+- Layer 4 will be an optional layer for certain levels that will consist of rain, or dust storm or other effects to darken up
+the mood of the game.  On top of everything I will use shaders to give a dark, gritty, film noir style to the game.
+
+Today I ended up making some major changes to the main engine again to better handle lost device and other scenarios that come
+up with the running of windows applications.  I did a drastic overhaul of the system and got everything back up and running
+again.  So now I'm at the point of getting back to work on the map -> level systems.
+
+February 3rd, 2016
+
+Day 23 of Development
+So today is another day of development I am still working on the map and level systems of the game engine.  This is going to be
+a huge leap forward in development when I get them complete.  For the time being I'm going to move forward with the plan that
+I am going to use a single Texture as a tilemap / atlas to hold all tiles used in all of the various levels and maps in the
+game.  This makes the most sense to me because in the end we will probably use a similar style for each level and area of the
+city with some variations between the areas and those will just be extra tiles within the tilemap / atlas.  So the plan then
+to make this work will be to have a class specifically called tilemap that will include all methods needed to load the tilemap
+as well as to parse out the individual tiles from the tilemap texture and a way to compare the handle value of the specific
+tile and the handle from the text file that will define the individual levels of the maps.  So the level will simply contain
+an integer array that holds the values from the text file for the handles to the tilemap / atlas, each level also has to handle
+the buildings of the level, and have trigger points that will cause the player to be loaded into the inside of the building.
+The buildings will also contain levels I think I will create a separate class for the buildings to handle them because they
+will be built differently from the rest of the Maps because they have the potential of having more levels inside of them.
+Because of the plan of using a single tilemap / atlas to contain all tiles for all levels including the inside of buildings
+loading the various levels, and the inside of buildings should be very quick and seem less with little to know downtime.
+So then for data a single level will contain a string for the name of the map it belongs to, an integer array defining which
+tiles go where on the screen.  The level will contain methods for returning the value of the integer array at a specific
+location, as well as the method for initializing the level, I still need to figure out 100% how I'm going to handle
+the buildings in the game as well.
+
+I think I have decided on using a hybrid of my 2 trains of thought I will use a mixture of pre baked images for backdrops
+and I will use baked images for the buildings and tiles for the doors and other interactable objects in the game world,
+the things that can be attacked and broken by the player.  This will be how I will implement some of the lore because the
+player can destroy stuff in the game and find random items they can pick up.  The lore pieces will be the only thing that
+the player can pickup.
+
+Working on this system, working on figuring out how I want to build the maps and levels of the game has brought up another
+task that I need to accomplish in this game.  The thing I need to figure out before I move on to actually finishing the
+map and level system is where are rendering calls going to be done?  After doing years of research on video game development
+I have come across a concept over and over that I feel like works the best and that is the idea where each individual
+system in the game only does what it is meant to do, an input system just handles input and tells you if a button has been
+pressed, an audio system loads up the audio, and waits for you to tell it to play, and when you tell it to play it waits
+for you to tell it to stop or to do something else.  A graphics system loads up the necessary graphics libraries and then
+waits for you to tell it what to draw something to the screen.  You tell it what to draw and it does it.
+
+It is now the end of the day and I have made some more changes to my game engine I have moved towards having all rendering
+calls done within the graphics class, so the game class calls methods of the graphics class to add textures, and then
+render them to the screen.  I have also made the decision to move away from the texture manager class and moved the handling
+of texture resources to the graphics class, it creates a map and adds the textures to the map with a string name.  The render
+methods will ask for the string name of the texture and it will find it in the map and then call a method to display it. This
+will keep all rendering in graphics and all management of texture resources in their as well.
+
+February 4th, 2016
+
+Day 24 of Development
+Today I don't anticipate getting a lot of development done because I have to work my normal job these next 4 days.  That being
+said I am still going to try to work on things these next few days.  My goal for these next 4 days will be to try to figure out
+the map, and level systems, do I need to use classes? or do I just need to use struct's?  I have some ideas for how I'm going 
+to handle the levels and maps for the game I believe I will use a struct for the background layers that either move independent
+of the player or move at a speed different from the player.  The BackgroundLayer struct will contain the name of the texture
+to be able to access it from the map of textures, as well as a scroll speed to define what speed that layer moves at.  The
+level will also contain a handle for the texture for the tilemap and an array or I may move that to a struct as well not sure
+yet.  Each level will also contain an array that will define the placement of objects from within the game these will be the
+interactable objects of the level, things the player can either break to potentially find items from or doors that the player
+can use to go inside of buildings.  Something I need to explore more tomorrow is whether I want to use tiles for the buildings
+or do I want to just build a layer similar to the other 2 background layers with pre baked images.
+
+February 5th, 2016
+
+Day 25 of Development
+Today I did no programming as I had to work and had other obligations to take care of, however I did work on some pseudo ideas
+for the map and level systems while I was on breaks at work.  I think I have figured out how I want to layout the structures
+and classes of the various data for the map's and level's of the game.  The part that I am still working on is how I want to
+handle rendering of map and levels where do I want the actual draw calls to happen.  I am going to be working on the logic for
+this for a few days I anticipate.
+
+February 6th, 2016
+
+Day 26 of Development
+Today I fixed a minor bug that was causing the game to not work on earlier versions of windows because of a compiler setting
+I had set wrong.  I will test this out tomorrow when I'm at work to see if it is working now.  I also spent quite some time
+today figuring out more about how I'm going to handle rendering and what not of the maps and levels of the game.  I believe I
+have figured out how I"m going to handle the rendering with passing the graphics pointer to other systems to call rendering
+methods of their own objects, I expect that at a later date I will figure out a better way to handle this situation. But for
+the time being I will start with this and can always make some major tweaks to the system as I go.  This is what I anticipated
+from the very beginning that I would make multiple iterative changes to the engine as I go along.  My goal is to get something
+rendering on the screen hopefully this week and maybe get parallax scrolling working.  I realize that even once I can get a map
+rendering correctly this doesn't mean that I'm that close to completion of this game their is so much to work out still.  But
+getting this working correctly would be a huge step forward.
+
+February 8th, 2016
+
+Day 27 of Development
+Today is another day of development I fixed another issue that I had forgotten to fix the other day so I'm going to go test it
+today quick and then come back home and get back to working on the project I'm still working out all of the details of the map
+and level system and I'm also trying to think things through for how I'm going to let the various systems draw their graphics
+to the screen, as this will affect many systems down the road including HUD, the character and the maps to name a few.  I have
+now verified that the game will work on all versions of windows back to windows 7 I haven't tested it any further back but I
+feel comfortable calling it OK for now I will test it on a vista machine at a later date and see how well it works if it works
+at all.
+
+Thoughts on my game engine: so I am thinking about how I'm going to handle the drawing objects to the screen as well as loading
+the textures into the map array that the graphics system is holding on to for the entire program.  So the game class will load
+up the selected map, the map will take care of loading up all of the data for the levels, and the buildings for the levels(this
+may change down the road if either loading times become a problem or if I find out that the game moves so well that I can move
+the loading code outside of each subsystem and just do 1 giant load at the beginning of the startup of the game).  So when a
+map is loaded up in the game class it will handle populating the data for the levels and the buildings in the levels, this way
+once the map is loaded there is no more loading it can simply run and change what it draws based on where the character is at
+and if they are in a building or just outside on the street.
+
+So just to reiterate what my current plan is for the game when the game loads it will open a text file that will have the 
+filenames of all of the textures of the game.  They name's will be loaded in and then loaded into the map through addtexture
+which will also create the texture through the WIC load method.  Then all of the systems that want to use the textures will
+hold the name of the texture in their structures and classes.  And when a draw call needs to be done it can be passed in
+to the draw method and that texture will be drawn at whatever position is also passed in.
+
+-= Resources =-
+
+Buildings Text File
+1. levelName				+string
+2. TextureName				+string
+3. columns					+int
+4. rows						+int
+5. numberOfFloors			+int
+6. numberOfTriggerPoints	+int
+7-N. TriggerPoints			+string, int, int
+N-Z. CSV tile atlas data	+vector<int>
+
+Level Text File
+1. MapName						+string
+2. citySkyLine.TextureName		+string
+3. citySkyLine.ScrollSpeed		+float
+4. cloudLayer.TextureName		+string
+5. cloudLayer.ScrollSpeed		+float
+6. Buildings.TextureName		+string
+7. Buildings.ScrollSpeed		+float
+8. numberOfBuildings			+int
+9-N. Buildings TextFiles		+string
+
+Map Text File
+1. Name					+string
+2. Level1 Text File		+string
+3. Level2 Text File		+string
+4. Level3 Text File		+string
+5. Level4 Text File		+string
+
+I have made a major amount of progress again tonight although I still do not have a level displaying to the screen I have
+believe I have figured out the best way to handle buildings, levels, and maps in the game.  Tomorrow after I have finished
+replacing my processor and motherboard and getting things working on my machine again I will finish my work on this code
+the goal after I have completed this code is to build a test map, with 4 levels, and a set of buildings and to fill in the
+text files that I need to build to build all of the assets and then test this whole thing out.  If I can get things displaying
+then I will be able to get working on parallax scrolling and then getting a character displaying to the screen.  This will
+put me very close to the goal for the Demo for this game and as soon as we get the demo done for the game then I can send
+it to investors in order to get the company funded and then begin working on this thing full time.
+
+February 9th, 2016
+
+Day 28 of Development
+Today I have not gotten any programming done yet as I made some upgrades to my desktop increasing my hardware quality to
+help my computer run better.  I have spent the whole day so far getting the hardware working and then getting software
+installed again.  I will be putting time into the engine tomorrow attempting to finish the building, map and level systems
+of the game engine.  If everything goes smoothly I will attempt to build out the text files for the map, level and buildings,
+in an effort to test out the code to make sure everything gets populated correctly and that I can access the data I need to
+access correctly.  If this goes well and I'm able to successfully do this I will then move on to building out a full map
+including the 4 levels, and a set of buildings in order to test out drawing the level on the screen.  Once I get this
+accomplished I can move on to getting the actual character displaying on the screen as well and moving around.  This set
+of tasks: verifying map, level and building are setup properly, getting a map displaying correctly on the screen and getting
+the character displaying and moving correctly would be a huge milestone for this project and this company.  From there I will
+have to get trigger points working as well so as to be able to move between levels and buildings.  I will also put a bunch of
+my time into research of various topics both c++ game programming related, and just other game programming related topics
+including Unreal Engine 4.
+
+February 10th, 2016
+
+Day 29 of Development
+Today is another day of development I should get the map and level and building systems done and tested however I don't know how
+much I will actually get done today because I am feeling the urge to be lazy and do other stuff that I want to do instead, maybe
+play some games and what not and I will also probably study about Unreal Engine today because if I can learn enough about Unreal
+Engine 4 maybe I can start doing game development in their instead which would lower the load put on my shoulders with having to
+develop all systems on my own including the normal systems all games have to have.  The usage of Unreal Engine 4 may also make
+deploying the game on other platforms including consoles a lot easier.  I am not saying that the answer is to use Unreal Engine
+for the project but I am at least continuing my research into the engine so as to see how useful it is, this will be more useful
+for 3D games and other advanced projects in the future.
+
+February 11th, 2016
+
+Day 30 of Development
+I spent some time on this day doing more research on different ways to handle the data in the game, and handle level creation, 
+because this is now my work week at my full time job I will probably not get any programming done over the next few days until
+Monday again.  I have done a lot of contemplating today and I will use the information that I have researched and put it into
+the engine.
+
+February 12th, 2016
+
+Day 31 of Development
+Today was another work day and I did not get any programming done on the project, I did do more research like I did the previous
+day as well.  I also had a discussion with my business partner about the project and about meeting up to discuss the project 
+some point in the very near future.  We discussed the situation about the artist, when I got home I decided to try to get in
+touch with our potential new artist for the company.  I was able to get a hold of his brother who is going to talk to him again
+tomorrow and see what he wants to do and about meeting up with us.  I was able to get his phone number from him so after I get
+a chance to talk to him face to face I will use that as my means of contact to get this project going.  We need to get our demo
+feature set and plan locked down so that we can get it built and get the demo off to investors to get funding for the company.
+
+February 13th, 2016
+
+Day 32 of Development
+Today I made some decisions about the future of the project and the engine running it the biggest decision I made was to change
+over my plans for the engine.  The layers of the parallax scrolling of the levels will no longer be handled by pre baked images
+we are going to switch over to using tile maps for all layers.  This will allow for better collision detection as well as make
+things easier for loading and reduce the amount of resources for the game.  All tiles for the various layers and the various
+maps will be located in a single texture and each level will have vector's of int that will index into the tiles of the texture.
+The tiles will be pulled in from the texture and placed into an array of some kind that I will define later.  The index of the
+vector int values will correspond to the index values of the array of tiles.
+
+Checking for collisions as well as trigger points will be much easier because I can simply check the value of the specific tile
+the player is about to step on to verify if it is a tile value of a known trigger point.  I think what I will do is make each
+level have 4 layers:
+
+Layer 1 will be the city skyline layer this will be the distant imagery to give the game the feel that it is in a real city,
+this layer will move with the player at a different scroll speed.
+Layer 2 will be cloud and other objects layer this will be a layer that scrolls on its own animating the clouds scrolling by.
+Layer 3 will be the buildings layer this is the layer that the buildings will be shown in this layer will also move with the
+player at a different scroll speed.
+Layer 4 will be the trigger points and interactable objects layer this layer will be used to hold the actual trigger points
+and objects the player can destroy, trash cans, and other stuff they can attack.
+
+Displayed on top of the 4th Layer will be the crowd of people that are just walking by in the city, the players character,
+and the bums that the player can chance running into and interact with to get info on where they need to go.
+
+On top of that final layer of the game screen will be a layer of rain, and possibly dust effects to give the very gritty and
+dark feeling to the scene.
+
+February 16th, 2016
+
+Day 33 of Development
+Back to the grind today getting this game up and running and displaying a real map on the screen, the other day the company
+had its first meeting with our potential lead artist we don't know at this point if he is going to sign on to the company or
+not yet.  We will just have to wait and see what happens but regardless of what comes of that meeting I will move forward with
+the plans to get the demo completed so we can get it off to investors.  Today I will get the changes implemented into the engine
+for how to handle the levels of the game with moving over to using tile maps/atlas for defining the levels.  The levels will be
+constructed of 32Pixels x 32Pixels tiles that will be stored in a single texture.  Each tiles position in the texture will
+be tied to an index in the vector for the layers of the levels.  Along with the texture that holds the tile map/atlas tiles
+there will be another texture similar to that one that just holds all the tiles used in any building within the game.  There
+will be another texture that will contain all sprite positions for the main character, movement for all directions as well as
+all the sprites for the various abilities the character has.  Another file will contain the sprites for the hobos/bums that will
+appear in the game as well as the generic NPC sprites that will be the background people that will simply scroll across the 
+screen to define the sea of people in the city.
+
+Resource Files:
+
+Map Levels Tile Atlas Texture
+Buildings Tile Atlas Texture
+Player Sprites
+Helper Character Sprites and NPC Sprites
+
+BuildingName.txt
+1. levelName				+string
+2. TextureName				+string
+3. columns					+int
+4. rows						+int
+5. numberOfFloors			+int
+6. numberOfTriggerPoints	+int
+7-N. TriggerPoints			+string, int, int
+8-N. CSV tile atlas data	+Vector<int>
+9-N. Objects				+Vector<Objects>
+
+LevelName.txt
+1. Name						+string
+2. Columns					+int
+3. Rows						+int
+4-N. Layer1					+Vector<int>
+5-N. Layer2					+Vector<int>
+6-N. Layer3					+Vector<int>
+7-N. TriggerPoints			+Vector<TriggerPoint>
+8-N. Objects				+Vector<Objects>
+9-N. Buildings Text Files	+Vector<Building>
+
+MapName.txt
+1. Name						+string
+2-N. Map Dossier			+string
+3. Level1 Text File			+string
+4. Level2 Text File			+string
+5. Level3 Text File			+string
+6. Level4 Text File			+string
+
+February 18th, 2016
+
+Day 34 of Development
+Today was the first day in a few days that I put some real effort into writing some code for the project, I took the past
+three days off to rest and clear my head as I was getting burnt out.  I am back into developing again today and will try
+to spend as much time as I can every day from here on out on developing this project or another project for my portfolio.
+I updated the levels, buildings, and maps with the changes that I made a previous day including changing things over to
+using a tile map/atlas for all layers on each level of the game, I also added support for objects to the game, they will
+be defined in the actual level in a separate layer in the tiled program and therefor loaded into the game through the same
+text files that hold all other level data.  I am still waiting to test out this code to see how well it works until I can
+build a test level, with our current prospect for an artist still being up in the air on weather he will join the team or
+not; I am going to be forced to handle making a test map myself.  So one of the things I'm going to work on this week end
+is to find royalty free art and tiles that I can use to build the levels in the Tiled program in order to test the game out.
+
+On another side note something I want to write down in here that will be used later in development when I get further along
+in the project but I'm afraid that if I don't document it I will forget what I'm thinking about doing to make it work.  The
+designer for the team has talked about having the ability to use telekineses like abilities to control a bad guy, this ability
+will be triggered if the bad guy has the same blood type as the main character.  He wants to be able to do this from outside of
+the building when the player is on the street, well I have come up with an idea to make this work what I will do is when the
+player gets signal that they can do this to somebody inside of a specific building if they press a specific button when right
+in front of a window which we will define later, when they player presses that button the game will load the building that the
+player is in front of and place the player at the bottom of the screen on what appears to be the street right in front of the
+building.  Then they will have the ability to control the specific character inside of the building.  This will make it so this
+whole system works but I don't have to figure out how to layer things the way the designer was talking about because I don't 
+believe it is possible to do things the way he talked about doing without moving the game over to 3D and that is just not a very
+practical idea for this project with me as the only developer and us already having a challenge getting a 2D artist let alone
+a 3D artist for the team.
+
+February 22nd, 2016
+
+Day 35 of Development
+I am working today on getting the map, map sections, and buildings code re worked out so that I can get things to load easily
+in the game engine.  Also I'm trying to make sure that however I handle the code for those systems and how I setup the text
+file requirements for the maps I have to make sure that it is easy for Sam or Michael to work on the maps for the game.
+Because if I am required to do all of the conversion it could slow progress down when developing the maps.  With the maps
+being the biggest part of the gameplay aspect of the game.  I have also made a decision to change the code so that their is
+now no restrictions on the size of the maps, as in the number of Map sections that can be made for each map, and all other
+areas where a size restriction used to exist.  The only real restriction on how big the maps, or the buildings or the map
+sections can be is based what the hardware can handle.  Which leads to another task we will have to tackle at some point before
+the project is complete and that is what is the minimum hardware spec for playing the game?
+
+One question that I need to resolve is do I keep using my original plan of using a single container for textures a map that all
+textures are loaded into or do I have each map have a container that it uses for its own textures.  And then I could have a 
+separate container for the textures related to the company logo, and the main screen, and the map select screen and everything
+else that doesn't belong to the maps?
+
+No the more that I think about things the more I realize that I need to use the map and I will load any and all textures that
+are needed at any given time, when a map is used for the first time its textures are added to the map and then left in there.
+Unless we figure out that loading all textures into memory at one time causes performance issues and then I can tailor things
+differently as needed.
+
+One positive note on the progress of the game and the company as a whole is that our artist has created a logo for the company,
+this makes us a real company and this I will admit scares me greatly right now because I don't know if I'm truly ready to make
+this happen and to take this task on 100%.  The biggest problem I am having is that with everything that is happening in my life
+between my family life, and my friends I have nobody to talk to and to confide in and to talk to about things.
+
+February 23rd, 2016
+
+Day 36 of Development
+Today I have been doing some heavy thinking about the future of this project and I think I finally have my head back in the game
+about getting this project done and about the future of this company.  All that matters now is getting this done and funded so I
+can stop working for somebody else and start working for myself.
+
+I have made a decision about the project I'm going to make a change again to the map system, I have decided to switch back to
+using pre baked images for a couple of the layers of the map, namely Layer's 1 and 2 I have changed back to this because I have
+decided that it doesn't make sense to use the time map for those 2 layers because they can't really be constructed by anybody
+but the artist for the project.  So I need to change the system to accommodate this, so from here on out there is going to be
+Layer 1 a city skyline layer, Layer 2 will be a cloud layer, Layer 3 will be a tile map atlas for the buildings of the level,
+Layer 4 will be a layer of objects which will just be made up of a set of data, namely a position, a tile index into the
+tilemap, and an object type.  Along with that layer will also be the Trigger Points of the level which will define the points on
+the map that will cause events to take place in the game.
+
+February 24th, 2016
+
+Day 37 of Development
+Today I am continuing my work on the project, getting the map, map section, and buildings code worked out and working so that I
+can take another step forward in this project and get this demo done so that I can get funding and get this company functional.
+
+February 25th, 2016
+
+Day 38 of Development
+Today I have continued working on the map code and figuring out how I want the data to get drawn into the engine and making sure
+that however I do it there is plenty of documentation so that everybody can contribute to making sure things work correctly.  I
+also updated the documentation for the demo I think that I have everything outlined in it that we need to get done for this demo
+to be considered ready for the investors.  I will have a meeting with Sam tomorrow about the company and hopefully we can have
+a meeting with Michael in the next week to discuss the final plan for the demo so I can get him working on art.  I have to work
+the next few days so I will probably not get much done, however I am making it a requirement for myself that I finalize the 
+plans for the text file resources that outline the buildings, and map sections and the map itself by the end of the weekend. I
+do not have to get it 100% implemented and tested but I have to get it defined out on paper so that this next week I can get
+it implemented and hopefully tested by the end of the week so that I know how to construct the data for the levels.  Once I get
+it so that the data is pulled in correctly then I can work on drawing code to get it displaying on the screen and hopefully get
+it scrolling correctly as well.  I will have to make some more of my amazing programmer art in order to test this all out.  If
+I can get the map sections displaying on the screen properly and get things scrolling correctly then I can hook up trigger
+points and test out buildings and if I can accomplish that then the demo will be very well on its way to being done.  But first
+I have to make it through the next 3 days and get the map text files defined how they are going to be constructed by the end of
+the day on Sunday.
+
+February 26th, 2016
+
+Day 39 of Development
+I am continuing my work on figuring out all the details of the demo project and the details for the system for the map, building
+and map sections of the engine.  The other piece I accomplished is I have decided on a set of Milestone Goals that take me out
+to the end of March.
+Milestone 1 Complete design of map, map section, and building code by February 29th, 2016
+Milestone 2 Complete drawing and update code for maps by March 7th, 2016
+Milestone 3 Complete basic player class by March 21th, 2016
+Milestone 4 Complete player rendering and update code and make certain I can get him animating by March 31st, 2016
+
+February 28th, 2016
+
+Day 40 of Development
+Today I had to work again but I was able to complete some of the design changes for the engine, related to the map, map section,
+and building part of the engine.  I will complete the first Milestone objective by the end of the day tomorrow.
+
+February 29th, 2016
+
+Day 41 of Development
+Today I am working on completing Milestone 1 Objective which is to Complete design of map, map section, and building code, this
+task is very imperative to the progression of the demo reaching completion.  I am beginning today with finalizing the design for
+the text files representing maps, map sections, and buildings.
+
+MapName.txt
+1.) Name
+2.) NumberOfMapSections
+3-N.) Map Sections 1 - NumberOfMapSections MapSection#.txt
+
+MapSection#.txt
+1.) NumberOfLayers
+2.) Layer 1 - NumberOfLayers (textureName, autoScroll, scrollSpeed)
+3-N.) Objects(Name, Type, tileIndex, Position)
+4-N.)TriggerPoints (Name, Type, position, moveToPosition)
+
+MapSection#Building#.txt
+1.) textureName
+2.) Columns
+3.) Rows
+4.) NumberOfFloors
+5-N.) Floor# tile index data
+6-N.) floorObjects (Name, Type, tileIndex, Position)
+7-N.) TriggerPoints (Name, Type, Position, moveToPosition)
+
+At this point I'm going to lock in this as the final format for the text files, by the end of the project this may change but
+for the demo this will be the final format for the text files related to those resources.  I will work out the code to make
+loading these files into the engine possible.  The goal for today is to complete the code for loading this into the engine.
+If I get far enough and still have time then I will try to test out the code to verify that I can load the values into the
+engine properly.  Which will lead into Milestone 2 which is completion of the drawing and update code of the map system.
+
+I did not complete getting the code written to handle the maps, map sections and buildings by the end of the night but I will
+work very hard to complete it tomorrow and move on to working on the draw and update code.
+
+March 2nd, 2016
+
+Day 42 of Development
+I have been distracted this past week with other tasks and problems in my life but I am going to get back on track and complete
+this first milestone and move right into the second milestone and get it done by its due date.
+
+Today I was not able to complete the actual code for loading the map into the system however I did complete the pseudocode for
+the map loading system and all I need to do is convert it over to actual code tomorrow or some point this weekend.  With the
+changes to my life that I am planning in the next week I may have to push out my Milestone deadlines 1 week each so I will set
+the new milestone goals as:
+
+Milestone 1 Complete design of map, map section, and building code by March 6th, 2016
+Milestone 2 Complete drawing and update code for maps by March 13th, 2016
+Milestone 3 Complete basic player class by March 20th, 2016
+Milestone 4 Complete player rendering and update code and make certain I can get him animating by March 31st, 2016
+
+I will complete the requirements for Milestone 1 by this coming Sunday so I will have the code written for the map, map section
+and building systems of the game engine.
+
+March 13th, 2016
+
+Day 43 of Development
+Today is the first day in a couple of weeks that I have gotten back to work on this project, I have spent the past couple weeks
+handling personal issues as well as doing heavy research into Unreal Engine 4 and seeing if it is a viable option to switch the
+engine over.  I have decided that the amount of work and the learning curve involved in learning Unreal Engine 4's paper 2D
+stuff would be to much for the project it would push the development way off course and push it to far back from completion.
+I am going to move forward with this engine and get the demo up and running.  Unfortunately because of my side track I will
+have to push back my Milestone dates for the project.  So a new milestone schedule will be:
+
+Milestone 1 Complete converting pseudocode for map, map section and building over to C++ code by March 20th, 2016
+Milestone 2 Complete drawing and update code for maps by March 27th, 2016
+Milestone 3 Complete basic player class by April 3rd, 2016
+Milestone 4 Complete player rendering and update code and have the player animating on the screen by April 10th, 2016
+Milestone 5 Complete design and code for game start up sequence, title screen, and map select by April 30th, 2016
+
+March 14th, 2016
+
+Day 44 of Development
+Happy Pi day I am going to be working on the project all day and work very hard to get this pseudocode converted over for the first
+Milestone for the new Milestone schedule.
+
+March 15th, 2016
+
+Day 45 of Development
+Yesterday I ran into a little problem with the pseudocode for the map system, I realized that the way I had it setup wasn't correct
+for how the maps are constructed and how the text files containing the data for the maps are built.  I worked on figuring out how
+I needed to change things and I'm continuing this today.  I am also trying to work on an overall plan for the game; figuring out
+the general lifetime of the game so that I don't program myself into a corner with a specific system and have to re work it later.
+I'm trying to avoid wasting time on simple mistakes that I can avoid now by doing a better job of planning.
+
+More changes to resource layout
+
+MapName.txt
+1.) Name
+2.) NumberOfMapSections
+3-N.) Map Sections 1 - NumberOfMapSections MapSection#.txt
+
+MapSection#.txt
+1.) NumberOfLayers
+2.) Layer 1 - NumberOfLayers (textureName, autoScroll, scrollSpeed)
+3.) NumberOfObjects 
+4-N.) Objects(Name, textureName, Type, tileIndex, Position)
+5.) NumberOfTriggers
+6-N.)TriggerPoints (Name, Type, position, moveToPosition)
+
+MapSection#Building#.txt
+1.) textureName
+2.) Columns
+3.) Rows
+4.) NumberOfFloors
+5-N.) Floor# tile index data
+6.) NumberOfObjects
+7-N.) floorObjects (Name, Type, tileIndex, Position)
+8-N.) NumberOfTriggers
+9-N.) TriggerPoints (Name, Type, Position, moveToPosition)
+
+March 17th, 2016
+
+Day 46 of Development
+I worked today to finish converting the pseudocode over to engine code for the Map, Map Section, and Building
+sections of the engine.  Tomorrow I am going to test out the code to verify that the data in the text files
+gets taken in correctly into the engine and populates all variables correctly.  If this all goes well and no
+big issues then I will start working on the Update and Draw code for the Map, Map Section, and Building systems.
+
+March 18th, 2016
+
+Day 47 of Development
+Today I started off the day with the plan to test out the Map, Map Section and Building code that I had completed
+converting yesterday.  I was able to build the necessary text files and I was able verify that the data was drawn
+into the engine and populated the variables correctly.  The next step in this project and the next piece on my to
+do list for today and this week is to begin writing the pseudocode for the draw and update parts of the engine.
+
+March 19th, 2016
+
+Day 48 of Development
+Today I worked on moving around some of the code and changing a couple systems to use text files for loading assets,
+I also made some decisions about the level creation of the project.  I am going to develop an in game level editor,
+that both the designer and the artist for the company can use for creating the map sections of the game.  This will
+alleviate the concern I had about how to construct the text files behind the actual maps, and all its parts.  Instead
+of using other tools to construct things and then having to construct the text files correctly which could lead to
+errors which could lead to errors if they don't construct the files correctly, I will have them use the in game editor
+for constructing the levels of the game and then the game engine will write out the text files correctly so that the
+engine can read them in to play.
+
+March 20th, 2016
+
+Day 49 of Development
+Today I am going to begin working on bringing over the console command system from another project as well as begin the
+work on the in game editor for the engine.  But now that I think about it more I should get the console command system
+moved over and then get the rendering of levels working because before I can make the editor to work on levels I need
+to get levels displaying on the screen.
+
+March 23rd, 2016
+
+Day 50 of development
+Tonight I'm getting back to working on the changes I have decided on for the engine including the in game editor, the
+console window for using the in game editor and other stuff related to it.  I am working on getting a quad to display
+on the screen correctly so I can use it to draw text to it for the console command system.  I am ending the night 
+tonight without completing my task of getting the quad displaying on the screen.  For whatever reason I can't get it
+to display the quad no matter what I do, and even trying to use the exact code from the examples online doesn't seem
+to work in this situation.  I will have to investigate even more tomorrow to see why this is not working.
+
+March 24th, 2016
+
+Day 51 of Development
+Today I'm working on getting the console to display on the screen and to get the ability to type text into it working.
+I've been able to successfully get the console displaying on the screen with no issues but when I have moved on to
+getting the text displaying on the screen on the console window I'm having some complications that I am working out
+right now and I'm trying to get it done before the night is over.  So at this point my original Milestone goals for
+the project are shot, I think that I will just set a big Milestone goal for the project and just work on that for now.
+The milestone will be related to getting the editor implemented and working that means the goal is to have the console
+window showing and accepting inputs, and when the developer enters the correct command edit level it will cause the
+level editor to load and certain tools will show up on the screen for editing levels and it will start accepting
+commands related to level editing.  This also means I have to look into being able to open an open file dialog in
+a windows build so you can select images, and cause those images to be copied over to the correct folder and folders
+have to be able to be created by the program.
+
+Basically the plan is to make it so that when the level editor is used the person building the level will be able to
+create the level graphically and the engine will write out the correct text files that the engine knows how to load.
+This also means I have to get maps displaying on the screen and trigger points, working so that after you build the
+levels in the game editor you can then save it and just load it into the game and test it out right away.  To verify
+that everything works correctly and the way you want it to, things scroll at the correct speed, and everything else.
+
+Milestone 1: By April 30th 2016 I will have the level editor for the project implemented into the engine.
+
+March 25th, 2016
+
+Day 52 of Development
+Today I spent my time going back and forth on whether to use a pre built system for a console window for the engine and
+primarily the level editor or to build my own.  At the end of the day I'm leaning towards building my own because all of
+the systems that I have found out on the internet seem to bulky for what it is that I'm trying to accomplish for this
+project.  Plus with building it myself I get the benefit of furthering my programming skills and I have full control
+of how it is laid out and can re use this system in future projects so this will be another item that I will add to my
+tool box of programming algorithms.
+
+March 26th, 2016
+
+Day 53 of Development
+Today I am working on getting the console and editor integration working, I have changed the class name for the console
+over to just level editor and I'm going to incorporate everything into that class... maybe.  I may change my mind on this
+topic later but I believe I will put them together but maybe not... hmmm I must think this situation over and will decide
+in the next few days on how I want to handle this.  Putting everything into one class may make things easier for now but
+will cause me to create a bloat class that will make it harder to parse parts out for future projects.  OK it has been
+decided crazy how fast I change my mind huh? I'm going to use 1 class for the level editor and a separate class for the
+console, this will allow me to pass the console on to other projects that maybe don't use the same level editor as this
+game does.
+
+March 28th, 2016
+
+Day 54 of Development
+Today I got some more work done on the console window I now have the system working for displaying the console, and also
+the part working for accepting input and displaying it on the screen as the user is typing it in.  I still have some more
+work to get done on this because right now when you press the enter key it keeps the same string on the screen still and
+wont clear the prompt for the entry and it doesn't display the text that has been added to the history correctly which I
+think has to do with how I'm adding the text to the history and how I am positioning it on the screen because briefly I
+saw a string of text display on the screen and it scrolled down the screen until it disappeared off the screen.  I also
+have a demo project I found online called TextConsole that I need to look at and see how it works and see if I can't use
+some of the concepts from it for displaying multiple lines of text on the screen in a confined area of the screen. This is
+going to be one of the many things I will be handling tomorrow along with all other personal tasks I must take care of as
+well.
+
+March 29th, 2016
+
+Day 55 of Development
+Today when I had time to sit down and do some programming I was able to get the issues I was having yesterday resolved, I
+was able to get it so that after a command is entered in it adds, it to the history, and clears the prompt back out. I still
+need to work on the display of the history on the screen after the first few lines of the history are displayed it starts to 
+spread the lines out further and further apart each line.  This is one of the many tasks I will be working on tomorrow.  The
+biggest of the tasks that I need to resolve tomorrow is figure out how to handle function pointers and adding the commands
+to the console system.  I want to make it so that the console itself does not know anything about the commands it's processing
+it just grabs commands and calls the function for that command through the function pointer or whatever system I choose to
+use for the engine.  Once I can get this system working so I can handle the whole console commands being entered and get the
+history displaying correctly and working properly because I also want it so that you can press up and it will grab previous
+commands so you can use old commands again without typing them in again.  Once I can get that system working then I can move
+on to working out all the details of the level editor making it so that the rest of the team can start to work on building
+the levels for the game.
+
+March 30th, 2016
+
+Day 56 of Development
+Today I am working on getting the console stuff wrapped up and then beginning work on the level editor for the game engine. I 
+have been able to get the console stuff finished so far today getting the ability to handle commands built and making sure that
+the code for the history works correctly displaying it at the right spot and everything.  My next goal now is to work on the 
+level editor this is the next huge item on my list of things to complete.  At this point I think the order of how I'm going to
+tackle this is first figuring out how to open an open file dialog box to grab texture files, getting it to copy the files over
+to a specific location, and then storing the data correctly in the game engine.  Once I accomplish that I will get the on screen
+stuff displaying the way I want it to be for when editing a level.  Then get the graphics for the level displaying on the screen
+in the correct layer order as they are loaded.  From there I need to figure out mouse controls, and being able to place objects
+on the screen with the mouse.
+
+March 31st, 2016
+
+Day 57 of Development
+Today I have decided that I'm going to take a side track from the level editor and work on figuring out the broader plan for the
+engine and all of its sub systems.  Try to get a plan put together for how everything is going to be put together on in the end.
+Figuring out things like game state, startup sequence and things like that.  If I am able to get that part completed and then I
+will move on to the level editor today.  I need to take a good long hard look at the current state of the game engine and make
+sure that I have all my current systems in place correctly so that I don't run into any giant road blocks later in this project.
+The reality is that I have time to polish this project truth be told this project is probably going to just be a portfolio piece
+to help get me a job at another game company in another state because I have a feeling that eventually the other people on this
+team will get tired of waiting on this project and or I will get tired of seeing no progress from the others on the team... But
+if I turn this project into a polished game I stand a very good chance of getting a job offer from a large game company out in
+another state later this year.
+
+Questions I need to resolve for this project:
+Should I allow various systems that need to draw things on the screen to access the actual graphics system directly or do I create
+some kind of a command system within the graphics system and when another system wants to send drawing commands they send the
+request into the drawing system and it will use the command system with a container that will use a first in first out system where
+each frame of the game will process whatever commands are in the container.
+
+OK I have already answered my own question about what I'm going to do I need to figure out how to write out the code and logic for
+a command system where each individual system will subscribe to a specific type of Commands that the command system will process.
+
+This is my new #1 task completing the Commands System, followed by the Game State system being 2nd, and from their I think my 3rd in
+line should be get the Game State system actually used in the game and get the startup process working, so Banner Parade, gameplay
+video, title screen, menu title screen, and get everything in the game engine even if they are just stubbed out before I go back to
+working on the level editor.  So the task for tomorrow and until it is completed is the Commands System.
+
+April 1st, 2016
+
+Day 58 of Development
+Today I am going to work on the Commands system or whatever I choose to call it in the end figuring out all the details of this
+system and getting it implemented into the engine. I have some new ideas for this system that I'm working out and I will work on
+this more tomorrow and I expect it will be on my priority list for the foreseeable future.
+
+April 2nd, 2016
+
+Day 59 of Development
+The plan for the day is to begin working on stubbing out the code for the Command System of the game engine. The plan I currently
+have for the system is each system will register themselves with the command system and the command system will hold a pointer to
+every systems main object. Then when I want to pass a message to a specific system it will be sent through the game class to the
+command class the command class will call the command processing method for each subsystem directly and pass the data along that
+the system needs. In the game engine the plan has for the most part been that Win32_window is the entry point for the game engine
+as soon as it creates the game object and starts it running it passes control over to the game class and every other system of the
+engine has an object that the game class controls and contains in it's class.  The plan was to not have other systems know about
+each other in the engine because making it so that each system points to each system can create some very chaotic code and it is
+not very professional and if I want to be taken serious as a game programmer I need to come up with a solution that is a more
+elegant and professional.
+
+Getting back to the task at hand so I can't use pointers to every system in every system because it creates chaotic code but
+another option that I think will create a much more clean engine but will be complicated to implement uses the Command System where
+it has an object from each system and each system has a command system object pointer to pass commands to the command system and a
+method in each system that processes commands from the command system. So to implement this system correctly the system will contain
+an object for each individual system in the engine including a pointer to the game class itself.  Each system will contain a pointer
+to the command system object that will allow it to pass messages to other systems and each system will contain a method that
+processes commands that where passed to it.  I don't pretend to know if I am handling this 100% the way I should be or if how I'm
+doing this is professional but I'm going to use this on this project and on other projects I will continue to grow my skill set.
+
+April 4th, 2016
+
+Day 60 of Development
+Today I am beginning to shell out the Command system under its new name Events I decided to name it this because although it will
+be at first only used for passing graphics commands around between the various systems I do plan to in the future grow it into
+a full events system for the engine and in future projects will be used and modified into a system for each game. I did not get
+anything done on the project today because of outside interference but I will not let this be a problem anymore starting tomorrow.
+I will be getting the Events system completed tomorrow no matter what.
+
+April 5th, 2016
+
+Day 61 of Development
+I'm scratching today again because of reasons that I'm not proud of but I will do what I must to fix this and do better tomorrow.
+
+April 7th, 2016
+
+Day 62 of Development
+With certain other distractions now being out of the way I will be moving forward with this project and make some great progress
+towards my ultimate goal. I am playing around with the idea that maybe I don't actually need an event system or command system
+because of how my game engine works right now passing around a pointer to multiple systems for graphics may actually be OK in
+this instance.  I will keep going without developing the event system for now and if I get further along and find that I really
+need to fix it for some reason than I will do it at that point. I'm going to do some more thinking and planning out of things and
+if after I do this I feel like this system needs to be implemented then I will do it otherwise I'll move on without it.
+
+April 14th, 2016
+
+Day 63 of Development
+It has been a rough few weeks and I have let outside distractions in my life affect my ability to get this project moving forward,
+but this is changing today my goal for today is that by the end of the night by the time I lay down and call it a night I will get
+a map displaying on the screen and get the parallax scrolling effect working.  I don't anticipate getting the level editor finished
+or getting a character displaying or trigger points working or anything like that but I will have a single section of a map working
+on screen and scrolling correctly including with auto scrolling for certain layers auto scrolling.  Once I can get this part of the
+logic working I can move on to getting the level editor working so that Sam and Michael can test out building levels in the game so
+we can get the demo moving forward.
+
+I set out today with the goal to get a map displaying on the screen by the end of the night but I am not able to complete what I
+had set out on for today.  I realize this means I did not complete my goal for today but I will live with it.  I have gotten some
+code written for displaying the map on the screen, and for updating the current map on the screen.  I am working out some bugs and
+some details for how I'm going to handle certain aspects of displaying the map, what the current position the map is in so on and
+so forth. I anticipate being able to get a map displaying on the screen by the end of the day tomorrow as I'm very close to
+accomplishing this tonight.
+
+One thing I need to solve is figuring out how to handle scrolling the image that is larger than the game window that I am displaying
+it in.  I know this is a simple task but tonight I'm drawing a blank as to how to handle this.  I may have to wait until I get my
+internet connection working again tomorrow night in order to finish this because there are some great examples out there that I can
+draw upon on how to handle this but I need to be able to get online in order to download them and look at their code.
+
+April 15th, 2016
+
+Day 64 of Development
+I plan to get some things done for this project today but I don't know how much I will be able to complete and how soon I'll be
+able to start working on it.  A lot of what I'm trying to figure out I need to get access to some reference that I don't have here
+at the house I need the internet to download the code for some examples that show how to do what I'm trying to do.  So I will very
+likely have to wait until my internet gets turned on some point today in order to move forward.  But that being said once it is up
+and running I will get to work on this project and work very hard today and the rest of the weekend when I'm not working at my job
+to get further on this project.
+
+I was able to get some work done but today moving towards getting the map displaying on the screen I will work on this more tomorrow
+to reach my goal of getting it displaying and moving on the screen by the end of the weekend.
+
+April 21st, 2016
+
+Day 65 of Development
+Today I am working on cleaning up some of the code trying to figure out how to get the code for displaying the map on the screen
+working and getting the update code working as well the goal is that tomorrow I will find some graphics that I can use for testing
+purposes and get the test graphics displaying on the screen correctly and also scrolling properly both from auto scroll and from
+user input.
+
+April 22nd, 2016
+
+Day 66 of Development
+Today I am working on the code for displaying and updating the map on the screen and my goal for today is to get some test graphics
+to display on the screen and to update correctly.  If I am able to complete this successfully I will then move on to work on the
+level editor in the engine.  Getting that piece of the engine functional would be a major accomplishment towards completion of this
+engine. Because this would allow for easier construction of the text files used by the engine for loading the content of the game.
+
+I just ran into a complication related to a system I was worried about earlier I can't use a global graphics object in the map
+system because of link error's this comes back to my question about developing a messaging system for passing commands to and from
+various systems of the engine.  Maybe this is the point when I need to step back and figure out this system. This is a problem that
+once I solve it will bring the engine back to my original design where the game class is the only class that contains the other
+systems and it passes data to the various engine support systems and then they pass commands back.
+
+April 23rd, 2016
+
+Day 67 of Development
+So today I am working on figuring out how I'm going to handle the problem I'm having with the link errors with using a global
+object, I'm still not 100% sure how I'm going to handle this but I will continue to do research and I have even reached out to an
+online forum for developers and I'm waiting for a response on suggestions on what to do.
+
+OK so I have managed to figure out what I needed to do for the whole graphics system variable and it does not involve me using a
+very difficult and rather useless command system like I was thinking that I was going to need I am using a global extern defined
+object to the graphics system this way I'm no longer passing a large pointer around which is a very costly action so I have 
+learned over time.  Now every system that needs to send graphics commands can do so as they need to because keeping all draw
+commands to just the game class is simply not possible considering how I am building all these systems.  So now that I have been
+able to resolve this issue I can now move forward with the project I am going to make it my gaol tomorrow to find the test 
+graphics and attempt to draw a map on the screen with scrolling.  This will as I stated on other days be a big milestone in the
+project because this moves towards having a demo level ready to show to investors.
+
+April 28th, 2016
+
+Day 68 of Development
+Today I'm getting back to work on the project again I'm taking inventory of what I need to accomplish to get the demo done for
+investors.
+To Demo Completion:
+- Get Map displaying on the screen, animating and moving through user interaction, also need to get trigger points working for
+  moving from map section to map section, and from map section to buildings and from floor to floor, and from buildings to map
+  section.
+- Write the Player class and figure out the abilities for the character, get the character animating, will use component design
+  pattern for this class for the abilities of the player.
+- Write the Enemy and Boss classes and get them displaying on the screen with animations and abilities I may use a similar class
+  structure and design pattern as the Player class for this.
+- Figure out the blood meter HUD piece and how it will play into the game with it basically being a timer that goes down based
+  on the players actions which will tie into the Player abilities each one will have a cost of blood as well as movement will
+  have some tie to a cost on the blood meter.
+
+So today I got to work on testing out the map displaying and updating section of the demo and I am very happy to say that I was
+able to get it to display on the screen and yeah it updates.  The auto scroll feature works great, there are some tweaks that
+would need to be made to the code related to how fast things scroll and what not but regardless it works.  There are some
+minor tweaks and improvements I feel that I could make to the code for the map going over code to make sure that there are
+no redundant checks or any other stuff that could be wasting processor cycles on useless crap.
+
+Completing this has however brought up an interesting issue with my keyboard code which after doing some research I have come to
+the conclusion that I may need to scrap using the DirectXTK keyboard entry code for another way to handle this but I need to
+do more research on the topic and make sure that my hypothesis is correct.  I will do this more tomorrow as well as cleaning up
+the map code to make it more stable and work correctly.
+
+So I went back and checked things out as well as some documentation and found out what I needed to do to make this work correctly
+and was able to get the keyboard code working correctly as well as the gamePad code.  So I am happy to say that I have a map
+displaying on the screen and correctly updating on the screen as well both auto scroll and keyboard entry works correctly.  I do
+need to work on the code some more to work out some weird bugs and abnormalities related to moving the actual layers when in auto
+scroll and not but that is something that I'm sure I can figure out fairly easy.  I think what I need to do is sit down and try to
+write out the pseudocode for that method and figure out the best way to handle it.  Considering the fact that all I did was write
+the code for that method as well as the draw method on the fly without taking the time to logically write it out I think it is
+pretty cool that it worked the first time I did it.
+
+So I'm done for tonight with a big step in the right direction I will continue my progress tomorrow when I get home from all of the
+running I must do after work.
+
+April 30th, 2016
+
+Day 69 of Development
+Today I am starting out with changing the resolution of the window to a full 1920 x 1080 and made the window open up maximized for
+now eventually I will add the options menu where you can either make the fullscreen with no tool bars or anything or windowed where
+you can select the dimensions of the window.
+
+One of the things I want to add to my to do list both for the Demo and just in general for the engine is to write a class for all
+the input related things, even though I'm using the DirectXTK's input classes and what not I still want to write a class around
+that system to control things the way I want to control them including access to the input functionality.  By doing this I can
+then have a single gateway to the input stuff instead of using a global extern variable.  The global will work for now to get
+things tested and working but I need to move away from that for all systems of the engine.
+
+Things I need to research and get books on:
+- Design Patterns
+- Object Oriented Program Design
+- Building an RPG with Unreal Engine 4
+
+May 2nd, 2016
+
+Day 70 of Development
+Today I am spending more time researching Design Patterns as they pertain to game programming to figure out if there are any design
+changes I should make to the engine as well as figuring out how I'm going to handle some of the new systems to make sure everything
+blends together in this engine seamlessly and try to prevent bugs and issues in the future in this project as well as other projects
+that I may undertake in my programming career.
+
+-=Command=-
+I need to research the -=Command Design=- Pattern more and see how I can implement it into my own code, I see a use for it in the
+input end of my engine, as well as my Console Command system that I built this would do what I originally wanted it to do in a much
+better bug free way.  This will require me to re write that class but in the end if it makes my code more robust and the engine more
+stable and clear than it will benefit me in the end.  This is a part of developing video games understanding the benefits of re
+writing code for systems that you have already implemented if it means saving you hours of problems in the future then the couple
+hours it will take to re write and implement it will all be worth it.
+
+May 4th, 2016
+
+Day 71 of Development
+So I made some changes after doing some heavy reading on design patterns, the reading I did enlightened me why using the singleton
+class design is a bad idea especially with global variables.  So I went back to doing things the way I was originally doing it with
+passing pointers to systems that need them which I have learned is actually not a bad thing because it controls the systems better
+and forces you to see where your data is going plus it makes it easier to trace bugs.  I'm hoping to take some of the advice and
+design pattern ideas that I have read and put them into use for certain systems in the engine.
+
+I still want to figure an actual input class, and now I think I need to add an audio class so that various systems that need to
+play sound effects can do so but I need to research design patterns more to figure out how I want to handle this in the engine.
