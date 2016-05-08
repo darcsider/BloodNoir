@@ -18,6 +18,8 @@ class Game
 {
 	private:
 		GameTiming m_timer;
+		GameTiming m_eventTimer;
+
 		vector<int> handles;
 		bool m_appPaused;
 

@@ -28,7 +28,7 @@ bool InitWindowClass(HINSTANCE program)
 	}
 
 	int w, h;
-	g_game->GetDefaultSize(w, h);
+	m_game->GetDefaultSize(w, h);
 	rc.top = 0;
 	rc.left = 0;
 	rc.right = static_cast<LONG>(w);
@@ -67,17 +67,17 @@ int WINAPI wWinMain(_In_ HINSTANCE Program, _In_opt_ HINSTANCE PreviousProgram, 
 		return 1;
 #endif
 
-	g_game = make_unique<Game>();
+	m_game = make_unique<Game>();
 
 	if (!InitWindowClass(Program))
 		return 1;
 
 	ShowWindow(m_window, SW_MAXIMIZE);
-	SetWindowLongPtr(m_window, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(g_game.get()));
+	SetWindowLongPtr(m_window, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(m_game.get()));
 
 	GetClientRect(m_window, &rc);
 		
-	if (!g_game->GameInitialize(m_window, rc.right - rc.left, rc.bottom - rc.top))
+	if (!m_game->GameInitialize(m_window, rc.right - rc.left, rc.bottom - rc.top))
 		return 0;
 
 	MSG msg = { 0 };
@@ -90,10 +90,10 @@ int WINAPI wWinMain(_In_ HINSTANCE Program, _In_opt_ HINSTANCE PreviousProgram, 
 		}
 		else
 		{
-			g_game->GameRun();
+			m_game->GameRun();
 		}
 	}
-	g_game.reset();
+	m_game.reset();
 
 	CoUninitialize();
 	return (int)msg.wParam;

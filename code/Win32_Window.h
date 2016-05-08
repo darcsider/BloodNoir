@@ -14,7 +14,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 string className = "BloodNoir";
 string windowTitle = "Blood Noir 1.0";
 
-std::unique_ptr<Game> g_game;
+std::unique_ptr<Game> m_game;
 
 RECT rc;
 HWND m_window;

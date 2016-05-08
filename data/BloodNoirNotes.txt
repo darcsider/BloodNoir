@@ -1176,3 +1176,22 @@ a test of what I'm capable of doing to an actual production game.  Things like f
 the game state concept.  Figuring out the startup process banner parade, and all of that fun stuff, these things are concepts
 that I need to not only understand from a logical point of view but I need to know how to implement them by myself because I
 have nobody else to rely on for programming tasks.
+
+My next steps for this project that I need to work on tomorrow is moving everything related to Audio into its own class, and
+move anything related to Input over to its own class.  I need to research design patterns more and figure out how to write a
+class where other systems can subscribe to it.  I want to make it so that for input the actual commands that are watched and
+checked for are added to an Input Que or some other container that will not be cleared out they will simply be checked for
+each and every frame of the game.  So basically when a system needs to check for right arrow for example it will pass in a
+request for the right arrow to be watched and it will have a function pointer to the function that will process the Command.
+
+This will definitely be the Command Design pattern that I was reading about the other day and this will also play into making
+the game so that the controls can be bound to various events in the options menu.
+
+Also I want to test out the functionality of using a timer for certain events, the ones that I'm going to test out specifically
+tomorrow will be the startup banner parade.  Once I get that working I want to get the code working for the title screen with
+loading and the text on the screen and the menu options being selectable with each one firing off an event and being handled
+properly.
+
+May 8th, 2016
+
+Day 73 of Development
