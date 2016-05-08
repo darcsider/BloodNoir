@@ -19,9 +19,9 @@ class Console
 {
 	private:
 		DX11RenderManager				*m_graphicSystem;		// Graphics System variable
-		std::string						m_commandString;		// string holding the command entered in by the user
-		std::string						m_prompt;				// the prompt that displays on the screen
-		std::string						m_textInput;			// the text that is being entered in by the keyboard
+		string							m_commandString;		// string holding the command entered in by the user
+		string							m_prompt;				// the prompt that displays on the screen
+		string							m_textInput;			// the text that is being entered in by the keyboard
 		XMFLOAT4						m_backgroundColor;		// the color for the background of the console
 		Vector2							m_textPosition;			// position of current line of text on the screen
 		Vector2							m_consolePosition;		// position of the console on the screen
@@ -39,8 +39,8 @@ class Console
 		bool							m_newline;				// did the end user hit enter? yes=process command, no=keep inputing
 		bool							m_visible;				// should the console be displayed or not?
 		const int						MAXLINES = 8;			// max number of lines allowed to be in history
-		std::vector<std::string>		m_history;				// history of commands entered in
-		std::map<std::string, std::function<void()>> m_commandMap;	// map holding the commands and function pointers to
+		vector<string>					m_history;				// history of commands entered in
+		map<string, function<void()>>	m_commandMap;	// map holding the commands and function pointers to
 																	// the function that is being used to process that command
 
 	public:
@@ -70,7 +70,7 @@ class Console
 
 		void TextInput(WPARAM wParam);
 
-		void AddCommand(std::string commandName, std::function<void()> funcPoint);
+		void AddCommand(string commandName, function<void()> funcPoint);
 
 		void ProcessCommand(std::string CommandName);
 

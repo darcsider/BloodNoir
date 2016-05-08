@@ -53,6 +53,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Audio.h"
 
 using namespace DirectX;
+using namespace std;
 using Microsoft::WRL::ComPtr;
 using DirectX::SimpleMath::Vector2;
 
@@ -67,7 +68,7 @@ namespace DX
 		if (FAILED(hr))
 		{
 			// Set a breakpoint on this line to catch DirectX API errors
-			throw std::exception();
+			throw exception();
 		}
 	}
 }

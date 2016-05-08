@@ -31,9 +31,9 @@ DX11RenderManager::~DX11RenderManager()
 
 bool DX11RenderManager::InitDirectXTKObjects()
 {
-	m_graphicStates.reset(new DirectX::CommonStates(m_d3dDevice.Get()));
-	m_effectFactory.reset(new DirectX::EffectFactory(m_d3dDevice.Get()));
-	m_effectSystem.reset(new DirectX::BasicEffect(m_d3dDevice.Get()));
+	m_graphicStates.reset(new CommonStates(m_d3dDevice.Get()));
+	m_effectFactory.reset(new EffectFactory(m_d3dDevice.Get()));
+	m_effectSystem.reset(new BasicEffect(m_d3dDevice.Get()));
 	m_effectSystem->SetProjection(XMMatrixOrthographicOffCenterLH(0, m_gameWidth, m_gameHeight, 0, 0, 1));
 	m_effectSystem->SetVertexColorEnabled(true);
 
@@ -47,7 +47,7 @@ bool DX11RenderManager::InitDirectXTKObjects()
 			return false;
 	}
 
-	m_spriteBatch.reset(new DirectX::SpriteBatch(m_d3dContext.Get()));
+	m_spriteBatch.reset(new SpriteBatch(m_d3dContext.Get()));
 	m_spriteFont.reset(new SpriteFont(m_d3dDevice.Get(), L"..\\Art\\CourierNew.spriteFont"));
 
 	m_primitiveBatch.reset(new PrimitiveBatch<VertexPositionColor>(m_d3dContext.Get()));
@@ -152,7 +152,7 @@ void DX11RenderManager::InitDirectX11()
 		(void)m_d3dContext.As(&m_d3dContext1);
 }
 
-bool DX11RenderManager::AddTexture(std::wstring filename, std::string name)
+bool DX11RenderManager::AddTexture(wstring filename, string name)
 {
 	ComPtr<ID3D11ShaderResourceView> texture;
 
@@ -164,7 +164,7 @@ bool DX11RenderManager::AddTexture(std::wstring filename, std::string name)
 		{
 			if (SUCCEEDED(CreateWICTextureFromFile(m_d3dDevice.Get(), filename.c_str(), nullptr, texture.ReleaseAndGetAddressOf())))
 			{
-				m_textures.insert(std::pair<std::string, ComPtr<ID3D11ShaderResourceView>>(name, texture));
+				m_textures.insert(pair<string, ComPtr<ID3D11ShaderResourceView>>(name, texture));
 			}
 			else
 			{
@@ -205,7 +205,7 @@ void DX11RenderManager::ClearScene()
 	m_d3dContext->RSSetViewports(1, &screenViewport);
 }
 
-void DX11RenderManager::DrawObject(std::string textureName, Vector2 position)
+void DX11RenderManager::DrawObject(string textureName, Vector2 position)
 {
 	if (graphicsInitialized)
 	{
@@ -220,7 +220,7 @@ void DX11RenderManager::DrawObject(std::string textureName, Vector2 position)
 	}
 }
 
-void DX11RenderManager::DrawObject(std::string textureName, RECT sourceRect, Vector2 position)
+void DX11RenderManager::DrawObject(string textureName, RECT sourceRect, Vector2 position)
 {
 	if (graphicsInitialized)
 	{
@@ -260,7 +260,7 @@ void DX11RenderManager::DrawQuad(Vector2 position, int width, int height, XMFLOA
 	m_primitiveBatch->End();
 }
 
-D3D11_TEXTURE2D_DESC DX11RenderManager::getTextureDesc(std::string textureName)
+D3D11_TEXTURE2D_DESC DX11RenderManager::getTextureDesc(string textureName)
 {
 	D3D11_TEXTURE2D_DESC textDesc = { 0 };
 	ComPtr<ID3D11Texture2D>	texture;
@@ -277,7 +277,7 @@ D3D11_TEXTURE2D_DESC DX11RenderManager::getTextureDesc(std::string textureName)
 				textureIndex->second.Get()->GetResource(resource.GetAddressOf());
 				resource->GetType(&dim);
 				if (dim != D3D11_RESOURCE_DIMENSION_TEXTURE2D)
-					throw std::exception("No texture2D no fun");
+					throw exception("No texture2D no fun");
 				resource.As(&texture);
 				texture->GetDesc(&textDesc);
 			}
@@ -309,19 +309,19 @@ void DX11RenderManager::PresentScene()
 	}
 }
 
-void DX11RenderManager::DrawTextToScreen(std::string text, Vector2 position)
+void DX11RenderManager::DrawTextToScreen(string text, Vector2 position)
 {
-	std::wstring convertedText;
-	std::wstring_convert<convert_type, wchar_t> converter;
+	wstring convertedText;
+	wstring_convert<convert_type, wchar_t> converter;
 
 	convertedText = converter.from_bytes(text);
 	m_spriteFont->DrawString(m_spriteBatch.get(), convertedText.c_str(), position, Colors::BlueViolet);
 }
 
-void DX11RenderManager::DrawTextToScreen(std::string text, Vector2 position, const XMVECTORF32& color)
+void DX11RenderManager::DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color)
 {
-	std::wstring convertedText;
-	std::wstring_convert<convert_type, wchar_t> converter;
+	wstring convertedText;
+	wstring_convert<convert_type, wchar_t> converter;
 
 	convertedText = converter.from_bytes(text);
 	m_spriteFont->DrawString(m_spriteBatch.get(), convertedText.c_str(), position, color);

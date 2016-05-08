@@ -18,7 +18,7 @@ class Game
 {
 	private:
 		GameTiming m_timer;
-		std::vector<int> handles;
+		vector<int> handles;
 		bool m_appPaused;
 
 		int m_gameWidth = 0;
@@ -32,20 +32,20 @@ class Game
 		bool m_fpsOn;
 		Map testMap;
 
-		std::unique_ptr<DX11RenderManager> m_graphicSystem;
+		unique_ptr<DX11RenderManager> m_graphicSystem;
 
-		std::unique_ptr<Keyboard::KeyboardStateTracker> m_keyboardTracker;
-		std::unique_ptr<Keyboard> m_keyboard;
-		std::unique_ptr<GamePad> m_gamePad;
+		unique_ptr<Keyboard::KeyboardStateTracker> m_keyboardTracker;
+		unique_ptr<Keyboard> m_keyboard;
+		unique_ptr<GamePad> m_gamePad;
 
-		std::unique_ptr<Mouse> m_mouse;
-		std::unique_ptr<AudioEngine> m_audioEngine;
+		unique_ptr<Mouse> m_mouse;
+		unique_ptr<AudioEngine> m_audioEngine;
 
-		std::unique_ptr<SoundEffect> m_backgroundMusic;
-		std::unique_ptr<SoundEffectInstance> m_backgroundEffect;
+		unique_ptr<SoundEffect> m_backgroundMusic;
+		unique_ptr<SoundEffectInstance> m_backgroundEffect;
 
-		std::unique_ptr<SoundEffect> m_soundEffect;
-		std::unique_ptr<SoundEffectInstance> m_effect;
+		unique_ptr<SoundEffect> m_soundEffect;
+		unique_ptr<SoundEffectInstance> m_effect;
 
 	public:
 		Game();

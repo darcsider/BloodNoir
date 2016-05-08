@@ -11,8 +11,8 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Includes.h"
 #include "Game.h"
 
-std::string className = "BloodNoir";
-std::string windowTitle = "Blood Noir 1.0";
+string className = "BloodNoir";
+string windowTitle = "Blood Noir 1.0";
 
 std::unique_ptr<Game> g_game;
 

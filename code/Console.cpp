@@ -38,12 +38,12 @@ bool Console::initialize(DX11RenderManager *graphics, Vector2 startPosition, int
 	return true;
 }
 
-void Console::AddCommand(std::string commandName, std::function<void()> funcPoint)
+void Console::AddCommand(string commandName, function<void()> funcPoint)
 {
-	m_commandMap.insert(std::pair<std::string, std::function<void()>>(commandName, funcPoint));
+	m_commandMap.insert(pair<string, function<void()>>(commandName, funcPoint));
 }
 
-void Console::ProcessCommand(std::string commandName)
+void Console::ProcessCommand(string commandName)
 {
 	if (!commandName.empty())
 	{

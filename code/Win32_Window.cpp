@@ -67,7 +67,7 @@ int WINAPI wWinMain(_In_ HINSTANCE Program, _In_opt_ HINSTANCE PreviousProgram, 
 		return 1;
 #endif
 
-	g_game = std::make_unique<Game>();
+	g_game = make_unique<Game>();
 
 	if (!InitWindowClass(Program))
 		return 1;

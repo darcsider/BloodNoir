@@ -47,9 +47,6 @@
     <ClInclude Include="code\Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\GameMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="code\DX11RenderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -61,9 +58,6 @@
     <ClCompile Include="code\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\GameTiming.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="code\Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,10 +67,10 @@
     <ClCompile Include="code\Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\GameMap.cpp">
+    <ClCompile Include="code\DX11RenderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\DX11RenderManager.cpp">
+    <ClCompile Include="code\GameTiming.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

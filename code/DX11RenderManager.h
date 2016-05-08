@@ -34,15 +34,15 @@ class DX11RenderManager
 		HWND							m_window;
 		bool							graphicsInitialized;
 
-		std::unique_ptr<CommonStates>	m_graphicStates;
-		std::unique_ptr<BasicEffect>	m_effectSystem;
-		std::unique_ptr<EffectFactory>	m_effectFactory;
-		std::unique_ptr<SpriteBatch>	m_spriteBatch;
-		std::unique_ptr<SpriteFont>		m_spriteFont;
+		unique_ptr<CommonStates>		m_graphicStates;
+		unique_ptr<BasicEffect>			m_effectSystem;
+		unique_ptr<EffectFactory>		m_effectFactory;
+		unique_ptr<SpriteBatch>			m_spriteBatch;
+		unique_ptr<SpriteFont>			m_spriteFont;
 
-		std::unique_ptr<PrimitiveBatch<VertexPositionColor>> m_primitiveBatch;
+		unique_ptr<PrimitiveBatch<VertexPositionColor>> m_primitiveBatch;
 
-		std::map<std::string, ComPtr<ID3D11ShaderResourceView>> m_textures;
+		map<string, ComPtr<ID3D11ShaderResourceView>> m_textures;
 
 	public:
 		DX11RenderManager();
@@ -52,15 +52,15 @@ class DX11RenderManager
 		bool InitializeGraphics(HWND Window, int width, int height);
 		bool InitDirectXTKObjects();
 
-		bool AddTexture(std::wstring filename, std::string name);
+		bool AddTexture(wstring filename, string name);
 		void CreateResources();
 		void OnDeviceLost();
 
 		void BeginScene();
 		void ClearScene();
 		void PresentScene();
-		void DrawObject(std::string textureName, Vector2 position);
-		void DrawObject(std::string textureName, RECT sourceRect, Vector2 position = Vector2(0, 0));
+		void DrawObject(string textureName, Vector2 position);
+		void DrawObject(string textureName, RECT sourceRect, Vector2 position = Vector2(0, 0));
 		void DrawQuad(Vector2 position, int width, int height, XMFLOAT4 color);
 		void EndScene();
 
@@ -69,10 +69,10 @@ class DX11RenderManager
 			return m_spriteFont->GetLineSpacing();
 		}
 
-		void DrawTextToScreen(std::string text, Vector2 position);
-		void DrawTextToScreen(std::string text, Vector2 position, const XMVECTORF32& color);
+		void DrawTextToScreen(string text, Vector2 position);
+		void DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color);
 
-		D3D11_TEXTURE2D_DESC getTextureDesc(std::string textureName);
+		D3D11_TEXTURE2D_DESC getTextureDesc(string textureName);
 
 		void setWidth(int width)
 		{
@@ -115,15 +115,4 @@ class DX11RenderManager
 			return static_cast<float>(m_gameWidth) / m_gameHeight;
 		}
 };
-
-static DX11RenderManager& get()
-{
-	static DX11RenderManager* gpSingleton = NULL;
-	if (gpSingleton == NULL)
-	{
-		gpSingleton = new DX11RenderManager;
-	}
-	assert(gpSingleton);
-	return *gpSingleton;
-}
 #endif

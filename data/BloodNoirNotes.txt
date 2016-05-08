@@ -1149,7 +1149,7 @@ blends together in this engine seamlessly and try to prevent bugs and issues in 
 that I may undertake in my programming career.
 
 -=Command=-
-I need to research the -=Command Design=- Pattern more and see how I can implement it into my own code, I see a use for it in the
+I need to research the -=Command=- Design Pattern more and see how I can implement it into my own code, I see a use for it in the
 input end of my engine, as well as my Console Command system that I built this would do what I originally wanted it to do in a much
 better bug free way.  This will require me to re write that class but in the end if it makes my code more robust and the engine more
 stable and clear than it will benefit me in the end.  This is a part of developing video games understanding the benefits of re
@@ -1167,3 +1167,12 @@ design pattern ideas that I have read and put them into use for certain systems 
 
 I still want to figure an actual input class, and now I think I need to add an audio class so that various systems that need to
 play sound effects can do so but I need to research design patterns more to figure out how I want to handle this in the engine.
+
+May 7th, 2016
+
+Day 72 of Development
+Today I'm going over the general engine design for this game to figure out what I need to change to move this project from just
+a test of what I'm capable of doing to an actual production game.  Things like figuring out finite state machines for handling
+the game state concept.  Figuring out the startup process banner parade, and all of that fun stuff, these things are concepts
+that I need to not only understand from a logical point of view but I need to know how to implement them by myself because I
+have nobody else to rely on for programming tasks.

@@ -11,7 +11,7 @@ Game::Game() :
 	m_gameWidth(1920),
 	m_gameHeight(1080)
 {
-	m_graphicSystem = std::make_unique<DX11RenderManager>();
+	m_graphicSystem = make_unique<DX11RenderManager>();
 	editorConsole = NULL;
 #if DEBUG || _DEBUG
 	m_fpsOn = true;
@@ -48,10 +48,10 @@ bool Game::DirectXTKInitialize()
 	m_soundEffect.reset(new SoundEffect(m_audioEngine.get(), L"..\\Music\\heli.wav"));
 	m_effect = m_soundEffect->CreateInstance();
 
-	m_keyboard = std::make_unique<Keyboard>();
+	m_keyboard = make_unique<Keyboard>();
 	m_keyboardTracker.reset(new Keyboard::KeyboardStateTracker);
-	m_mouse = std::make_unique<Mouse>();
-	m_gamePad = std::make_unique<GamePad>();
+	m_mouse = make_unique<Mouse>();
+	m_gamePad = make_unique<GamePad>();
 
 	//m_backgroundEffect->Play(true);
 	
@@ -62,31 +62,31 @@ void Game::InitializeResources()
 {
 	int numberOfTextures;
 	int numberOfMaps;
-	std::string tempString;
-	std::string filename;
-	std::string resourceName;
-	std::ifstream inFile("..\\Resources.txt");
-	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-	std::wstring output;
+	string tempString;
+	string filename;
+	string resourceName;
+	ifstream inFile("..\\Resources.txt");
+	wstring_convert<codecvt_utf8<wchar_t>> converter;
+	wstring output;
 
 	if (inFile)
 	{
-		std::getline(inFile, tempString);
-		numberOfTextures = std::atoi(tempString.c_str());
+		getline(inFile, tempString);
+		numberOfTextures = atoi(tempString.c_str());
 
 		for (int i = 0; i < numberOfTextures; i++)
 		{
-			std::getline(inFile, filename);
-			std::getline(inFile, resourceName);
+			getline(inFile, filename);
+			getline(inFile, resourceName);
 			output = converter.from_bytes(filename);
 			m_graphicSystem->AddTexture(output, resourceName);
 		}
-		std::getline(inFile, tempString);
-		numberOfMaps = std::atoi(tempString.c_str());
+		getline(inFile, tempString);
+		numberOfMaps = atoi(tempString.c_str());
 
 		for (int i = 0; i < numberOfMaps; i++)
 		{
-			std::getline(inFile, filename);
+			getline(inFile, filename);
 			testMap.BuildMap(filename);
 		}
 	}
@@ -98,8 +98,8 @@ bool Game::GameInitialize(HWND window, int width, int height)
 {
 	m_timer.Reset();
 	m_window = window;
-	m_gameWidth = std::max(width, 1);
-	m_gameHeight = std::max(height, 1);
+	m_gameWidth = max(width, 1);
+	m_gameHeight = max(height, 1);
 
 	if (!m_graphicSystem->InitializeGraphics(m_window, width, height))
 		return false;
@@ -204,7 +204,7 @@ void Game::CalculateFrameStats()
 	{
 		static int frameCnt = 0;
 		static float timeElapsed = 0.0f;
-		static std::string windowTitle = "Blood Noir 1.0";
+		static string windowTitle = "Blood Noir 1.0";
 
 		frameCnt++;
 
@@ -214,9 +214,9 @@ void Game::CalculateFrameStats()
 			float fps = (float)frameCnt; // fps = frameCnt / 1
 			float mspf = 1000.0f / fps;
 
-			std::string output = windowTitle +
-				" FPS: " + std::to_string(fps) +
-				" Frame Time: " + std::to_string(mspf) +
+			string output = windowTitle +
+				" FPS: " + to_string(fps) +
+				" Frame Time: " + to_string(mspf) +
 				" (ms)";
 
 			SetWindowText(m_window, output.c_str());
@@ -274,7 +274,7 @@ void Game::OnResuming()
 
 void Game::OnWindowSizeChanged(int width, int height)
 {
-	m_gameWidth = std::max(width, 1);
-	m_gameHeight = std::max(height, 1);
+	m_gameWidth = max(width, 1);
+	m_gameHeight = max(height, 1);
 	m_graphicSystem->CreateResources();
 }

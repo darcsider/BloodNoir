@@ -11,6 +11,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "DX11RenderManager.h"
 #pragma warning (disable : 4244)
 #pragma warning (disable : 4018)
+
 // The various object types available in the game
 // Money used to travel faster and potentially other upgrades
 // Lore Piece's progression and achievements are tied to this
@@ -39,11 +40,11 @@ enum TriggerType
 // the objects position on the screen and the object type
 struct Object
 {
-	std::string m_name;
-	std::string m_textureName;
-	int m_tileIndex;
-	Vector2 m_position;
-	ObjectType m_objectType;
+	string		m_name;
+	string		m_textureName;
+	int			m_tileIndex;
+	Vector2		m_position;
+	ObjectType	m_objectType;
 };
 
 // a structure defining trigger points on a map, the trigger points define
@@ -52,22 +53,22 @@ struct Object
 // is a building trigger.
 struct TriggerPoint
 {
-	std::string m_name;
-	TriggerType m_triggerType;
-	Vector2 m_mapPosition;
-	Vector2 m_moveToPosition;
+	string			m_name;
+	TriggerType		m_triggerType;
+	Vector2			m_mapPosition;
+	Vector2			m_moveToPosition;
 };
 
 // Map Layer defines the background layers of a map section, these are defined by pre baked images
 // that are scrolled either automatically or when the player moves the main character.
 struct SectionLayer
 {
-	std::string m_textureName;
-	float m_scrollSpeed;
-	bool m_autoScroll;
-	int m_width;
-	int m_height;
-	RECT m_sourceRectangle;
+	string	m_textureName;
+	float	m_scrollSpeed;
+	bool	m_autoScroll;
+	int		m_width;
+	int		m_height;
+	RECT	m_sourceRectangle;
 };
 
 // Building Floor is all the data related to a specific layer of a building
@@ -76,11 +77,11 @@ struct SectionLayer
 // the number of columns and rows that make up a specific tile map on the screen
 struct BuildingFloor
 {
-	int m_columns = 0;
-	int m_rows = 0;
-	std::vector<int> m_tileSet;
-	std::vector<Object> m_floorObjects;
-	std::vector<TriggerPoint> m_floorTriggers;
+	int						m_columns;
+	int						m_rows;
+	vector<int>				m_tileSet;
+	vector<Object>			m_floorObjects;
+	vector<TriggerPoint>	m_floorTriggers;
 };
 
 // the class defining a building it contains
@@ -92,17 +93,17 @@ struct BuildingFloor
 class Building
 {
 	public:
-		std::string m_textureName;
-		std::vector<BuildingFloor> m_floors;
-		int m_numberOfFloors;
-		int m_floorNumber;
+		string					m_textureName;
+		vector<BuildingFloor>	m_floors;
+		int						m_numberOfFloors;
+		int						m_floorNumber;
 		
 		Building()
 		{ }
 		~Building()
 		{ }
 
-		void BuildBuilding(std::string fileName);
+		void BuildBuilding(string fileName);
 		void DrawBuilding();
 };
 
@@ -121,14 +122,14 @@ class Building
 class MapSection
 {
 	protected:
-		DX11RenderManager *m_graphicSystem;
-		int m_numberOfLayers;
-		int m_numberOfObjects;
-		int m_numberOfTriggers;
-		std::vector<SectionLayer> m_layers;
-		std::vector<Object> m_objects;
-		std::vector<TriggerPoint> m_triggerPoints;
-		std::vector<Building> m_buildings;
+		DX11RenderManager		*m_graphicSystem;
+		int						m_numberOfLayers;
+		int						m_numberOfObjects;
+		int						m_numberOfTriggers;
+		vector<SectionLayer>	m_layers;
+		vector<Object>			m_objects;
+		vector<TriggerPoint>	m_triggerPoints;
+		vector<Building>		m_buildings;
 		
 	public:
 		MapSection()
@@ -136,7 +137,7 @@ class MapSection
 		~MapSection()
 		{ }
 
-		void BuildMapSection(DX11RenderManager *graphics, std::string fileName);
+		void BuildMapSection(DX11RenderManager *graphics, string fileName);
 		void DrawMapSection();
 		RECT UpdateMapSection(float delta, bool left, bool keyboardEntry);
 };
@@ -148,22 +149,22 @@ class MapSection
 class Map
 {
 	protected:
-		DX11RenderManager *m_graphicSystem;
-		Keyboard *m_keyboard;
-		GamePad *m_gamePad;
-		std::string m_mapName;
-		std::vector<MapSection> m_mapSections;
-		std::vector<std::string> m_sectionNames;
-		RECT m_currentPosition;
-		MapSection m_currentSection;
-		int m_numberOfMapSections;
+		DX11RenderManager	*m_graphicSystem;
+		Keyboard			*m_keyboard;
+		GamePad				*m_gamePad;
+		string				m_mapName;
+		vector<MapSection>	m_mapSections;
+		vector<string>		m_sectionNames;
+		RECT				m_currentPosition;
+		MapSection			m_currentSection;
+		int					m_numberOfMapSections;
 	
 	public:
 		Map();
 		~Map();
 
 		void InitializeMap(DX11RenderManager *graphics, Keyboard *keyboard, GamePad *gamePad, int screenWidth, int screenHeight);
-		void BuildMap(std::string mapTextFile);
+		void BuildMap(string mapTextFile);
 		void UpdateMap(float timeDelta);
 		void DrawMap();
 		void SetCurrentMapSection(int mapSection);

@@ -25,19 +25,19 @@ void Map::InitializeMap(DX11RenderManager *graphics, Keyboard *keyboard, GamePad
 	m_currentPosition.bottom = screenHeight;
 }
 
-void Map::BuildMap(std::string mapTextFile)
+void Map::BuildMap(string mapTextFile)
 {
-	std::string tempString;
+	string tempString;
 
-	std::ifstream inFile(mapTextFile);
+	ifstream inFile(mapTextFile);
 	if (inFile)
 	{
-		std::getline(inFile, m_mapName);
-		std::getline(inFile, tempString);
-		m_numberOfMapSections = std::atoi(tempString.c_str());
+		getline(inFile, m_mapName);
+		getline(inFile, tempString);
+		m_numberOfMapSections = atoi(tempString.c_str());
 		for (int i = 0; i < m_numberOfMapSections; i++)
 		{
-			std::getline(inFile, tempString);
+			getline(inFile, tempString);
 			m_sectionNames.push_back(tempString);
 		}
 	}
@@ -84,7 +84,7 @@ void Map::SetCurrentMapSection(int mapSection)
 	m_currentSection = m_mapSections[mapSection];
 }
 
-void Building::BuildBuilding(std::string fileName)
+void Building::BuildBuilding(string fileName)
 {
 	int columns = 0;
 	int rows = 0;
@@ -93,18 +93,18 @@ void Building::BuildBuilding(std::string fileName)
 	Object tempObject;
 	TriggerPoint tempTrigger;
 	BuildingFloor tempFloor;
-	std::string tempString;
+	string tempString;
 	
-	std::ifstream inFile(fileName);
+	ifstream inFile(fileName);
 	if (inFile)
 	{
-		std::getline(inFile, m_textureName);
-		std::getline(inFile, tempString);
-		columns = std::atoi(tempString.c_str());
-		std::getline(inFile, tempString);
-		rows = std::atoi(tempString.c_str());
-		std::getline(inFile, tempString);
-		m_numberOfFloors = std::atoi(tempString.c_str());
+		getline(inFile, m_textureName);
+		getline(inFile, tempString);
+		columns = atoi(tempString.c_str());
+		getline(inFile, tempString);
+		rows = atoi(tempString.c_str());
+		getline(inFile, tempString);
+		m_numberOfFloors = atoi(tempString.c_str());
 		for (int floor = 0; floor < m_numberOfFloors; floor++)
 		{
 			tempFloor.m_columns = columns;
@@ -112,39 +112,39 @@ void Building::BuildBuilding(std::string fileName)
 
 			for (int row = 0; row < rows; row++)
 			{
-				std::getline(inFile, tempString);
-				std::istringstream ss(tempString);
+				getline(inFile, tempString);
+				istringstream ss(tempString);
 
 				while (ss)
 				{
-					std::string s2;
-					if (!std::getline(ss, s2, ','))
+					string s2;
+					if (!getline(ss, s2, ','))
 						break;
 
-					tempFloor.m_tileSet.push_back(std::atoi(s2.c_str()));
+					tempFloor.m_tileSet.push_back(atoi(s2.c_str()));
 				}
 			}
 
-			std::getline(inFile, tempString);
-			numberOfObjects = std::atoi(tempString.c_str());
+			getline(inFile, tempString);
+			numberOfObjects = atoi(tempString.c_str());
 			for (int object = 0; object < numberOfObjects; object++)
 			{
-				std::getline(inFile, tempObject.m_name);
-				std::getline(inFile, tempObject.m_textureName);
-				std::getline(inFile, tempString);
-				tempObject.m_tileIndex = std::atoi(tempString.c_str());
+				getline(inFile, tempObject.m_name);
+				getline(inFile, tempObject.m_textureName);
+				getline(inFile, tempString);
+				tempObject.m_tileIndex = atoi(tempString.c_str());
 
-				std::getline(inFile, tempString);
-				std::istringstream ss(tempString);
+				getline(inFile, tempString);
+				istringstream ss(tempString);
 
-				std::string s2;
+				string s2;
 
-				std::getline(ss, s2, ',');
-				tempObject.m_position.x = std::atof(s2.c_str());
-				std::getline(ss, s2, ',');
-				tempObject.m_position.y = std::atof(s2.c_str());
+				getline(ss, s2, ',');
+				tempObject.m_position.x = atof(s2.c_str());
+				getline(ss, s2, ',');
+				tempObject.m_position.y = atof(s2.c_str());
 
-				std::getline(inFile, tempString);
+				getline(inFile, tempString);
 				if (tempString == "Money")
 					tempObject.m_objectType = Money;
 				else if (tempString == "LorePiece")
@@ -155,12 +155,12 @@ void Building::BuildBuilding(std::string fileName)
 				tempFloor.m_floorObjects.push_back(tempObject);
 			}
 
-			std::getline(inFile, tempString);
-			numberOfTriggers = std::atoi(tempString.c_str());
+			getline(inFile, tempString);
+			numberOfTriggers = atoi(tempString.c_str());
 			for (int trigger = 0; trigger < numberOfTriggers; trigger++)
 			{
-				std::getline(inFile, tempTrigger.m_name);
-				std::getline(inFile, tempString);
+				getline(inFile, tempTrigger.m_name);
+				getline(inFile, tempString);
 				if (tempString == "BuildingTrigger")
 					tempTrigger.m_triggerType = BuildingTrigger;
 				else if (tempString == "BlockTrigger")
@@ -168,23 +168,23 @@ void Building::BuildBuilding(std::string fileName)
 				else if (tempString == "FloorTrigger")
 					tempTrigger.m_triggerType = FloorTrigger;
 
-				std::getline(inFile, tempString);
-				std::istringstream ss(tempString);
+				getline(inFile, tempString);
+				istringstream ss(tempString);
 
-				std::string s2;
-				std::getline(ss, s2, ',');
-				tempTrigger.m_mapPosition.x = std::atof(s2.c_str());
-				std::getline(ss, s2, ',');
-				tempTrigger.m_mapPosition.y = std::atof(s2.c_str());
+				string s2;
+				getline(ss, s2, ',');
+				tempTrigger.m_mapPosition.x = atof(s2.c_str());
+				getline(ss, s2, ',');
+				tempTrigger.m_mapPosition.y = atof(s2.c_str());
 
 
-				std::getline(inFile, tempString);
-				std::istringstream ss2(tempString);
+				getline(inFile, tempString);
+				istringstream ss2(tempString);
 
-				std::getline(ss2, s2, ',');
-				tempTrigger.m_moveToPosition.x = std::atof(s2.c_str());
-				std::getline(ss2, s2, ',');
-				tempTrigger.m_moveToPosition.y = std::atof(s2.c_str());
+				getline(ss2, s2, ',');
+				tempTrigger.m_moveToPosition.x = atof(s2.c_str());
+				getline(ss2, s2, ',');
+				tempTrigger.m_moveToPosition.y = atof(s2.c_str());
 
 				tempFloor.m_floorTriggers.push_back(tempTrigger);
 			}
@@ -195,9 +195,9 @@ void Building::BuildBuilding(std::string fileName)
 	inFile.close();
 }
 
-void MapSection::BuildMapSection(DX11RenderManager *graphics, std::string fileName)
+void MapSection::BuildMapSection(DX11RenderManager *graphics, string fileName)
 {
-	std::string tempString;
+	string tempString;
 	SectionLayer tempLayer;
 	Object tempObject;
 	TriggerPoint tempTrigger;
@@ -205,17 +205,17 @@ void MapSection::BuildMapSection(DX11RenderManager *graphics, std::string fileNa
 	D3D11_TEXTURE2D_DESC textDesc;
 	m_graphicSystem = graphics;
 
-	std::ifstream inFile(fileName);
+	ifstream inFile(fileName);
 	if (inFile)
 	{
-		std::getline(inFile, tempString);
-		m_numberOfLayers = std::atoi(tempString.c_str());
+		getline(inFile, tempString);
+		m_numberOfLayers = atoi(tempString.c_str());
 		for (int layer = 0; layer < m_numberOfLayers; layer++)
 		{
-			std::getline(inFile, tempLayer.m_textureName);
-			std::getline(inFile, tempString);
-			tempLayer.m_scrollSpeed = std::atof(tempString.c_str());
-			std::getline(inFile, tempString);
+			getline(inFile, tempLayer.m_textureName);
+			getline(inFile, tempString);
+			tempLayer.m_scrollSpeed = atof(tempString.c_str());
+			getline(inFile, tempString);
 			if (tempString == "TRUE")
 				tempLayer.m_autoScroll = true;
 			else
@@ -230,27 +230,27 @@ void MapSection::BuildMapSection(DX11RenderManager *graphics, std::string fileNa
 			m_layers.push_back(tempLayer);
 		}
 		
-		std::getline(inFile, tempString);
-		m_numberOfObjects = std::atoi(tempString.c_str());
+		getline(inFile, tempString);
+		m_numberOfObjects = atoi(tempString.c_str());
 		for (int object = 0; object < m_numberOfObjects; object++)
 		{
-			std::getline(inFile, tempObject.m_name);
-			std::getline(inFile, tempObject.m_textureName);
-			std::getline(inFile, tempString);
-			tempObject.m_tileIndex = std::atoi(tempString.c_str());
+			getline(inFile, tempObject.m_name);
+			getline(inFile, tempObject.m_textureName);
+			getline(inFile, tempString);
+			tempObject.m_tileIndex = atoi(tempString.c_str());
 
-			std::getline(inFile, tempString);
-			std::istringstream ss(tempString);
+			getline(inFile, tempString);
+			istringstream ss(tempString);
 
-			std::string s2;
+			string s2;
 
-			std::getline(ss, s2, ',');
-			tempObject.m_position.x = std::atof(s2.c_str());
-			std::getline(ss, s2, ',');
-			tempObject.m_position.y = std::atof(s2.c_str());
+			getline(ss, s2, ',');
+			tempObject.m_position.x = atof(s2.c_str());
+			getline(ss, s2, ',');
+			tempObject.m_position.y = atof(s2.c_str());
 
 
-			std::getline(inFile, tempString);
+			getline(inFile, tempString);
 			if (tempString == "Money")
 				tempObject.m_objectType = Money;
 			else if (tempString == "LorePiece")
@@ -261,12 +261,12 @@ void MapSection::BuildMapSection(DX11RenderManager *graphics, std::string fileNa
 			m_objects.push_back(tempObject);
 		}
 
-		std::getline(inFile, tempString);
-		m_numberOfTriggers = std::atoi(tempString.c_str());
+		getline(inFile, tempString);
+		m_numberOfTriggers = atoi(tempString.c_str());
 		for (int trigger = 0; trigger < m_numberOfTriggers; trigger++)
 		{
-			std::getline(inFile, tempTrigger.m_name);
-			std::getline(inFile, tempString);
+			getline(inFile, tempTrigger.m_name);
+			getline(inFile, tempString);
 			if (tempString == "BuildingTrigger")
 				tempTrigger.m_triggerType = BuildingTrigger;
 			else if (tempString == "BlockTrigger")
@@ -274,22 +274,22 @@ void MapSection::BuildMapSection(DX11RenderManager *graphics, std::string fileNa
 			else if (tempString == "FloorTrigger")
 				tempTrigger.m_triggerType = FloorTrigger;
 
-			std::getline(inFile, tempString);
-			std::istringstream ss(tempString);
+			getline(inFile, tempString);
+			istringstream ss(tempString);
 
-			std::string s2;
-			std::getline(ss, s2, ',');
-			tempTrigger.m_mapPosition.x = std::atof(s2.c_str());
-			std::getline(ss, s2, ',');
-			tempTrigger.m_mapPosition.y = std::atof(s2.c_str());
+			string s2;
+			getline(ss, s2, ',');
+			tempTrigger.m_mapPosition.x = atof(s2.c_str());
+			getline(ss, s2, ',');
+			tempTrigger.m_mapPosition.y = atof(s2.c_str());
 
-			std::getline(inFile, tempString);
-			std::istringstream ss2(tempString);
+			getline(inFile, tempString);
+			istringstream ss2(tempString);
 
-			std::getline(ss2, s2, ',');
-			tempTrigger.m_moveToPosition.x = std::atof(s2.c_str());
-			std::getline(ss2, s2, ',');
-			tempTrigger.m_moveToPosition.y = std::atof(s2.c_str());
+			getline(ss2, s2, ',');
+			tempTrigger.m_moveToPosition.x = atof(s2.c_str());
+			getline(ss2, s2, ',');
+			tempTrigger.m_moveToPosition.y = atof(s2.c_str());
 
 			m_triggerPoints.push_back(tempTrigger);
 		}
