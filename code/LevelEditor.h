@@ -13,11 +13,6 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include <deque>
 #include "Includes.h"
 
-/*
-std::function<void(void)> func = std::bind(&Game::TurnFPSOnOff, this);
-editorConsole->AddCommand("FPS", func);
-*/
-
 class LevelEditor
 {
 	private:

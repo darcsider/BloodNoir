@@ -50,6 +50,15 @@
     <ClInclude Include="code\DX11RenderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="code\WinAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\WinInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\GameActor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Win32_Window.cpp">
@@ -71,6 +80,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\GameTiming.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\WinAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\WinInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\GameActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

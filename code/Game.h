@@ -12,6 +12,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "DX11RenderManager.h"
 #include "Map.h"
 #include "Console.h"
+#include "WinInput.h"
 
 // not complete must do more work just doing this to get started
 class Game
@@ -34,13 +35,15 @@ class Game
 		bool m_fpsOn;
 		Map testMap;
 
+		unique_ptr<WinInput> m_input;
+
 		unique_ptr<DX11RenderManager> m_graphicSystem;
 
-		unique_ptr<Keyboard::KeyboardStateTracker> m_keyboardTracker;
-		unique_ptr<Keyboard> m_keyboard;
-		unique_ptr<GamePad> m_gamePad;
+		//unique_ptr<Keyboard::KeyboardStateTracker> m_keyboardTracker;
+		//unique_ptr<Keyboard> m_keyboard;
+		//unique_ptr<GamePad> m_gamePad;
 
-		unique_ptr<Mouse> m_mouse;
+		//unique_ptr<Mouse> m_mouse;
 		unique_ptr<AudioEngine> m_audioEngine;
 
 		unique_ptr<SoundEffect> m_backgroundMusic;
@@ -76,6 +79,11 @@ class Game
 		{
 			m_appPaused = false;
 			m_timer.Start();
+		}
+
+		void CloseGame()
+		{
+			PostQuitMessage(0);
 		}
 
 		void DrawScene();

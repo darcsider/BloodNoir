@@ -9,6 +9,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define MAP_H
 #include "Includes.h"
 #include "DX11RenderManager.h"
+#include "WinInput.h"
 #pragma warning (disable : 4244)
 #pragma warning (disable : 4018)
 
@@ -65,6 +66,7 @@ struct SectionLayer
 {
 	string	m_textureName;
 	float	m_scrollSpeed;
+	float	m_velocity;
 	bool	m_autoScroll;
 	int		m_width;
 	int		m_height;
@@ -137,9 +139,10 @@ class MapSection
 		~MapSection()
 		{ }
 
+		void UpdateVelocity(int value);
 		void BuildMapSection(DX11RenderManager *graphics, string fileName);
 		void DrawMapSection();
-		RECT UpdateMapSection(float delta, bool left, bool keyboardEntry);
+		RECT UpdateMapSection(float delta);
 };
 
 // This is the map class it defines a section of the city that the player
@@ -150,8 +153,7 @@ class Map
 {
 	protected:
 		DX11RenderManager	*m_graphicSystem;
-		Keyboard			*m_keyboard;
-		GamePad				*m_gamePad;
+		WinInput			*m_input;
 		string				m_mapName;
 		vector<MapSection>	m_mapSections;
 		vector<string>		m_sectionNames;
@@ -163,10 +165,12 @@ class Map
 		Map();
 		~Map();
 
-		void InitializeMap(DX11RenderManager *graphics, Keyboard *keyboard, GamePad *gamePad, int screenWidth, int screenHeight);
+		void InitializeMap(DX11RenderManager *graphics, WinInput *input, int screenWidth, int screenHeight);
 		void BuildMap(string mapTextFile);
 		void UpdateMap(float timeDelta);
 		void DrawMap();
 		void SetCurrentMapSection(int mapSection);
+		void MoveMapLeft();
+		void MoveMapRight();
 };
 #endif

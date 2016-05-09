@@ -20,12 +20,12 @@ Game::Game() :
 
 Game::~Game()
 {
-	m_gamePad.reset();
-	m_gamePad.release();
-	m_mouse.reset();
-	m_mouse.release();
-	m_keyboard.reset();
-	m_keyboard.release();
+	//m_gamePad.reset();
+	//m_gamePad.release();
+	//m_mouse.reset();
+	//m_mouse.release();
+	//m_keyboard.reset();
+	//m_keyboard.release();
 	m_soundEffect.reset();
 	m_soundEffect.release();
 	m_audioEngine.reset();
@@ -52,10 +52,10 @@ bool Game::DirectXTKInitialize()
 	m_soundEffect.reset(new SoundEffect(m_audioEngine.get(), L"..\\Music\\heli.wav"));
 	m_effect = m_soundEffect->CreateInstance();
 
-	m_keyboard = make_unique<Keyboard>();
-	m_keyboardTracker.reset(new Keyboard::KeyboardStateTracker);
-	m_mouse = make_unique<Mouse>();
-	m_gamePad = make_unique<GamePad>();
+	//m_keyboard = make_unique<Keyboard>();
+	//m_keyboardTracker.reset(new Keyboard::KeyboardStateTracker);
+	//m_mouse = make_unique<Mouse>();
+	//m_gamePad = make_unique<GamePad>();
 
 	//m_backgroundEffect->Play(true);
 	
@@ -111,13 +111,19 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	DirectXTKInitialize();		// this call is going away as soon as Audio, and Input classes are written.
 	// the test map variable will go away as soon as I get the game closer to a complete state it is just for
 	// testing purposes to prove that the map works.
-	testMap.InitializeMap(m_graphicSystem.get(), m_keyboard.get(), m_gamePad.get(), m_gameWidth, m_gameHeight);
+	testMap.InitializeMap(m_graphicSystem.get(), m_input.get(), m_gameWidth, m_gameHeight);
 	InitializeResources();
 
 	// EditorConsole will be going away from the game class as soon as I complete writing the level editor class
 	// then I will be moving it over to there, I will then figure out how to change the Console class in a way
 	// that other systems can subscribe to the Console class and can setup their own commands that the console
 	// will recognize and process.
+	m_input = make_unique<WinInput>();
+	m_input->InitializeInput();
+
+	function<void()> funcPoint = bind(&Game::CloseGame, this);
+	m_input->AddKeyboardInput(Keyboard::Keys::Escape, funcPoint);
+
 	editorConsole = new Console();
 	editorConsole->initialize(m_graphicSystem.get(), Vector2(0,0), m_gameWidth, 200, XMFLOAT4(0,0,0,0.8));
 	m_gameInitialized = true;
@@ -126,35 +132,35 @@ bool Game::GameInitialize(HWND window, int width, int height)
 
 void Game::SystemsUpdate()
 {
-	auto keyboardState = m_keyboard->GetState();
-	m_keyboardTracker->Update(keyboardState);
-	auto mouseState = m_mouse->GetState();
-	auto gamePadState = m_gamePad->GetState(0);
+	//auto keyboardState = m_keyboard->GetState();
+	//m_keyboardTracker->Update(keyboardState);
+	//auto mouseState = m_mouse->GetState();
+	//auto gamePadState = m_gamePad->GetState(0);
 	auto soundState = m_effect->GetState();
 
-	if (m_keyboardTracker->pressed.Escape)
-	{
-		PostQuitMessage(0);
-	}
+	//if (m_keyboardTracker->pressed.Escape)
+	//{
+		//PostQuitMessage(0);
+	//}
 
-	if (m_keyboardTracker->IsKeyReleased(Keyboard::OemTilde))
-	{
-		editorConsole->HideShow();
-	}
+	//if (m_keyboardTracker->IsKeyReleased(Keyboard::OemTilde))
+	//{
+		//editorConsole->HideShow();
+	//}
 
-	if (gamePadState.IsConnected())
-	{
-		if (gamePadState.IsBackPressed())
-		{
-			PostQuitMessage(0);
-		}
+	//if (gamePadState.IsConnected())
+	//{
+		//if (gamePadState.IsBackPressed())
+		//{
+			//PostQuitMessage(0);
+		//}
 
-		if (gamePadState.IsAPressed())
-		{
-			if (soundState == STOPPED)
-				m_effect->Play();
-		}
-	}
+		//if (gamePadState.IsAPressed())
+		//{
+			//if (soundState == STOPPED)
+				//m_effect->Play();
+		//}
+	//}
 
 	if (!m_audioEngine->Update())
 	{
@@ -170,6 +176,7 @@ void Game::SystemsUpdate()
 void Game::GameUpdate()
 {
 	SystemsUpdate();
+	m_input->HandleInput();
 	testMap.UpdateMap(m_timer.DeltaTime());
 }
 
@@ -256,28 +263,28 @@ void Game::MouseProcess(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Game::OnActivated()
 {
-	m_gamePad->Resume();
+	//m_gamePad->Resume();
 	m_timer.Start();
 	m_appPaused = false;
 }
 
 void Game::OnDeactivated()
 {
-	m_gamePad->Suspend();
+	//m_gamePad->Suspend();
 	m_timer.Stop();
 	m_appPaused = true;
 }
 
 void Game::OnSuspending()
 {
-	m_gamePad->Suspend();
+	//m_gamePad->Suspend();
 	m_timer.Stop();
 	m_appPaused = true;
 }
 
 void Game::OnResuming()
 {
-	m_gamePad->Resume();
+	//m_gamePad->Resume();
 	m_timer.Start();
 	m_appPaused = false;
 }

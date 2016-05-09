@@ -14,11 +14,9 @@ Map::~Map()
 {
 }
 
-void Map::InitializeMap(DX11RenderManager *graphics, Keyboard *keyboard, GamePad *gamePad, int screenWidth, int screenHeight)
+void Map::InitializeMap(DX11RenderManager *graphics, WinInput *input, int screenWidth, int screenHeight)
 {
 	m_graphicSystem = graphics;
-	m_keyboard = keyboard;
-	m_gamePad = gamePad;
 	m_currentPosition.top = 0;
 	m_currentPosition.left = 0;
 	m_currentPosition.right = screenWidth;
@@ -51,27 +49,30 @@ void Map::BuildMap(string mapTextFile)
 	}
 }
 
+void Map::MoveMapLeft()
+{
+	m_currentSection.UpdateVelocity(-1);
+}
+
+void Map::MoveMapRight()
+{
+	m_currentSection.UpdateVelocity(1);
+}
+
 void Map::UpdateMap(float timeDelta)
 {
-	bool left;;
-	bool keyboardEntry;
-	left = false;
-	keyboardEntry = false;
-	auto gamePadState = m_gamePad->GetState(0);
-	auto keyboardState = m_keyboard->GetState();
+	//if (keyboardState.Right || gamePadState.IsDPadRightPressed())
+	//{
+		//left = false;
+		//keyboardEntry = true;
+	//}
+	//else if (keyboardState.Left || gamePadState.IsDPadLeftPressed())
+	//{
+		//left = true;
+		//keyboardEntry = true;
+	//}
 
-	if (keyboardState.Right || gamePadState.IsDPadRightPressed())
-	{
-		left = false;
-		keyboardEntry = true;
-	}
-	else if (keyboardState.Left || gamePadState.IsDPadLeftPressed())
-	{
-		left = true;
-		keyboardEntry = true;
-	}
-
-	m_currentPosition = m_currentSection.UpdateMapSection(timeDelta, left, keyboardEntry);
+	m_currentPosition = m_currentSection.UpdateMapSection(timeDelta);
 }
 
 void Map::DrawMap()
@@ -306,45 +307,22 @@ void MapSection::BuildMapSection(DX11RenderManager *graphics, string fileName)
 	}
 }
 
-RECT MapSection::UpdateMapSection(float delta, bool left, bool keyboardEntry)
+void MapSection::UpdateVelocity(int value)
+{
+	for (int i = 0; i < m_layers.size(); i++)
+	{
+		m_layers[i].m_velocity = m_layers[i].m_scrollSpeed * value;
+	}
+}
+
+RECT MapSection::UpdateMapSection(float delta)
 {
 	for (int layers = 0; layers < m_layers.size(); layers++)
 	{
-		if (m_layers[layers].m_autoScroll)
-		{
-			m_layers[layers].m_sourceRectangle.left += m_layers[layers].m_scrollSpeed * delta;
-			m_layers[layers].m_sourceRectangle.right += m_layers[layers].m_scrollSpeed * delta;
-
-			if (m_layers[layers].m_sourceRectangle.right >= m_layers[layers].m_width)
-			{
-				m_layers[layers].m_sourceRectangle.left = 0;
-				m_layers[layers].m_sourceRectangle.right = m_graphicSystem->getWidth();
-			}
-		}
-		else if (!m_layers[layers].m_autoScroll && keyboardEntry)
-		{
-			if (!left)
-			{
-				m_layers[layers].m_sourceRectangle.left += m_layers[layers].m_scrollSpeed * delta;
-				m_layers[layers].m_sourceRectangle.right += m_layers[layers].m_scrollSpeed * delta;
-				if (m_layers[layers].m_sourceRectangle.right >= m_layers[layers].m_width)
-				{
-					m_layers[layers].m_sourceRectangle.left = m_layers[layers].m_width - m_graphicSystem->getWidth();
-					m_layers[layers].m_sourceRectangle.right = m_layers[layers].m_width;
-				}
-			}
-			else
-			{
-				m_layers[layers].m_sourceRectangle.left -= m_layers[layers].m_scrollSpeed * delta;
-				m_layers[layers].m_sourceRectangle.right -= m_layers[layers].m_scrollSpeed * delta;
-				if (m_layers[layers].m_sourceRectangle.left <= 0)
-				{
-					m_layers[layers].m_sourceRectangle.left = 0;
-					m_layers[layers].m_sourceRectangle.right = m_graphicSystem->getWidth();
-				}
-			}
-		}
+		m_layers[layers].m_sourceRectangle.left += m_layers[layers].m_velocity * delta;
+		m_layers[layers].m_sourceRectangle.right += m_layers[layers].m_velocity * delta;
 	}
+
 	return m_layers[m_layers.size() - 1].m_sourceRectangle;
 }
 

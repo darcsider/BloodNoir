@@ -181,20 +181,26 @@
     <ClInclude Include="code\Console.h" />
     <ClInclude Include="code\DX11RenderManager.h" />
     <ClInclude Include="code\Game.h" />
+    <ClInclude Include="code\GameActor.h" />
     <ClInclude Include="code\GameTiming.h" />
     <ClInclude Include="code\Includes.h" />
     <ClInclude Include="code\LevelEditor.h" />
     <ClInclude Include="code\Map.h" />
     <ClInclude Include="code\Win32_Window.h" />
+    <ClInclude Include="code\WinAudio.h" />
+    <ClInclude Include="code\WinInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Console.cpp" />
     <ClCompile Include="code\DX11RenderManager.cpp" />
     <ClCompile Include="code\Game.cpp" />
+    <ClCompile Include="code\GameActor.cpp" />
     <ClCompile Include="code\GameTiming.cpp" />
     <ClCompile Include="code\LevelEditor.cpp" />
     <ClCompile Include="code\Map.cpp" />
     <ClCompile Include="code\Win32_Window.cpp" />
+    <ClCompile Include="code\WinAudio.cpp" />
+    <ClCompile Include="code\WinInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

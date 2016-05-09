@@ -40,8 +40,8 @@ class Console
 		bool							m_visible;				// should the console be displayed or not?
 		const int						MAXLINES = 8;			// max number of lines allowed to be in history
 		vector<string>					m_history;				// history of commands entered in
-		map<string, function<void()>>	m_commandMap;	// map holding the commands and function pointers to
-																	// the function that is being used to process that command
+		map<string, function<void()>>	m_commandMap;			// map holding the commands and function pointers to
+																// the function that is being used to process that command
 
 	public:
 		// Constructor
