@@ -59,7 +59,7 @@ class Console
 
 		void Draw();
 
-		void HideShow()
+		void HideShow(bool notUsed)
 		{
 			m_visible = !m_visible;
 			m_textInput.clear();

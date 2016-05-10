@@ -1192,6 +1192,9 @@ tomorrow will be the startup banner parade.  Once I get that working I want to g
 loading and the text on the screen and the menu options being selectable with each one firing off an event and being handled
 properly.
 
-May 8th, 2016
+May 9th, 2016
 
 Day 73 of Development
+Yesterday I worked on this project and forgot to write an update in my notes about the project, yesterday I began working on
+moving the Input and Audio code over from the main Game Class to their own classes.  I moved everything over and started work
+on the Input class and wiring up all of the connections again.  I have the input class working and I even have 

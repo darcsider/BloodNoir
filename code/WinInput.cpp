@@ -22,9 +22,9 @@ void WinInput::InitializeInput()
 	m_keyboardTracker.reset(new Keyboard::KeyboardStateTracker);
 }
 
-void WinInput::AddKeyboardInput(Keyboard::Keys key, function<void()> functionPointer)
+void WinInput::AddKeyboardInput(Keyboard::Keys key, function<void(bool)> functionPointer)
 {
-	m_keyboardMap.insert(pair<Keyboard::Keys, function<void()>>(key, functionPointer));
+	m_keyboardMap.insert(pair<Keyboard::Keys, function<void(bool)>>(key, functionPointer));
 }
 
 void WinInput::HandleInput()
@@ -32,13 +32,18 @@ void WinInput::HandleInput()
 	auto keyboardState = m_keyboard->GetState();
 	m_keyboardTracker->Update(keyboardState);
 
-	map<Keyboard::Keys, function<void()>>::iterator keyboardIterator;
+	map<Keyboard::Keys, function<void(bool)>>::iterator keyboardIterator;
 
 	for (keyboardIterator = m_keyboardMap.begin(); keyboardIterator != m_keyboardMap.end(); keyboardIterator++)
 	{
 		if (m_keyboardTracker->IsKeyPressed(keyboardIterator->first))
 		{
-			keyboardIterator->second();
+			keyboardIterator->second(true);
+		}
+		
+		if (m_keyboardTracker->IsKeyReleased(keyboardIterator->first))
+		{
+			keyboardIterator->second(false);
 		}
 	}
 }

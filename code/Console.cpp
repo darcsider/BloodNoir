@@ -37,7 +37,7 @@ bool Console::initialize(DX11RenderManager *graphics, WinInput *input, Vector2 s
 
 	m_prompt = "|:>";
 
-	function<void()> funcPoint = bind(&Console::HideShow, this);
+	function<void(bool)> funcPoint = bind(&Console::HideShow, this, placeholders::_1);
 	m_input->AddKeyboardInput(Keyboard::Keys::OemTilde, funcPoint);
 
 	return true;

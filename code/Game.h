@@ -79,7 +79,7 @@ class Game
 			m_timer.Start();
 		}
 
-		void CloseGame()
+		void CloseGame(bool notUsed)
 		{
 			PostQuitMessage(0);
 		}

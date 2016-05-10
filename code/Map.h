@@ -170,7 +170,7 @@ class Map
 		void UpdateMap(float timeDelta);
 		void DrawMap();
 		void SetCurrentMapSection(int mapSection);
-		void MoveMapLeft();
-		void MoveMapRight();
+		void MoveMapLeft(bool move);
+		void MoveMapRight(bool move);
 };
 #endif

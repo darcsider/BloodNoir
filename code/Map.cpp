@@ -23,10 +23,10 @@ void Map::InitializeMap(DX11RenderManager *graphics, WinInput *input, int screen
 	m_currentPosition.right = screenWidth;
 	m_currentPosition.bottom = screenHeight;
 
-	function<void()> funcPointLeft = bind(&Map::MoveMapLeft, this);
+	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
 	m_input->AddKeyboardInput(Keyboard::Keys::Left, funcPointLeft);
 	
-	function<void()> funcPointRight = bind(&Map::MoveMapRight, this);
+	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
 	m_input->AddKeyboardInput(Keyboard::Keys::Right, funcPointRight);
 }
 
@@ -56,14 +56,20 @@ void Map::BuildMap(string mapTextFile)
 	}
 }
 
-void Map::MoveMapLeft()
+void Map::MoveMapLeft(bool move)
 {
-	m_currentSection.UpdateVelocity(-1);
+	if (move)
+		m_currentSection.UpdateVelocity(-1);
+	else
+		m_currentSection.UpdateVelocity(0);
 }
 
-void Map::MoveMapRight()
+void Map::MoveMapRight(bool move)
 {
-	m_currentSection.UpdateVelocity(1);
+	if (move)
+		m_currentSection.UpdateVelocity(1);
+	else
+		m_currentSection.UpdateVelocity(0);
 }
 
 void Map::UpdateMap(float timeDelta)
@@ -312,7 +318,8 @@ void MapSection::UpdateVelocity(int value)
 {
 	for (int i = 0; i < m_layers.size(); i++)
 	{
-		m_layers[i].m_velocity = m_layers[i].m_scrollSpeed * value;
+		if (!m_layers[i].m_autoScroll)
+			m_layers[i].m_velocity = m_layers[i].m_scrollSpeed * value;
 	}
 }
 
@@ -322,6 +329,29 @@ RECT MapSection::UpdateMapSection(float delta)
 	{
 		m_layers[layers].m_sourceRectangle.left += m_layers[layers].m_velocity * delta;
 		m_layers[layers].m_sourceRectangle.right += m_layers[layers].m_velocity * delta;
+
+		if (!m_layers[layers].m_autoScroll)
+		{
+			if (m_layers[layers].m_sourceRectangle.left < 0)
+			{
+				m_layers[layers].m_sourceRectangle.left = 0;
+				m_layers[layers].m_sourceRectangle.right = m_layers[layers].m_sourceRectangle.left + m_graphicSystem->getWidth();
+			}
+
+			if (m_layers[layers].m_sourceRectangle.right > m_layers[layers].m_width)
+			{
+				m_layers[layers].m_sourceRectangle.right = m_layers[layers].m_width;
+				m_layers[layers].m_sourceRectangle.left = m_layers[layers].m_sourceRectangle.right - m_graphicSystem->getWidth();
+			}
+		}
+		else
+		{
+			if (m_layers[layers].m_sourceRectangle.right > m_layers[layers].m_width)
+			{
+				m_layers[layers].m_sourceRectangle.left = 0;
+				m_layers[layers].m_sourceRectangle.right = m_graphicSystem->getWidth();
+			}
+		}
 	}
 
 	return m_layers[m_layers.size() - 1].m_sourceRectangle;

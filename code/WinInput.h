@@ -23,14 +23,14 @@ class WinInput
 	protected:
 		unique_ptr<Keyboard::KeyboardStateTracker> m_keyboardTracker;
 		unique_ptr<Keyboard> m_keyboard;
-		map<Keyboard::Keys, function<void()>> m_keyboardMap;
+		map<Keyboard::Keys, function<void(bool)>> m_keyboardMap;
 
 	public:
 		WinInput();
 		~WinInput();
 
 		void InitializeInput();
-		void AddKeyboardInput(Keyboard::Keys key, function<void()> functionPointer);
+		void AddKeyboardInput(Keyboard::Keys key, function<void(bool)> functionPointer);
 		void HandleInput();
 };
 #endif

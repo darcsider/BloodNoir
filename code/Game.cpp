@@ -85,7 +85,7 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	testMap.InitializeMap(m_graphicSystem.get(), m_input.get(), m_gameWidth, m_gameHeight);
 	InitializeResources();
 
-	function<void()> funcPoint = bind(&Game::CloseGame, this);
+	function<void(bool)> funcPoint = bind(&Game::CloseGame, this, placeholders::_1);
 	m_input->AddKeyboardInput(Keyboard::Keys::Escape, funcPoint);
 	
 	// EditorConsole will be going away from the game class as soon as I complete writing the level editor class
