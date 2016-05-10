@@ -61,8 +61,6 @@ class Game
 
 		void InitializeResources();
 
-		bool DirectXTKInitialize();
-
 		void GameUpdate();
 
 		void SystemsUpdate();

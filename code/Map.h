@@ -109,18 +109,18 @@ class Building
 		void DrawBuilding();
 };
 
-// the class that defines the sections of a map
-// this class used to be called levels because I said that a map
-// was made up of 4 levels but that kept getting people confused
-// when I called them levels so I have renamed it to MapSection
-// The map is setup like a grid like a real city map, the player is
-// walking on the street of a specific block of the city they can
-// go left and right without loading anything, for the full width
-// of the specific "block" if they go up at a street point it will
-// send them to the next block north of that current one. They can
-// also go down and go to the next block south of the current one.
-// however it will be restricted to however many blocks belong to 
-// that "map" or section of the city.
+/* the class that defines the sections of a map this class used to
+   be called levels because I said that a map was made up of 4 levels
+   but that kept getting people confused
+   when I called them levels so I have renamed it to MapSection
+   The map is setup like a grid like a real city map, the player is
+   walking on the street of a specific block of the city they can
+   go left and right without loading anything, for the full width
+   of the specific "block" if they go up at a street point it will
+   send them to the next block north of that current one. They can
+   also go down and go to the next block south of the current one.
+   however it will be restricted to however many blocks belong to 
+   that "map" or section of the city.*/
 class MapSection
 {
 	protected:

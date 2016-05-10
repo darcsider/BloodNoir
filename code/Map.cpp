@@ -17,10 +17,17 @@ Map::~Map()
 void Map::InitializeMap(DX11RenderManager *graphics, WinInput *input, int screenWidth, int screenHeight)
 {
 	m_graphicSystem = graphics;
+	m_input = input;
 	m_currentPosition.top = 0;
 	m_currentPosition.left = 0;
 	m_currentPosition.right = screenWidth;
 	m_currentPosition.bottom = screenHeight;
+
+	function<void()> funcPointLeft = bind(&Map::MoveMapLeft, this);
+	m_input->AddKeyboardInput(Keyboard::Keys::Left, funcPointLeft);
+	
+	function<void()> funcPointRight = bind(&Map::MoveMapRight, this);
+	m_input->AddKeyboardInput(Keyboard::Keys::Right, funcPointRight);
 }
 
 void Map::BuildMap(string mapTextFile)
@@ -61,17 +68,6 @@ void Map::MoveMapRight()
 
 void Map::UpdateMap(float timeDelta)
 {
-	//if (keyboardState.Right || gamePadState.IsDPadRightPressed())
-	//{
-		//left = false;
-		//keyboardEntry = true;
-	//}
-	//else if (keyboardState.Left || gamePadState.IsDPadLeftPressed())
-	//{
-		//left = true;
-		//keyboardEntry = true;
-	//}
-
 	m_currentPosition = m_currentSection.UpdateMapSection(timeDelta);
 }
 
@@ -228,6 +224,11 @@ void MapSection::BuildMapSection(DX11RenderManager *graphics, string fileName)
 			textDesc = m_graphicSystem->getTextureDesc(tempLayer.m_textureName);
 			tempLayer.m_width = textDesc.Width;
 			tempLayer.m_height = textDesc.Height;
+			if (tempLayer.m_autoScroll)
+				tempLayer.m_velocity = tempLayer.m_scrollSpeed;
+			else
+				tempLayer.m_velocity = 0;
+
 			m_layers.push_back(tempLayer);
 		}
 		

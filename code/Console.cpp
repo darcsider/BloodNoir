@@ -15,9 +15,10 @@ Console::~Console()
 	onLostDevice();            // call onLostDevice() for every graphics item
 }
 
-bool Console::initialize(DX11RenderManager *graphics, Vector2 startPosition, int width, int height, XMFLOAT4 backColor)
+bool Console::initialize(DX11RenderManager *graphics, WinInput *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor)
 {
 	m_graphicSystem = graphics;
+	m_input = input;
 	m_consolePosition = startPosition;
 	m_width = width;
 	m_height = height;
@@ -35,6 +36,10 @@ bool Console::initialize(DX11RenderManager *graphics, Vector2 startPosition, int
 	m_history.clear();
 
 	m_prompt = "|:>";
+
+	function<void()> funcPoint = bind(&Console::HideShow, this);
+	m_input->AddKeyboardInput(Keyboard::Keys::OemTilde, funcPoint);
+
 	return true;
 }
 
