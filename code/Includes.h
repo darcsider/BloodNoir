@@ -57,8 +57,6 @@ using namespace std;
 using Microsoft::WRL::ComPtr;
 using DirectX::SimpleMath::Vector2;
 
-typedef std::codecvt_utf8<wchar_t> convert_type;
-
 #define SAFE_DELETE( p ) { if( p ) { delete ( p );     ( p ) = NULL; } }
 
 namespace DX

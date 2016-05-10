@@ -25,24 +25,33 @@ void WinAudio::InitializeAudio()
 
 	m_audioEngine.reset(new AudioEngine(audioFlags));
 
-	/*m_backgroundMusic.reset(new SoundEffect(m_audioEngine.get(), L"..\\Music\\Electro.wav"));
+	wchar_t test[] = L"..\\Music\\Electro.wav";
+	m_backgroundMusic.reset(new SoundEffect(m_audioEngine.get(), test));
 	m_backgroundEffect = m_backgroundMusic->CreateInstance();
 
-	m_soundEffect.reset(new SoundEffect(m_audioEngine.get(), L"..\\Music\\heli.wav"));
-	m_effect = m_soundEffect->CreateInstance();
-
-	// move this later as I finish this class
-	auto soundState = m_effect->GetState();*/
+	auto soundState = m_effect->GetState();
 }
 
-bool WinAudio::SetBackgroundMusic()
+bool WinAudio::SetBackgroundMusic(string fileName)
 {
+	m_backgroundMusic.reset(new SoundEffect(m_audioEngine.get(), ConvertSTRtoWSTR(fileName).c_str()));
 	return true;
 }
 
-bool WinAudio::AddSoundEffect()
+bool WinAudio::AddSoundEffect(string effectName, string fileName)
 {
-	return true;
+	auto soundIndex = m_soundEffects.find(effectName);
+	
+	if (soundIndex == m_soundEffects.end())
+	{
+		wstring file = ConvertSTRtoWSTR(fileName);
+		m_soundEffects.insert(map<string, SoundEffect>::value_type(effectName, SoundEffect(m_audioEngine.get(), file.c_str())));
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void WinAudio::AudioEngineUpdate()
@@ -56,4 +65,28 @@ void WinAudio::AudioEngineUpdate()
 			return;
 		}
 	}
+}
+
+void WinAudio::PlayEffect(string effectName)
+{
+	auto soundIndex = m_soundEffects.find(effectName);
+
+	if (soundIndex != m_soundEffects.end())
+	{
+		m_effect = soundIndex->second.CreateInstance();
+		auto soundState = m_effect->GetState();
+
+		if (soundState == STOPPED)
+			m_effect->Play();
+	}
+}
+
+void WinAudio::StartBackgroundMusic()
+{
+	m_backgroundEffect->Play(true);
+}
+
+void WinAudio::StopBackgroundMusic()
+{
+	m_backgroundEffect->Stop();
 }

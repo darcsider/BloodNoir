@@ -311,20 +311,13 @@ void DX11RenderManager::PresentScene()
 
 void DX11RenderManager::DrawTextToScreen(string text, Vector2 position)
 {
-	wstring convertedText;
-	wstring_convert<convert_type, wchar_t> converter;
-
-	convertedText = converter.from_bytes(text);
-	m_spriteFont->DrawString(m_spriteBatch.get(), convertedText.c_str(), position, Colors::BlueViolet);
+	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, Colors::BlueViolet);
 }
 
 void DX11RenderManager::DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color)
 {
-	wstring convertedText;
-	wstring_convert<convert_type, wchar_t> converter;
-
-	convertedText = converter.from_bytes(text);
-	m_spriteFont->DrawString(m_spriteBatch.get(), convertedText.c_str(), position, color);
+	
+	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, color);
 }
 
 void DX11RenderManager::CreateResources()

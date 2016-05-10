@@ -114,5 +114,15 @@ class DX11RenderManager
 		{
 			return static_cast<float>(m_gameWidth) / m_gameHeight;
 		}
+
+		wstring ConvertSTRtoWSTR(string text)
+		{
+			typedef std::codecvt_utf8<wchar_t> convert_type;
+			wstring convertedText;
+			wstring_convert<convert_type, wchar_t> converter;
+
+			convertedText = converter.from_bytes(text);
+			return convertedText;
+		}
 };
 #endif
