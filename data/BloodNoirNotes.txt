@@ -1197,4 +1197,20 @@ May 9th, 2016
 Day 73 of Development
 Yesterday I worked on this project and forgot to write an update in my notes about the project, yesterday I began working on
 moving the Input and Audio code over from the main Game Class to their own classes.  I moved everything over and started work
-on the Input class and wiring up all of the connections again.  I have the input class working and I even have 
+on the Input class and wiring up all of the connections again.  I have the input class working and I even have things moving
+on screen.
+
+Today I'm working on fixing some issues that I was running into with the new input system the map would move like I asked it
+to but it wouldn't stop moving as soon as the button was released.  I have figured out how to fix this I changed the map that
+is used for input so that each function pointer in the map has to accept a bool variable, even if it is not used which is the
+case with a few of the instances of using this it still must accept it.  The methods that need it take the value in and if it
+is a true value it moves if its false then it stops movement, as True equals the key is pressed and False equals the button
+was released.
+
+Tomorrow I need to work on the Audio system and get that up and working again.
+
+May 10th, 2016
+
+Day 74 of Development
+Today the plan is to get working on the Audio system and try to get it completed or at least most of the way completed.  I
+also need to work on the Input System in the engine more because I want to get Game Pad working in the engine as well.

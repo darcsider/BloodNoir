@@ -25,5 +25,6 @@ class WinAudio
 		void InitializeAudio();
 		bool SetBackgroundMusic();
 		bool AddSoundEffect();
+		void AudioEngineUpdate();
 };
 #endif

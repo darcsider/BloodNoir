@@ -20,17 +20,9 @@ Game::Game() :
 
 Game::~Game()
 {
-	//m_gamePad.reset();
-	//m_gamePad.release();
-	//m_mouse.reset();
-	//m_mouse.release();
-	//m_keyboard.reset();
-	//m_keyboard.release();
-	m_soundEffect.reset();
-	m_soundEffect.release();
-	m_audioEngine.reset();
-	m_audioEngine.release();
 	m_graphicSystem.release();
+	m_input.release();
+	m_audioSystem.release();
 }
 
 void Game::InitializeResources()
@@ -87,6 +79,9 @@ bool Game::GameInitialize(HWND window, int width, int height)
 
 	function<void(bool)> funcPoint = bind(&Game::CloseGame, this, placeholders::_1);
 	m_input->AddKeyboardInput(Keyboard::Keys::Escape, funcPoint);
+
+	m_audioSystem = make_unique<WinAudio>();
+	m_audioSystem->InitializeAudio();
 	
 	// EditorConsole will be going away from the game class as soon as I complete writing the level editor class
 	// then I will be moving it over to there, I will then figure out how to change the Console class in a way
@@ -100,23 +95,13 @@ bool Game::GameInitialize(HWND window, int width, int height)
 
 void Game::SystemsUpdate()
 {
-	/*auto soundState = m_effect->GetState();
-
-	if (!m_audioEngine->Update())
-	{
-		// No audio device is active
-		if (m_audioEngine->IsCriticalError())
-		{
-			MessageBox(NULL, "Something went really wrong audio is broken", "Audio Error", MB_OK);
-			return;
-		}
-	}*/
+	m_audioSystem->AudioEngineUpdate();
+	m_input->HandleInput();
 }
 
 void Game::GameUpdate()
 {
 	SystemsUpdate();
-	m_input->HandleInput();
 	testMap.UpdateMap(m_timer.DeltaTime());
 }
 
@@ -124,8 +109,6 @@ void Game::DrawScene()
 {
 	m_graphicSystem->ClearScene();
 	m_graphicSystem->BeginScene();
-	//g_graphicSystem->DrawObject("background", Vector2(0.0f, 0.0f));
-	//g_graphicSystem->DrawObject("clouds", Vector2(0.0f, 0.0f));
 	testMap.DrawMap();
 	m_graphicSystem->EndScene();
 	editorConsole->Draw();
