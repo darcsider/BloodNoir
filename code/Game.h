@@ -80,6 +80,11 @@ class Game
 			PostQuitMessage(0);
 		}
 
+		void TestSound(bool notUsed)
+		{
+			m_audioSystem->PlayEffect("heli");
+		}
+
 		void DrawScene();
 
 		void CalculateFrameStats();

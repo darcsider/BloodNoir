@@ -34,5 +34,4 @@ class LevelEditor
 		//      *tracker points to Input
 		bool initialize();
 };
-
 #endif

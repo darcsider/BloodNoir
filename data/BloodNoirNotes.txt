@@ -1214,3 +1214,17 @@ May 10th, 2016
 Day 74 of Development
 Today the plan is to get working on the Audio system and try to get it completed or at least most of the way completed.  I
 also need to work on the Input System in the engine more because I want to get Game Pad working in the engine as well.
+
+I have been able to get the Audio system working and implemented and I have been able to test the code to verify that it
+works exactly the way I want it to work in the game.  There are some things that I may tweak on the settings for Audio
+later in the development process, things like changing the sound volume and effect volume I may even try to link those
+2 values to a slider in the options menu.
+
+I feel like the next thing that I would like to focus my attention on figuring out is how to setup the whole banner
+parade event process in code.  So that each banner image is left on the screen for X number of seconds and then the
+next one is displayed on the screen ending with the title screen and main menu.  Along with this I need to figure out
+the title screen with being able to select the menu options and having them change the state of the game to whatever.
+New Game would bring the player to the new game state which would be a special map specifically for the opening story.
+Continue Game would open a saved game selection menu where you can select your save and then it would open the spot
+that the player saved at.  Options would open the Options menu where the player can change certain game settings that
+we expose to the player.

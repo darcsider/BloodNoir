@@ -24,17 +24,12 @@ void WinAudio::InitializeAudio()
 #endif
 
 	m_audioEngine.reset(new AudioEngine(audioFlags));
-
-	wchar_t test[] = L"..\\Music\\Electro.wav";
-	m_backgroundMusic.reset(new SoundEffect(m_audioEngine.get(), test));
-	m_backgroundEffect = m_backgroundMusic->CreateInstance();
-
-	auto soundState = m_effect->GetState();
 }
 
 bool WinAudio::SetBackgroundMusic(string fileName)
 {
 	m_backgroundMusic.reset(new SoundEffect(m_audioEngine.get(), ConvertSTRtoWSTR(fileName).c_str()));
+	m_backgroundEffect = m_backgroundMusic->CreateInstance();
 	return true;
 }
 

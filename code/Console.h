@@ -82,5 +82,4 @@ class Console
 		// Call when graphics device is reset.
 		void onResetDevice();
 };
-
 #endif

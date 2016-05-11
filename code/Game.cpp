@@ -82,6 +82,9 @@ bool Game::GameInitialize(HWND window, int width, int height)
 
 	m_audioSystem = make_unique<WinAudio>();
 	m_audioSystem->InitializeAudio();
+
+	function<void(bool)> funcPoint2 = bind(&Game::TestSound, this, placeholders::_1);
+	m_input->AddKeyboardInput(Keyboard::Keys::A, funcPoint2);
 	
 	// EditorConsole will be going away from the game class as soon as I complete writing the level editor class
 	// then I will be moving it over to there, I will then figure out how to change the Console class in a way
@@ -89,6 +92,10 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	// will recognize and process.
 	editorConsole = new Console();
 	editorConsole->initialize(m_graphicSystem.get(), m_input.get(), Vector2(0,0), m_gameWidth, 200, XMFLOAT4(0,0,0,0.8));
+	m_audioSystem->SetBackgroundMusic("..\\Music\\Electro.wav");
+	m_audioSystem->AddSoundEffect("heli", "..\\Music\\heli.wav");
+
+	m_audioSystem->StartBackgroundMusic();
 	m_gameInitialized = true;
 	return true;
 }
