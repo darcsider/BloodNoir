@@ -95,7 +95,7 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	m_audioSystem->SetBackgroundMusic("..\\Music\\Electro.wav");
 	m_audioSystem->AddSoundEffect("heli", "..\\Music\\heli.wav");
 
-	m_audioSystem->StartBackgroundMusic();
+	//m_audioSystem->StartBackgroundMusic();
 	m_gameInitialized = true;
 	return true;
 }

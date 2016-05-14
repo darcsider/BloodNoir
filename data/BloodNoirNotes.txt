@@ -1228,3 +1228,14 @@ New Game would bring the player to the new game state which would be a special m
 Continue Game would open a saved game selection menu where you can select your save and then it would open the spot
 that the player saved at.  Options would open the Options menu where the player can change certain game settings that
 we expose to the player.
+
+May 13th, 2016
+
+Day 75 of Development
+Today all I have done was work on my lovely programmer art and play with certain settings related to the map displaying
+on the screen for the demo.  This was just so that I can have something to show when I meet up in a week.  I will get
+to work tomorrow on the tasks that I have set to be complete in earlier entries in these notes.
+
+May 14th, 2016
+
+Day 76 of Development
