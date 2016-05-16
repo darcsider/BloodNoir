@@ -1239,3 +1239,42 @@ to work tomorrow on the tasks that I have set to be complete in earlier entries 
 May 14th, 2016
 
 Day 76 of Development
+Today I'm going to get working on the startup process of the game, I want to get the banner parade and the title screen
+mocked up and working in code so that all I have to do is replace art assets when I get them and it will work.  This
+will bring the demo very close to being ready to show to people as soon as I get the art.
+
+I did not get any code written today but I did get some design work done for the new event system for the engine I feel
+like I should get to coding this tomorrow and will hopefully have it successfully implemented and functional in a few
+days time.  This system will allow me to setup the startup process as well as any other events in the game that the
+lifespan of the event is time based.  I may be able to extend the event system in the future for non time based events
+but I'm not sure if I will or if I will write another system specifically for that.
+
+May 15th, 2016
+
+Day 77 of Development
+I have spent most of the day today relaxing and getting my head back into this project I feel burnt out from programming
+this engine and working a full time job.  None the less I'm going to try to get something done on the engine before I go
+to bed tonight.
+
+On a side note thinking about the Event, Event Manager, and Event Type stuff has me thinking about the Finite State
+Machine pattern that I will probably use to define the various states of my game.
+
+Game State:
+Game States BannerParade, MainMenu, NewGame, LoadSavedGame, OptionsMenu, OnExit(which will also be tied into an event when
+window is closed.), Paused, Tutorial, MapSelectMenu, 
+
+Event and Event Manager Notes:
+
+An Event will consist of an Event Type that will define the type of event that is taking place, in larger games the event
+type will probably turn into something more elaborate but in this project seeing as how the scope of the game is not very
+large I think I will simply use an enumeration to handle this value.  However in order to prevent redundant data because
+of all of the systems that need to know about Events and Event Types I think I will place the EventType Enumeration in
+the Includes.h header file this way it gets included only once and each system will be able to know about it that needs
+to know about it.
+
+EventType: TimedEvent, (add more as needed?)
+
+So for the time being I am going to start with just the TimedEvent Type and get that part working as well as begin working
+on the FSM for the game state.  These are my 2 main areas I need to focus on getting implemented correctly and working so
+I can move on to other gameplay and other systems.  Getting these 2 systems coded and working correctly will put the state
+of this project much further along.

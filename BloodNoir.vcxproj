@@ -180,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="code\Console.h" />
     <ClInclude Include="code\DX11RenderManager.h" />
+    <ClInclude Include="code\EventManager.h" />
     <ClInclude Include="code\Game.h" />
     <ClInclude Include="code\GameActor.h" />
     <ClInclude Include="code\GameTiming.h" />
@@ -193,6 +194,7 @@
   <ItemGroup>
     <ClCompile Include="code\Console.cpp" />
     <ClCompile Include="code\DX11RenderManager.cpp" />
+    <ClCompile Include="code\EventManager.cpp" />
     <ClCompile Include="code\Game.cpp" />
     <ClCompile Include="code\GameActor.cpp" />
     <ClCompile Include="code\GameTiming.cpp" />

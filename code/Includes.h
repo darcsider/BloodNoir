@@ -70,4 +70,10 @@ namespace DX
 		}
 	}
 }
+
+enum EventType
+{
+	TimedEvent,
+	Other
+};
 #endif
