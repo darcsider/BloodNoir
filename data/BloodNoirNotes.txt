@@ -1278,3 +1278,180 @@ So for the time being I am going to start with just the TimedEvent Type and get 
 on the FSM for the game state.  These are my 2 main areas I need to focus on getting implemented correctly and working so
 I can move on to other gameplay and other systems.  Getting these 2 systems coded and working correctly will put the state
 of this project much further along.
+
+May 16th, 2016
+
+Day 78 of Development
+Today is a work day but I'm going to work hard to get more work on the Event System and the Game State system done. I will
+spend my free time today at work thinking about how to implement things and spend my time this evening implementing things.
+
+Notes From Work Today:
+Event Class
+	EventType m_eventType - Enumerated value
+	int		  m_eventID
+	virtual bool execute() = 0; - if return value is false more processing if true then event is done and ready to end.
+	void functionCallback()??? need to research how to implement a callback function that will get called when the event
+	is about to be destroyed.
+
+TimedEvent : public Event
+	EventType m_eventType - inherited
+	int m_eventID		  - inherited
+	double m_timeLimit	  - holds the amount of time before event death.
+	GameTiming timer
+	double currTime
+	call back function
+
+	TimedEvent() {}
+	TimedEvent(double time) {}
+	bool execute()
+		currTime += timer.update()
+		if (m_currTime >= m_timeLimit)
+			return true
+		else
+			return false
+
+EventManager
+	Vector<Event*> m_events
+
+	void ProcessEvents()
+		for (int i = 0; i < m_events.count(); i++)
+			if (m_events[i].execute())
+				m_events[i].callback()
+				m_events.removeat(i)
+
+	void addEvent(Event *event)
+		m_events.insert(event);
+
+	void AddTimedEvent(double timeLimit)
+		TimedEvent *event = new TimedEvent(timeLimit);
+		m_events.insert(event);
+
+
+The EventManager will be handled as a singleton where there will be only 1 EventManager variable in the entire
+engine and there will be a way to access it built into the header file for the system.  This way all systems
+can register for events and add events, etc...
+
+
+Game State
+
+States the game can be in:
+- Banner Parade - timed show opening screens including the company logo and any other screens required
+- Main Menu - main title screen where it will be waiting for input from the user to progress the state
+- New Game - Load new game specific stuff then move state to tutorial
+- Tutorial - This state comes after New Game and introduces the main game play mechanics of the game
+- Map Select - This state can be initiated from Tutorial, or the In Map state this is where the player selects
+  what area of the city they want to go to
+- In Map - This is the main game play state where all of the story will take place for the game this state can
+  transition to Paused, or back to Map Select
+- Paused - This is the state where the paused screen will be displayed this is where the player can check out
+  certain collections of theirs, their achievements, etc... this screen is only reachable from InMap state this
+  state/ window will also be where the player can select to go back to Map Select, Options Menu, Save and Exit
+  the game.
+- Load Saved Game - This is only selectable from Main Menu it will load the necessary data to load the players
+  saved game progress and get them back to where they left off this state will either transition to In Map or
+  to Map Select states.
+- Options Menu - This is accessible from Main Menu, Paused and Map Select this will show a window where the player
+  can set certain settings like key bindings and music and effect volumes.
+- On Exit - THis state is accessible from Paused as well as any other state by pressing Escape when this state is
+  invoked it will ask the player if they would like to save their game before exiting.
+
+May 17th, 2016
+
+Day 79 of Development
+More Notes on how to handle various stuff in code from while I was at work:
+
+Game States as Classes that inherit from base GameState
+
+GameState Class
+Constructor()
+Destructor()
+Update()
+
+Data:
+InputObject
+
+What does every game state have in common?
+What does every game state need to do every frame?
+- Every Game state will need to display graphics on the screen
+- Every Game state needs an update method
+- Every Game State needs access to an input object to handle input
+
+- BannerParade- Game State
+Do I use an Event Manager object or just an event object?
+bool nextBanner
+int remainingBanners
+int numberOfBanners
+Timed Event Callback Function
+Constructor()
+Destructor()
+Update()
+	if (input->AcceptButton && currentBanner can be skipped)
+		skip banner
+
+	if (nextBanner)
+		switch current banner to next banner
+		nextBanner = false
+
+	draw currentBanner
+
+Event Callback Method()
+	if (remainingBanners > 0)
+		nextBanner = true
+	remainingBanners--
+
+
+- MainMenu- Game State
+InputObject - inherited from base GameState set in constructor
+Input callback methods for up, down, and AcceptButton press - these will be set in constructor
+current Menu option selected variable
+Constructor()
+Destructor()
+Update()
+	draw titleScreen
+	draw MenuItems in current state
+
+input Callback for Up
+	If first menu option is selected then
+		switch to last menu option
+	else
+		menu option selected - 1
+
+input callback for down
+	if last menu option is selected then
+		switch to first menu option
+	else
+		menu option selected + 1
+
+input callback accept button
+	fire an event off for changing the GameState
+	if New Game Selected set GameState to NewGame/Tutorial
+	if LoadGame Selected set GameState to LoadGame
+	if Options Selected set GameState to OptionsMenu
+	if Exit Selected set GameState to OnExit
+
+- NewGame / Tutorial- Game State
+need to figure out if I want an actual New Game State or just the tutorial state it comes down to is there any
+processing that the new Game state would be better to process before transitioning to tutorial
+
+InputObject
+Tutorial text File name
+Vector or map of text strings
+I am thinking it would be better to use a map for text strings for the tutorial as well as other text strings
+in the game because then if we decide to localize the game in other languages it would be easier to switch them
+out because all you have to do is use the same key for the string and regardless of which language it is in the
+game will load it properly.
+
+May 18th, 2016
+
+Day 80 of Development
+Today I began working on implementing the new systems that I spent the past couple of days planning out logically.
+I was able to get the Events, and EventManager classes code written I have not verified that they work yet because
+I feel that in order to best verify functionality I need to finish the GameState Classes and once I have all of that
+stuff written then I can get them implemented and working correctly in the game engine.  The goal at this point is
+to have the Events, EventManager, and GameState stuff all coded and working properly by Sunday so that I can show it
+off to my business partner to show what I have been able to complete so far.  Getting these core systems implemented
+really will bring the game to a nice point it will bring it very close to being demo ready, with artwork, character
+class implemented and displaying, and buildings, and trigger points being the short list of things that I need to
+get working before the demo is ready to show off.  There are more things to finish than the list I just gave but not
+to many more to add to that list.  I will try by Sunday to compile a list of things still needing to get done before
+the demo can be handed off to investors.
