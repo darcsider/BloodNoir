@@ -1455,3 +1455,33 @@ class implemented and displaying, and buildings, and trigger points being the sh
 get working before the demo is ready to show off.  There are more things to finish than the list I just gave but not
 to many more to add to that list.  I will try by Sunday to compile a list of things still needing to get done before
 the demo can be handed off to investors.
+
+May 19th, 2016
+
+Day 81 of Development
+Tonight the plan is to spend some time getting more of the code written from my notes from past days.  Another thing
+that I have realized that I need to work on for this engine is some kind of a system for key bindings.  What I mean
+is that I need to modify input or whatever I have to do to get it setup so that regardless of what key an action is
+bound to when that action is activated it is handled correctly in the context of the system that is checking for it
+and the state the game is in.  This is one system that I may need to get done in order to fully complete the game
+state system.  I should be able to get it partially implemented and move forward and continue working on the input.
+
+May 20th, 2016
+
+Day 82 of Development
+Today I'm going to get working on making changes to the input system and getting more done on the game state system
+of the engine.  Some notes about what I'm reading now is that instead of having a single input map that the input
+system handles I need to create an input map for each game state that defines the controls that are currently being
+used in the game in the current state.  When a state change happens then I change the input map that is used in the
+engine.
+
+Note for when I get back to working on this later today after work:
+Input States for the game:
+Up
+Down
+Left
+Right
+Accept
+Cancel
+Pause
+Exit?
