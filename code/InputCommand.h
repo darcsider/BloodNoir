@@ -10,65 +10,69 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Includes.h"
 #include "GameActor.h"
 
+
 class Command
 {
 	protected:
-		GamePad m_gamePad;
-		Keyboard m_keyboard;
-		function<void()> functionPointer;
+		function<void()>	m_functionPointer;
+		bool				m_dpadSet;
+		bool				m_buttonSet;
+		GamePad::Buttons	m_button;
+		GamePad::DPad		m_dpad;
+		Keyboard::Keys		m_key;
 
 	public:
-		virtual ~Command() {};
-		virtual void execute() = 0;
-		virtual void setKeyboardKeyBinding(Keyboard::Keys key) = 0;
-		virtual void setGamePadButtonBinding(GamePad::Buttons button) {}
-		virtual void setGamePadDPadBinding(GamePad::DPad dpad) {}
-		virtual void setCallbackFunction(function<void(bool)> funcPoint) {}
-};
-
-class UpCommand : public Command
-{
-	protected:
-		Keyboard::Keys m_key;
-		GamePad::DPad m_dpad;
-
-	public:
-		UpCommand() {}
-		~UpCommand() {}
-		void execute()
+		virtual void execute()
 		{
-			functionPointer();
+			m_functionPointer();
 		}
 
-		void setKeyboardKeyBinding(Keyboard::Keys key)
+		virtual void setCallbackFunction(function<void()> funcPoint)
+		{
+			m_functionPointer = funcPoint;
+		}
+
+		virtual void setKeyboardKeyBinding(Keyboard::Keys key)
 		{
 			m_key = key;
 		}
 
-		void setGamePadDPadBinding(GamePad::DPad dpad)
+		virtual Keyboard::Keys getKeyboardBinding()
+		{
+			return m_key;
+		}
+
+		virtual void setGamePadDpad(GamePad::DPad dpad)
 		{
 			m_dpad = dpad;
+			m_dpadSet = true;
 		}
 
-		void setCallbackFunction(function<void()> funcPoint)
+		virtual GamePad::DPad getGamePadDpad()
 		{
-			functionPointer = funcPoint;
+			return m_dpad;
 		}
-};
 
-class DownCommand : public Command
-{
-protected:
-	Keyboard::Keys m_key;
-	GamePad::DPad m_dpad;
+		virtual bool hasDpadBinding()
+		{
+			return m_dpadSet;
+		}
 
-public:
-	DownCommand() {}
-	~DownCommand() {}
-	void execute();
-	void setKeyboardKeyBinding(Keyboard::Keys key);
-	void setGamePadDPadBinding(GamePad::DPad dpad);
-	void setCallbackFunction(function<void()> funcPoint);
+		virtual void setGamePadButton(GamePad::Buttons button)
+		{
+			m_button = button;
+			m_buttonSet = true;
+		}
+
+		virtual GamePad::Buttons getGamePadButton()
+		{
+			return m_button;
+		}
+
+		virtual bool hasButtonBinding()
+		{
+			return m_buttonSet;
+		}
 };
 
 class WinInput
@@ -148,4 +152,103 @@ else
 {
 tracker.Reset();
 }
+*/
+
+/*	Just in case I find out that my changes are not going to work
+class Command
+{
+protected:
+Keyboard::Keys m_key;
+function<void()> m_functionPointer;
+
+public:
+virtual void execute()
+{
+m_functionPointer();
+}
+
+virtual void setCallbackFunction(function<void()> funcPoint)
+{
+m_functionPointer = funcPoint;
+}
+
+virtual void setKeyboardKeyBinding(Keyboard::Keys key)
+{
+m_key = key;
+}
+
+virtual Keyboard::Keys getKeyboardBinding()
+{
+return m_key;
+}
+
+virtual void setGamePadDpad(GamePad::DPad dpad);
+virtual GamePad::DPad getGamePadDpad();
+virtual bool hasDpadBinding();
+
+virtual void setGamePadButton(GamePad::Buttons button);
+virtual GamePad::Buttons getGamePadButton();
+virtual bool hasButtonBinding();
+};
+
+class DirectionalCommand : public Command
+{
+protected:
+Keyboard::Keys m_key;
+GamePad::DPad m_dpad;
+
+public:
+DirectionalCommand() {}
+~DirectionalCommand() {}
+
+void setGamePadDpad(GamePad::DPad dpad)
+{
+m_dpad = dpad;
+}
+
+GamePad::DPad getGamePadDpad()
+{
+return m_dpad;
+}
+
+bool hasDpadBinding()
+{
+return true;
+}
+
+bool hasButtonBinding()
+{
+return false;
+}
+};
+
+class ActionCommand : public Command
+{
+protected:
+GamePad::Buttons m_button;
+
+public:
+ActionCommand() {}
+~ActionCommand() {}
+
+void setGamePadButton(GamePad::Buttons button)
+{
+m_button = button;
+}
+
+GamePad::Buttons getGamePadButton()
+{
+return m_button;
+}
+
+bool hasDpadBinding()
+{
+return false;
+}
+
+bool hasButtonBinding()
+{
+return true;
+}
+};
 */
