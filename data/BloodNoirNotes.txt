@@ -1508,3 +1508,18 @@ Maybe for each input action that can happen the up, down, etc... there will be 2
 one and a game pad one.  Each one handling their respective input type, or I can use a single one for each and have
 a keyboard object and a game pad object tied to each command and then have methods for setting the input binding for
 both keyboard and game pad.
+
+So I have been able to get more work done on the project I got some code written for the Command system and I also was
+able to get more of the plan figured out from a logic point of view.  I was going to use a series of Command classes
+that inherited from the base Command Class but figured out that with the way that I want to handle things that maybe
+I don't need to use more than 1 class.  The class will encompass everything that a command can be which is basically
+a keyboard key binding and either a d-pad binding or a game pad button binding.  Basically if a d-pad direction is set
+then I will code it so that when it sees there is a d-pad setting then it checks d-pad binding and processes accordingly
+if it has a game pad button bound then same thing.  I will get this system integrated into the input class and into the
+GameState system tomorrow and then test it out.  I'm hoping to after breaking it from integrating these systems into
+the actual game engine that I can get it working properly again.  If I get that done and still have enough time then I
+will attempt to setup the first couple game states correctly and get things mocked up for the demo.
+
+May 22nd, 2016
+
+Day 84 of Development

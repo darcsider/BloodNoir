@@ -23,11 +23,25 @@ void Map::InitializeMap(DX11RenderManager *graphics, WinInput *input, int screen
 	m_currentPosition.right = screenWidth;
 	m_currentPosition.bottom = screenHeight;
 
+	// this stuff here is temporary while I continue to work on finishing various systems
+
+	Command *testCommand = new Command();
+	testCommand->setKeyboardKeyBinding(Keyboard::Keys::Left);
+	testCommand->setGamePadDpad(Left);
+
 	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
-	m_input->AddKeyboardInput(Keyboard::Keys::Left, funcPointLeft);
+	testCommand->setCallbackFunction(funcPointLeft);
+
+	m_input->AddCommand(testCommand);
+
+	Command *testCommand2 = new Command();
+	testCommand2->setKeyboardKeyBinding(Keyboard::Keys::Right);
+	testCommand2->setGamePadDpad(Right);
 	
 	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
-	m_input->AddKeyboardInput(Keyboard::Keys::Right, funcPointRight);
+	testCommand2->setCallbackFunction(funcPointRight);
+
+	m_input->AddCommand(testCommand2);
 }
 
 void Map::BuildMap(string mapTextFile)

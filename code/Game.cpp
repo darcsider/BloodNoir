@@ -77,14 +77,22 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	testMap.InitializeMap(m_graphicSystem.get(), m_input.get(), m_gameWidth, m_gameHeight);
 	InitializeResources();
 
+
+	// this crap will go away once I have completed building the other systems related to the game state
+	Command *testCommand = new Command();
+	testCommand->setKeyboardKeyBinding(Keyboard::Keys::Escape);
+	testCommand->setGamePadButton(Back);
+
 	function<void(bool)> funcPoint = bind(&Game::CloseGame, this, placeholders::_1);
-	m_input->AddKeyboardInput(Keyboard::Keys::Escape, funcPoint);
+	testCommand->setCallbackFunction(funcPoint);
+
+	m_input->AddCommand(testCommand);
 
 	m_audioSystem = make_unique<WinAudio>();
 	m_audioSystem->InitializeAudio();
 
-	function<void(bool)> funcPoint2 = bind(&Game::TestSound, this, placeholders::_1);
-	m_input->AddKeyboardInput(Keyboard::Keys::A, funcPoint2);
+	//function<void(bool)> funcPoint2 = bind(&Game::TestSound, this, placeholders::_1);
+	//m_input->AddKeyboardInput(Keyboard::Keys::A, funcPoint2);
 	
 	// EditorConsole will be going away from the game class as soon as I complete writing the level editor class
 	// then I will be moving it over to there, I will then figure out how to change the Console class in a way

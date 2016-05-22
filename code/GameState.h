@@ -9,12 +9,10 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define GAMESTATE_H
 #include "Includes.h"
 #include "EventManager.h"
+#include "InputCommand.h"
 
 class GameState
 {
-	protected:
-		map<Keyboard::Keys, function<void(bool)>> m_keyboardMap;
-
 	public:
 		GameState() {}
 		virtual ~GameState() {}
@@ -29,8 +27,11 @@ class BannerParade : public GameState
 		int m_numberOfBanners;
 		EventManager *m_eventManager;
 
+		Command *m_actionCommand;
+
 	public:
-		void CallbackFunction();
+		void InputCallBack(bool pressedOrReleased);
+		void StateChangeCallBack();
 		BannerParade();
 		~BannerParade();
 		void Update();

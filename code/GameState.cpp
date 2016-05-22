@@ -16,14 +16,17 @@ BannerParade::~BannerParade()
 
 }
 
-void BannerParade::CallbackFunction()
+void BannerParade::InputCallBack(bool pressedOrReleased)
+{
+}
+
+void BannerParade::StateChangeCallBack()
 {
 	if (m_remainingBanners > 0)
 	{
 		m_nextBanner = true;
 		m_remainingBanners--;
 	}
-
 }
 
 void BannerParade::Update()
