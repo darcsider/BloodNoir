@@ -13,6 +13,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 class GameState
 {
 	protected:
+		map<Keyboard::Keys, function<void(bool)>> m_keyboardMap;
 
 	public:
 		GameState() {}

@@ -1,10 +1,10 @@
 /*=====================================================================================
-$File: WinInput.cpp
+$File: InputCommand.cpp
 $Date: May 8, 2016
 $Creator: Jamie Cooper
 $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserved.
 =====================================================================================*/
-#include "WinInput.h"
+#include "InputCommand.h"
 
 WinInput::WinInput()
 {

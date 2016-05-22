@@ -9,7 +9,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define MAP_H
 #include "Includes.h"
 #include "DX11RenderManager.h"
-#include "WinInput.h"
+#include "InputCommand.h"
 #pragma warning (disable : 4244)
 #pragma warning (disable : 4018)
 

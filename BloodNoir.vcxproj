@@ -190,7 +190,7 @@
     <ClInclude Include="code\Map.h" />
     <ClInclude Include="code\Win32_Window.h" />
     <ClInclude Include="code\WinAudio.h" />
-    <ClInclude Include="code\WinInput.h" />
+    <ClInclude Include="code\InputCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Console.cpp" />
@@ -204,7 +204,7 @@
     <ClCompile Include="code\Map.cpp" />
     <ClCompile Include="code\Win32_Window.cpp" />
     <ClCompile Include="code\WinAudio.cpp" />
-    <ClCompile Include="code\WinInput.cpp" />
+    <ClCompile Include="code\InputCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

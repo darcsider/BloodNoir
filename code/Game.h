@@ -12,7 +12,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "DX11RenderManager.h"
 #include "Map.h"
 #include "Console.h"
-#include "WinInput.h"
+#include "InputCommand.h"
 #include "WinAudio.h"
 
 // not complete must do more work just doing this to get started

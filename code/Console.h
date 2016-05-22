@@ -13,7 +13,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include <deque>
 #include "Includes.h"
 #include "DX11RenderManager.h"
-#include "WinInput.h"
+#include "InputCommand.h"
 #pragma warning (disable : 4018)
 
 class Console

@@ -1482,6 +1482,29 @@ Down
 Left
 Right
 Accept
-Cancel
+Cancel/Exit Menu
 Pause
-Exit?
+
+I will continue my work on the project tomorrow as I have no energy left and can't see straight right now to work
+on it.  I have some real direction for how I want to handle things in the engine.  I'm going to re work the input
+system again and change it over to using an input map for each state the game is in, I'm also going to incorporate
+the command design pattern and class into the engine and into the input system as I feel it is the best fit for 
+making things work in a way that I can allow the user to specify key bindings during gameplay.
+
+May 21st, 2016
+
+Day 83 of Development
+Today I'm hoping to get some work done on the input system changes that I want to make so that tomorrow I can finish
+up the game state stuff to a tolerable point so that I when I take the demo over to my business partner and show the
+progress I can show off the ability to change game states and stuff.
+
+Commands:
+So how I'm going to implement Command is that I will set things up so that each of the main Input States or Commands
+that the game can assign controls for in each game state will have a class associated with it.  The things that I need
+to figure out how I want to handle is the combination of keyboard and game pad commands for each command?  Do I use a
+single command class for both keyboard and game pad or what???
+
+Maybe for each input action that can happen the up, down, etc... there will be 2 classes tied to each one, a keyboard
+one and a game pad one.  Each one handling their respective input type, or I can use a single one for each and have
+a keyboard object and a game pad object tied to each command and then have methods for setting the input binding for
+both keyboard and game pad.
