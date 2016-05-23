@@ -201,28 +201,28 @@ void Game::MouseProcess(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Game::OnActivated()
 {
-	//m_gamePad->Resume();
+	m_input->GamePadOnResume();
 	m_timer.Start();
 	m_appPaused = false;
 }
 
 void Game::OnDeactivated()
 {
-	//m_gamePad->Suspend();
+	m_input->GamePadOnSusspend();
 	m_timer.Stop();
 	m_appPaused = true;
 }
 
 void Game::OnSuspending()
 {
-	//m_gamePad->Suspend();
+	m_input->GamePadOnSusspend();
 	m_timer.Stop();
 	m_appPaused = true;
 }
 
 void Game::OnResuming()
 {
-	//m_gamePad->Resume();
+	m_input->GamePadOnResume();
 	m_timer.Start();
 	m_appPaused = false;
 }

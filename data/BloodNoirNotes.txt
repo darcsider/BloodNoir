@@ -1523,3 +1523,12 @@ will attempt to setup the first couple game states correctly and get things mock
 May 22nd, 2016
 
 Day 84 of Development
+Today I am finishing up the changes to the input system and getting it implemented into the game engine.  I am going to
+just hot wire it so to speak to show that it works I will link it up correctly once I get the game state and event system
+working and implemented fully.
+
+May 23rd, 2016
+
+Day 85 of Development
+Today I'm going to move forward with various systems for the game engine, I am going to continue working on the input system
+and trying to get the game pad stuff to work properly.

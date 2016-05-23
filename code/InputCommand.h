@@ -111,5 +111,15 @@ class WinInput
 		void AddCommand(Command *comm);
 		void ClearCommands();
 		void HandleInput();
+
+		void GamePadOnSusspend()
+		{
+			m_gamePad->Suspend();
+		}
+
+		void GamePadOnResume()
+		{
+			m_gamePad->Resume();
+		}
 };
 #endif

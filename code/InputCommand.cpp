@@ -44,26 +44,20 @@ void WinInput::HandleInput()
 	m_keyboardTracker->Update(keyboardState);
 
 	if (m_gamepadState.IsConnected())
-	{
 		tracker.Update(m_gamepadState);
-	}
-	else
-	{
-		tracker.Reset();
-	}
 
 	for (int i = 0; i < m_gameCommands.size(); i++)
 	{
-		m_gamepadState = m_gamePad->GetState(0);
-		tracker.Update(m_gamepadState);
-
 		if (m_keyboardTracker->IsKeyPressed(m_gameCommands[i]->getKeyboardBinding()))
 			m_gameCommands[i]->execute(true);
 
 		if (m_keyboardTracker->IsKeyReleased(m_gameCommands[i]->getKeyboardBinding()))
 			m_gameCommands[i]->execute(false);
 
+	}
 
+	for (int i = 0; i < m_gameCommands.size(); i++)
+	{
 		if (m_gameCommands[i]->hasDpadBinding())
 		{
 			if (tracker.dpadUp == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadDpad() == Up))
@@ -81,7 +75,7 @@ void WinInput::HandleInput()
 			if (tracker.dpadLeft == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadDpad() == Left))
 				m_gameCommands[i]->execute(true);
 
-			if (tracker.dpadLeft == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadDpad() == Left))
+			if (tracker.dpadLeft == GamePad::ButtonStateTracker::UP && (m_gameCommands[i]->getGamePadDpad() == Left))
 				m_gameCommands[i]->execute(false);
 
 			if (tracker.dpadRight == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadDpad() == Right))
