@@ -1531,4 +1531,14 @@ May 23rd, 2016
 
 Day 85 of Development
 Today I'm going to move forward with various systems for the game engine, I am going to continue working on the input system
-and trying to get the game pad stuff to work properly.
+and trying to get the game pad stuff to work properly.  I have the input system finished for the most part for now.  I will
+probably have to continue to do more work at a later date as features need to be added to the game.  I will tackle those 
+issues as they come up but for now I'm going to go ahead and move on.
+
+I'm going to get back to work on the game state system and try to get that and events to a working state and wire them up
+in the game engine.  My goal is to at least have it transition from Banner Parade, to Main Menu/ Title Screen and then with
+a button press it will transition over to the in game map state for now until I get a tutorial built.
+
+May 24th, 2016
+
+Day 86 of Development

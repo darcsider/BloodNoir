@@ -63,7 +63,7 @@ void WinInput::HandleInput()
 			if (tracker.dpadUp == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadDpad() == Up))
 				m_gameCommands[i]->execute(true);
 
-			if (tracker.dpadUp == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadDpad() == Up))
+			if (tracker.dpadUp == GamePad::ButtonStateTracker::UP && (m_gameCommands[i]->getGamePadDpad() == Up))
 				m_gameCommands[i]->execute(false);
 
 			if (tracker.dpadDown == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadDpad() == Down))
