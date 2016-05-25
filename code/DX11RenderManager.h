@@ -8,8 +8,6 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #ifndef DX11RENDERMANAGER_H
 #define DX11RENDERMANAGER_H
 #include "Includes.h"
-#pragma warning (disable : 4244)
-#pragma warning (disable : 4305)
 
 class DX11RenderManager
 {

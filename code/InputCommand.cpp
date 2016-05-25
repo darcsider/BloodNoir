@@ -6,135 +6,141 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "InputCommand.h"
 
-WinInput::WinInput()
+InputHandler::InputHandler()
 {
 
 }
 
-WinInput::~WinInput()
+InputHandler::~InputHandler()
 {
 
 }
 
-void WinInput::InitializeInput()
+void InputHandler::InitializeInput()
 {
 	m_keyboard = make_unique<Keyboard>();
 	m_gamePad = make_unique<GamePad>();
 	m_keyboardTracker.reset(new Keyboard::KeyboardStateTracker);
 }
 
-void WinInput::AddCommand(Command *comm)
+void InputHandler::AddCommand(Command *comm)
 {
 	m_gameCommands.push_back(comm);
 }
 
-void WinInput::ClearCommands()
+void InputHandler::ClearCommands()
 {
 	m_gameCommands.clear();
 }
 
-void WinInput::HandleInput()
+void InputHandler::HandleInput()
 {
 	auto keyboardState = m_keyboard->GetState();
-	m_gamepadState = m_gamePad->GetState(0);
-
+	auto gamepadState = m_gamePad->GetState(0);
+	static bool keyboardEntry = false;
 	GamePad::ButtonStateTracker tracker;
 
-	m_gamepadState = m_gamePad->GetState(0);
 	m_keyboardTracker->Update(keyboardState);
 
-	if (m_gamepadState.IsConnected())
-		tracker.Update(m_gamepadState);
+	if (gamepadState.IsConnected())
+		tracker.Update(gamepadState);
 
-	for (int i = 0; i < m_gameCommands.size(); i++)
+	vector<Command*>::iterator commandIterator;
+
+	for (commandIterator = m_gameCommands.begin(); commandIterator != m_gameCommands.end(); commandIterator++)
 	{
-		if (m_keyboardTracker->IsKeyPressed(m_gameCommands[i]->getKeyboardBinding()))
-			m_gameCommands[i]->execute(true);
-
-		if (m_keyboardTracker->IsKeyReleased(m_gameCommands[i]->getKeyboardBinding()))
-			m_gameCommands[i]->execute(false);
-
-	}
-
-	for (int i = 0; i < m_gameCommands.size(); i++)
-	{
-		if (m_gameCommands[i]->hasDpadBinding())
+		if (m_keyboardTracker->IsKeyPressed((*commandIterator)->getKeyboardBinding()))
 		{
-			if (tracker.dpadUp == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadDpad() == Up))
-				m_gameCommands[i]->execute(true);
-
-			if (tracker.dpadUp == GamePad::ButtonStateTracker::UP && (m_gameCommands[i]->getGamePadDpad() == Up))
-				m_gameCommands[i]->execute(false);
-
-			if (tracker.dpadDown == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadDpad() == Down))
-				m_gameCommands[i]->execute(true);
-
-			if (tracker.dpadDown == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadDpad() == Down))
-				m_gameCommands[i]->execute(false);
-
-			if (tracker.dpadLeft == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadDpad() == Left))
-				m_gameCommands[i]->execute(true);
-
-			if (tracker.dpadLeft == GamePad::ButtonStateTracker::UP && (m_gameCommands[i]->getGamePadDpad() == Left))
-				m_gameCommands[i]->execute(false);
-
-			if (tracker.dpadRight == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadDpad() == Right))
-				m_gameCommands[i]->execute(true);
-
-			if (tracker.dpadRight == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadDpad() == Right))
-				m_gameCommands[i]->execute(false);
+			keyboardEntry = true;
+			(*commandIterator)->execute(true);
 		}
 
-
-		if (m_gameCommands[i]->hasButtonBinding())
+		if (m_keyboardTracker->IsKeyReleased((*commandIterator)->getKeyboardBinding()))
 		{
-			if (tracker.a == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadButton() == A))
-				m_gameCommands[i]->execute(true);
+			keyboardEntry = false;
+			(*commandIterator)->execute(false);
+		}
 
-			if (tracker.a == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadButton() == A))
-				m_gameCommands[i]->execute(false);
+		if (!keyboardEntry)
+		{
+			if ((*commandIterator)->getIsDPadDirectionSet())
+			{
+				if (tracker.dpadUp == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadDpadBinding() == Up))
+					(*commandIterator)->execute(true);
 
-			if (tracker.b == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadButton() == B))
-				m_gameCommands[i]->execute(true);
+				else if (tracker.dpadUp == GamePad::ButtonStateTracker::UP && ((*commandIterator)->getGamePadDpadBinding() == Up))
+					(*commandIterator)->execute(false);
 
-			if (tracker.b == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadButton() == B))
-				m_gameCommands[i]->execute(false);
+				if (tracker.dpadDown == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadDpadBinding() == Down))
+					(*commandIterator)->execute(true);
 
-			if (tracker.x == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadButton() == X))
-				m_gameCommands[i]->execute(true);
+				else if (tracker.dpadDown == GamePad::ButtonStateTracker::UP && ((*commandIterator)->getGamePadDpadBinding() == Down))
+					(*commandIterator)->execute(false);
 
-			if (tracker.x == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadButton() == X))
-				m_gameCommands[i]->execute(false);
+				if (tracker.dpadLeft == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadDpadBinding() == Left))
+					(*commandIterator)->execute(true);
 
-			if (tracker.y == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadButton() == Y))
-				m_gameCommands[i]->execute(true);
+				else if (tracker.dpadLeft == GamePad::ButtonStateTracker::UP && ((*commandIterator)->getGamePadDpadBinding() == Left))
+					(*commandIterator)->execute(false);
 
-			if (tracker.y == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadButton() == Y))
-				m_gameCommands[i]->execute(false);
+				if (tracker.dpadRight == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadDpadBinding() == Right))
+					(*commandIterator)->execute(true);
 
-			if (tracker.back == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadButton() == Back))
-				m_gameCommands[i]->execute(true);
+				else if (tracker.dpadRight == GamePad::ButtonStateTracker::UP && ((*commandIterator)->getGamePadDpadBinding() == Right))
+					(*commandIterator)->execute(false);
+			}
 
-			if (tracker.back == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadButton() == Back))
-				m_gameCommands[i]->execute(false);
 
-			if (tracker.start == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadButton() == Start))
-				m_gameCommands[i]->execute(true);
+			if ((*commandIterator)->getIsGamePadButtonSet())
+			{
+				if (tracker.a == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadButtonBinding() == A))
+					(*commandIterator)->execute(true);
 
-			if (tracker.start == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadButton() == Start))
-				m_gameCommands[i]->execute(false);
+				if (tracker.a == GamePad::ButtonStateTracker::RELEASED && ((*commandIterator)->getGamePadButtonBinding() == A))
+					(*commandIterator)->execute(false);
 
-			if (tracker.leftShoulder == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadButton() == LeftShoulder))
-				m_gameCommands[i]->execute(true);
+				if (tracker.b == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadButtonBinding() == B))
+					(*commandIterator)->execute(true);
 
-			if (tracker.leftShoulder == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadButton() == LeftShoulder))
-				m_gameCommands[i]->execute(false);
+				if (tracker.b == GamePad::ButtonStateTracker::RELEASED && ((*commandIterator)->getGamePadButtonBinding() == B))
+					(*commandIterator)->execute(false);
 
-			if (tracker.rightShoulder == GamePad::ButtonStateTracker::PRESSED && (m_gameCommands[i]->getGamePadButton() == RightShoulder))
-				m_gameCommands[i]->execute(true);
+				if (tracker.x == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadButtonBinding() == X))
+					(*commandIterator)->execute(true);
 
-			if (tracker.rightShoulder == GamePad::ButtonStateTracker::RELEASED && (m_gameCommands[i]->getGamePadButton() == RightShoulder))
-				m_gameCommands[i]->execute(false);
+				if (tracker.x == GamePad::ButtonStateTracker::RELEASED && ((*commandIterator)->getGamePadButtonBinding() == X))
+					(*commandIterator)->execute(false);
+
+				if (tracker.y == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadButtonBinding() == Y))
+					(*commandIterator)->execute(true);
+
+				if (tracker.y == GamePad::ButtonStateTracker::RELEASED && ((*commandIterator)->getGamePadButtonBinding() == Y))
+					(*commandIterator)->execute(false);
+
+				if (tracker.back == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadButtonBinding() == Back))
+					(*commandIterator)->execute(true);
+
+				if (tracker.back == GamePad::ButtonStateTracker::RELEASED && ((*commandIterator)->getGamePadButtonBinding() == Back))
+					(*commandIterator)->execute(false);
+
+				if (tracker.start == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadButtonBinding() == Start))
+					(*commandIterator)->execute(true);
+
+				if (tracker.start == GamePad::ButtonStateTracker::RELEASED && ((*commandIterator)->getGamePadButtonBinding() == Start))
+					(*commandIterator)->execute(false);
+
+				if (tracker.leftShoulder == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadButtonBinding() == LeftShoulder))
+					(*commandIterator)->execute(true);
+
+				if (tracker.leftShoulder == GamePad::ButtonStateTracker::RELEASED && ((*commandIterator)->getGamePadButtonBinding() == LeftShoulder))
+					(*commandIterator)->execute(false);
+
+				if (tracker.rightShoulder == GamePad::ButtonStateTracker::PRESSED && ((*commandIterator)->getGamePadButtonBinding() == RightShoulder))
+					(*commandIterator)->execute(true);
+
+				if (tracker.rightShoulder == GamePad::ButtonStateTracker::RELEASED && ((*commandIterator)->getGamePadButtonBinding() == RightShoulder))
+					(*commandIterator)->execute(false);
+			}
 		}
 	}
 }

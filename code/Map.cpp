@@ -14,7 +14,7 @@ Map::~Map()
 {
 }
 
-void Map::InitializeMap(DX11RenderManager *graphics, WinInput *input, int screenWidth, int screenHeight)
+void Map::InitializeMap(DX11RenderManager *graphics, InputHandler *input, int screenWidth, int screenHeight)
 {
 	m_graphicSystem = graphics;
 	m_input = input;
@@ -27,7 +27,7 @@ void Map::InitializeMap(DX11RenderManager *graphics, WinInput *input, int screen
 
 	Command *testCommand = new Command();
 	testCommand->setKeyboardKeyBinding(Keyboard::Keys::Left);
-	testCommand->setGamePadDpad(Left);
+	testCommand->setGamePadDpadBinding(Left);
 
 	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
 	testCommand->setCallbackFunction(funcPointLeft);
@@ -36,7 +36,7 @@ void Map::InitializeMap(DX11RenderManager *graphics, WinInput *input, int screen
 
 	Command *testCommand2 = new Command();
 	testCommand2->setKeyboardKeyBinding(Keyboard::Keys::Right);
-	testCommand2->setGamePadDpad(Right);
+	testCommand2->setGamePadDpadBinding(Right);
 	
 	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
 	testCommand2->setCallbackFunction(funcPointRight);
@@ -81,7 +81,9 @@ void Map::MoveMapLeft(bool move)
 void Map::MoveMapRight(bool move)
 {
 	if (move)
+	{
 		m_currentSection.UpdateVelocity(1);
+	}
 	else
 		m_currentSection.UpdateVelocity(0);
 }

@@ -10,107 +10,127 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Includes.h"
 #include "GameActor.h"
 
-enum GamePadDPad
+enum DpadDirections
 {
+	DPadNone,
 	Up,
 	Down,
 	Left,
 	Right
 };
 
-enum GamePadButtons
+enum GamePadButton
 {
+	ButtonNone,
 	A,
 	B,
 	X,
 	Y,
-	LeftShoulder,
-	RightShoulder,
 	Back,
-	Start
+	Start,
+	LeftShoulder,
+	RightShoulder
 };
 
+// a class that defines a specific Command or Action in the game this class
+// encompasses a keyboard control and a game pad control each instance of the
+// command class will represent a single action in this game engine the actions
+// are Up, Down, Left, Right, Accept, Cancel, and Pause
 class Command
 {
 	protected:
-		function<void(bool)>	m_functionPointer;
-		bool					m_dpadSet;
+		function<void(bool)>	m_functionPointer;		// function pointer to the callback method
+		DpadDirections			m_dpadDirection;
+		bool					m_dpadDirectionSet;
+		GamePadButton					m_gamePadButton;
 		bool					m_buttonSet;
-		GamePadButtons			m_button;
-		GamePadDPad				m_dpad;
-		Keyboard::Keys			m_key;
+		Keyboard::Keys			m_key;					// keyboard key that is set to the action
+														// no matter what the default is that a keyboard key is required
+														// for each action
 
 	public:
-		virtual void execute(bool pressedOrReleased)
+		Command() {}
+
+		~Command() {}
+		// execute method that is called when a key is pressed for the action
+		// this method takes a bool on whether the action was a press or a release
+		// of the specified button, it takes that value and passes it on to the callback
+		// method that was set for the action, this method takes care of the actual action
+		// that the command is linked to
+		void execute(bool pressedOrReleased)
 		{
 			m_functionPointer(pressedOrReleased);
 		}
 
-		virtual void setCallbackFunction(function<void(bool)> funcPoint)
+		// method that simply sets the callback function associated with the command
+		void setCallbackFunction(function<void(bool)> funcPoint)
 		{
 			m_functionPointer = funcPoint;
 		}
 
-		virtual void setKeyboardKeyBinding(Keyboard::Keys key)
+		// method that sets the keyboard binding to which ever key is specified
+		void setKeyboardKeyBinding(Keyboard::Keys key)
 		{
 			m_key = key;
 		}
 
-		virtual Keyboard::Keys getKeyboardBinding()
+		void setGamePadDpadBinding(DpadDirections dpad)
 		{
-			return m_key;
+			m_dpadDirection = dpad;
+			m_dpadDirectionSet = true;
 		}
 
-		virtual void setGamePadDpad(GamePadDPad dpad)
+		DpadDirections getGamePadDpadBinding()
 		{
-			m_dpad = dpad;
-			m_dpadSet = true;
+			return m_dpadDirection;
 		}
 
-		virtual GamePadDPad getGamePadDpad()
+		void setGamePadButtonBinding(GamePadButton button)
 		{
-			return m_dpad;
-		}
-
-		virtual bool hasDpadBinding()
-		{
-			return m_dpadSet;
-		}
-
-		virtual void setGamePadButton(GamePadButtons button)
-		{
-			m_button = button;
+			m_gamePadButton = button;
 			m_buttonSet = true;
 		}
 
-		virtual GamePadButtons getGamePadButton()
+		GamePadButton getGamePadButtonBinding()
 		{
-			return m_button;
+			return m_gamePadButton;
 		}
 
-		virtual bool hasButtonBinding()
+		bool getIsDPadDirectionSet()
+		{
+			return m_dpadDirectionSet;
+		}
+
+		bool getIsGamePadButtonSet()
 		{
 			return m_buttonSet;
 		}
+
+		// method that returns the key that is bound to the action for the keyboard
+		Keyboard::Keys getKeyboardBinding()
+		{
+			return m_key;
+		}
 };
 
-class WinInput
+class InputHandler
 {
 	protected:
 		unique_ptr<Keyboard::KeyboardStateTracker> m_keyboardTracker;
 		unique_ptr<Keyboard> m_keyboard;
 		unique_ptr<GamePad> m_gamePad;
-		GamePad::State m_gamepadState;
 		vector<Command*> m_gameCommands;
 
 	public:
-		WinInput();
-		~WinInput();
+		InputHandler();
+		~InputHandler();
 
 		void InitializeInput();
 		void AddCommand(Command *comm);
 		void ClearCommands();
 		void HandleInput();
+
+		void GamePadUpdate();
 
 		void GamePadOnSusspend()
 		{

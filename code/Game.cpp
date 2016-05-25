@@ -71,7 +71,7 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	if (!m_graphicSystem->InitializeGraphics(m_window, width, height))
 		return false;
 
-	m_input = make_unique<WinInput>();
+	m_input = make_unique<InputHandler>();
 	m_input->InitializeInput();
 
 	testMap.InitializeMap(m_graphicSystem.get(), m_input.get(), m_gameWidth, m_gameHeight);
@@ -81,7 +81,7 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	// this crap will go away once I have completed building the other systems related to the game state
 	Command *testCommand = new Command();
 	testCommand->setKeyboardKeyBinding(Keyboard::Keys::Escape);
-	testCommand->setGamePadButton(Back);
+	testCommand->setGamePadButtonBinding(Back);
 
 	function<void(bool)> funcPoint = bind(&Game::CloseGame, this, placeholders::_1);
 	testCommand->setCallbackFunction(funcPoint);

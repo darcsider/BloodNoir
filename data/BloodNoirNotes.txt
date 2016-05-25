@@ -1542,3 +1542,9 @@ a button press it will transition over to the in game map state for now until I 
 May 24th, 2016
 
 Day 86 of Development
+Today I'm going to back track more and get some more work on the input system done, I'm just not happy with how it functions
+and how it feels glitchy when it does work.  So I'm going to keep working on it to get it to a stable state that I'm happy with
+before I move on to the game state stuff.  But My goal is to get working on the game state stuff today.
+
+I have the problem narrowed down to a couple possible issues and I will continue researching how to handle them correctly when
+I get back home from working out.

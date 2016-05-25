@@ -36,7 +36,7 @@ class Game
 		bool m_fpsOn;
 		Map testMap;
 
-		unique_ptr<WinInput> m_input;
+		unique_ptr<InputHandler> m_input;
 
 		unique_ptr<DX11RenderManager> m_graphicSystem;
 

@@ -10,8 +10,8 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Includes.h"
 #include "DX11RenderManager.h"
 #include "InputCommand.h"
-#pragma warning (disable : 4244)
-#pragma warning (disable : 4018)
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4018)
 
 // The various object types available in the game
 // Money used to travel faster and potentially other upgrades
@@ -65,8 +65,8 @@ struct TriggerPoint
 struct SectionLayer
 {
 	string	m_textureName;
-	float	m_scrollSpeed;
-	float	m_velocity;
+	double	m_scrollSpeed;
+	double	m_velocity;
 	bool	m_autoScroll;
 	int		m_width;
 	int		m_height;
@@ -153,7 +153,7 @@ class Map
 {
 	protected:
 		DX11RenderManager	*m_graphicSystem;
-		WinInput			*m_input;
+		InputHandler		*m_input;
 		string				m_mapName;
 		vector<MapSection>	m_mapSections;
 		vector<string>		m_sectionNames;
@@ -165,7 +165,7 @@ class Map
 		Map();
 		~Map();
 
-		void InitializeMap(DX11RenderManager *graphics, WinInput *input, int screenWidth, int screenHeight);
+		void InitializeMap(DX11RenderManager *graphics, InputHandler *input, int screenWidth, int screenHeight);
 		void BuildMap(string mapTextFile);
 		void UpdateMap(float timeDelta);
 		void DrawMap();

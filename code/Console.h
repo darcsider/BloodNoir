@@ -14,13 +14,14 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Includes.h"
 #include "DX11RenderManager.h"
 #include "InputCommand.h"
-#pragma warning (disable : 4018)
+
+#pragma warning(disable : 4018)
 
 class Console
 {
 	private:
 		DX11RenderManager				*m_graphicSystem;		// Graphics System variable
-		WinInput						*m_input;				// Input variable
+		InputHandler					*m_input;				// Input variable
 		string							m_commandString;		// string holding the command entered in by the user
 		string							m_prompt;				// the prompt that displays on the screen
 		string							m_textInput;			// the text that is being entered in by the keyboard
@@ -53,16 +54,17 @@ class Console
 		virtual ~Console();
 
 		// Initialize the Console
-		// Pre: *g points to Graphics
-		//      *in points to Input
-		bool initialize(DX11RenderManager *graphics, WinInput *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor);
+		bool initialize(DX11RenderManager *graphics, InputHandler *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor);
 
 		void Draw();
 
 		void HideShow(bool notUsed)
 		{
-			m_visible = !m_visible;
-			m_textInput.clear();
+			if (notUsed)
+			{
+				m_visible = !m_visible;
+				m_textInput.clear();
+			}
 		}
 
 		bool IsVisible()
