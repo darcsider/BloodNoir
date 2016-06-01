@@ -23,18 +23,19 @@ class BannerParade : public GameState
 {
 	protected:
 		bool m_nextBanner;
-		int m_remainingBanners;
-		int m_numberOfBanners;
+		int m_currentBanner;
+		bool m_changeBanner;
+		string m_fileName;
+		vector<string> m_textureNames;
+		vector<bool> m_skipBanner;
 		EventManager *m_eventManager;
-
 		Command *m_actionCommand;
 
 	public:
-		void InputCallBack(bool pressedOrReleased);
-		void StateChangeCallBack();
 		BannerParade();
 		~BannerParade();
+		void InputCallBack(bool pressedOrReleased);
+		void StateChangeCallBack();
 		void Update();
-
 };
 #endif

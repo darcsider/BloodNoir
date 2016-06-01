@@ -1547,4 +1547,27 @@ and how it feels glitchy when it does work.  So I'm going to keep working on it 
 before I move on to the game state stuff.  But My goal is to get working on the game state stuff today.
 
 I have the problem narrowed down to a couple possible issues and I will continue researching how to handle them correctly when
-I get back home from working out.
+I get back home from working out.  I still can't quite solve why it doesn't work 100% the way I want it to but I can still move
+on for now and when I come up with a solution I will fix it then.
+
+May 29th, 2016
+
+Day 87 of Development
+Tonight I'm going to work on the game state system and hope to get the banner parade one completely designed out and hopefully
+implemented.  I didn't get very far with this today but I will get back on track tomorrow.
+
+May 31st, 2016
+
+Day 88 of Development
+I'm getting to work on the game state system and as I start to plan out the logic for it I run into a problem that I figured I would
+run into eventually.  The rendering system the way it works now isn't going to work quite the way I need it to with the new game state
+system of the engine.  Right now each system grabs a copy of the graphics variable and then makes their own calls to the system for
+rendering something.  But with game states switching all the time passing that variable around could get expensive in system resources.
+The questions is how can I write a system where any engine system can add draw commands that get processed every frame in a queue like
+fashion or First In First Out.  Or maybe the answer is not to write a new system but to simply create a new event type for drawing
+graphics to the screen a DrawEvent that gets the data needed to draw to the screen and instead of passing the graphics object around
+each system will have access to the EventManager and when they need to draw something to the screen they can add the correct event
+type to the manager and then when it reaches the top of the Que it will get processed and then removed from the Que and the next one
+will be processed.  So before I can work on the Game State system I need to get graphics draw commands throughout the engine switched
+over to EventManager add commands.
+

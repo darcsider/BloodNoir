@@ -12,7 +12,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include <string>
 #include <deque>
 #include "Includes.h"
-#include "DX11RenderManager.h"
+#include "EventManager.h"
 #include "InputCommand.h"
 
 #pragma warning(disable : 4018)

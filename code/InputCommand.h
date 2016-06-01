@@ -130,8 +130,6 @@ class InputHandler
 		void ClearCommands();
 		void HandleInput();
 
-		void GamePadUpdate();
-
 		void GamePadOnSusspend()
 		{
 			m_gamePad->Suspend();
