@@ -1560,14 +1560,35 @@ May 31st, 2016
 
 Day 88 of Development
 I'm getting to work on the game state system and as I start to plan out the logic for it I run into a problem that I figured I would
-run into eventually.  The rendering system the way it works now isn't going to work quite the way I need it to with the new game state
-system of the engine.  Right now each system grabs a copy of the graphics variable and then makes their own calls to the system for
-rendering something.  But with game states switching all the time passing that variable around could get expensive in system resources.
-The questions is how can I write a system where any engine system can add draw commands that get processed every frame in a queue like
-fashion or First In First Out.  Or maybe the answer is not to write a new system but to simply create a new event type for drawing
-graphics to the screen a DrawEvent that gets the data needed to draw to the screen and instead of passing the graphics object around
-each system will have access to the EventManager and when they need to draw something to the screen they can add the correct event
-type to the manager and then when it reaches the top of the Que it will get processed and then removed from the Que and the next one
-will be processed.  So before I can work on the Game State system I need to get graphics draw commands throughout the engine switched
-over to EventManager add commands.
+run into eventually.  The rendering system the way it works now isn't going to work quite the way I need it to with the new game 
+state system of the engine.  Right now each system grabs a copy of the graphics variable and then makes their own calls to the
+system for rendering something.  But with game states switching all the time passing that variable around could get expensive
+in system resources. The questions is how can I write a system where any engine system can add draw commands that get processed
+every frame in a queue like fashion or First In First Out.  Or maybe the answer is not to write a new system but to simply create
+a new event type for drawing graphics to the screen a DrawEvent that gets the data needed to draw to the screen and instead of
+passing the graphics object around each system will have access to the EventManager and when they need to draw something to the
+screen they can add the correct event type to the manager and then when it reaches the top of the Que it will get processed and
+then removed from the Que and the next one will be processed.  So before I can work on the Game State system I need to get graphics
+draw commands throughout the engine switched over to EventManager add commands.
 
+Fixing this situation is going to take some time there is no way for me to finish the changes tonight, I have implemented the new
+draw event and hooked it up but with these changes I must now implement changes to all other systems that draw things to the screen.
+Which will take some time and I don't want to make that process to complicated because I will change it again as I implement the
+game state.  Maybe I need to look at this as an opportunity to re think my whole rendering scheme in general.  Maybe this is the
+point where I make it so that everything that I draw in the game is a version of a GameActor Object a class that inherits from the
+base GameActor class.
+
+I'm going to stop working on things for tonight and pick things back up tomorrow after a good nights rest, my goal for tomorrow is
+to get some design work done for the GameActor base class and think about the various types of Actors in the game.
+
+June 2nd, 2016
+
+Day 89 of Development
+Tonight I'm going to continue my work and research into how best to handle the Actor concepts in my engine so far I'm leaning
+toward using a Component style system for this part of the engine.
+
+June 6th, 2016
+
+Day 90 of Development
+Today I'm going to get this project back on track and get the game moving forward towards a complete demo to hand off to investors
+to fund the company.  

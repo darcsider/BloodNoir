@@ -23,36 +23,6 @@ class Event
 		virtual bool Execute() = 0;
 };
 
-class DrawEvent : public Event
-{
-	protected:
-		string m_drawObject;
-		DX11RenderManager *m_graphics;
-		Vector2 m_position;
-
-	public:
-		function<void()> callBack;
-		DrawEvent() {}
-		DrawEvent(int id, string object, Vector2 position, DX11RenderManager *tempGraphics);
-		~DrawEvent();
-		virtual bool Execute();
-
-		void SetGraphicsSystem(DX11RenderManager *tempGraphics)
-		{
-			m_graphics = tempGraphics;
-		}
-
-		void SetCallBack(function<void()> funcPoint)
-		{
-			callBack = funcPoint;
-		}
-
-		void ExecuteCallBack()
-		{
-			callBack();
-		}
-};
-
 class TimedEvent : public Event
 {
 	protected:
@@ -96,6 +66,5 @@ class EventManager
 		void ProcessEvents();
 		void AddEvent(Event *event);
 		void AddEvent(double timeLimit);
-		void AddEvent(string object);
 };
 #endif

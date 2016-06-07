@@ -13,6 +13,9 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 
 class GameState
 {
+	protected:
+		DX11RenderManager *m_graphics;
+		InputHandler *m_input;
 	public:
 		GameState() {}
 		virtual ~GameState() {}
@@ -32,10 +35,54 @@ class BannerParade : public GameState
 		Command *m_actionCommand;
 
 	public:
-		BannerParade();
+		BannerParade(DX11RenderManager *graphics, InputHandler *input);
 		~BannerParade();
+		void AddBanner(string textureName, bool canSkip);
+		void InputCallBack(bool pressedOrReleased);
+		void StateChangeCallBack();
+		void Update();
+};
+
+class MainMenu : public GameState
+{
+	protected:
+
+	public:
+		MainMenu();
+		~MainMenu();
 		void InputCallBack(bool pressedOrReleased);
 		void StateChangeCallBack();
 		void Update();
 };
 #endif
+
+/*
+- MainMenu- Game State
+InputObject - inherited from base GameState set in constructor
+Input callback methods for up, down, and AcceptButton press - these will be set in constructor
+current Menu option selected variable
+Constructor()
+Destructor()
+Update()
+draw titleScreen
+draw MenuItems in current state
+
+input Callback for Up
+If first menu option is selected then
+switch to last menu option
+else
+menu option selected - 1
+
+input callback for down
+if last menu option is selected then
+switch to first menu option
+else
+menu option selected + 1
+
+input callback accept button
+fire an event off for changing the GameState
+if New Game Selected set GameState to NewGame/Tutorial
+if LoadGame Selected set GameState to LoadGame
+if Options Selected set GameState to OptionsMenu
+if Exit Selected set GameState to OnExit
+*/
