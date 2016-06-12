@@ -1591,4 +1591,26 @@ June 6th, 2016
 
 Day 90 of Development
 Today I'm going to get this project back on track and get the game moving forward towards a complete demo to hand off to investors
-to fund the company.  
+to fund the company.  I was able to get some work done on the game state system, I do not have it complete but it is further along
+than it was when I started today, I'm hoping to get it much further along tomorrow and possibly get it linked up into the engine
+and working so that I can verify functionality.
+
+June 11th, 2016
+
+Day 91 of Development
+I'm going to try to get back to working on the project again I'm sad to say that I have let outside distractions get in the way but
+I'm serious this time when I say I'm going to get back to 100% focus on the project and getting the demo done.  I'm still working
+out the details of the game state system I'm not 100% sure how I am going to handle it but I'm trying to come up with some ideas.
+This is my current task getting the game state system built and implemented because once I do this it makes things a lot easier to
+bring the demo to a playable point and also makes the future of the project seem possible.
+
+-Game State Manager Class-
+
+I have been working on the idea for this for part of the day and I have come up with an interesting idea that I think will work
+very well for this system.  I will make it so that at the beginning of the game when the game state manager class is instantiated
+it will add all potential game states to the state container in there opening state.  When a state needs to change to another
+state for example if the player presses pause, or opens the in game menu while on a map then it will call a callback function
+that will change the current state over to the state being requested.  This way I don't have to figure out how to keep data
+related to each state alive in between them being added and destroyed.  The game state manager will call update on the current
+game state each frame, when a state is changed it will be changed to the current state.  Only when the game ends or the window
+is closed will all states be deleted for cleaning up memory.

@@ -6,10 +6,11 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "GameState.h"
 
-BannerParade::BannerParade(DX11RenderManager *graphics, InputHandler *input)
+BannerParade::BannerParade(DX11RenderManager *graphics, InputHandler *input, string file)
 {
 	m_graphics = graphics;
 	m_input = input;
+	m_fileName = file;
 	
 	m_input->ClearCommands();
 
@@ -21,6 +22,33 @@ BannerParade::BannerParade(DX11RenderManager *graphics, InputHandler *input)
 	skipCommand->setCallbackFunction(functionPointer);
 
 	m_currentBanner = 0;
+	BuildBanners();
+}
+
+void BannerParade::BuildBanners()
+{
+	int numberOfBanners = 0;
+	string tempString;
+	ifstream inFile(m_fileName);
+
+	if (inFile)
+	{
+		getline(inFile, tempString);
+		numberOfBanners = atoi(tempString.c_str());
+
+		for (int i = 0; i < numberOfBanners; i++)
+		{
+			getline(inFile, tempString);
+			m_textureNames.push_back(tempString);
+			
+			getline(inFile, tempString);
+			if (tempString == "TRUE")
+				m_skipBanner.push_back(true);
+			else if (tempString == "FALSE")
+				m_skipBanner.push_back(false);
+		}
+	}
+	inFile.close();
 }
 
 BannerParade::~BannerParade()
@@ -47,12 +75,6 @@ void BannerParade::StateChangeCallBack()
 		m_skipBanner.erase(m_skipBanner.begin() + m_currentBanner);
 		m_currentBanner++;
 	}
-}
-
-void BannerParade::AddBanner(string textureName, bool canSkip)
-{
-	m_textureNames.push_back(textureName);
-	m_skipBanner.push_back(canSkip);
 }
 
 void BannerParade::Update()

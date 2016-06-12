@@ -35,9 +35,9 @@ class BannerParade : public GameState
 		Command *m_actionCommand;
 
 	public:
-		BannerParade(DX11RenderManager *graphics, InputHandler *input);
+		BannerParade(DX11RenderManager *graphics, InputHandler *input, string file);
 		~BannerParade();
-		void AddBanner(string textureName, bool canSkip);
+		void BuildBanners();
 		void InputCallBack(bool pressedOrReleased);
 		void StateChangeCallBack();
 		void Update();
@@ -46,7 +46,9 @@ class BannerParade : public GameState
 class MainMenu : public GameState
 {
 	protected:
-
+		int m_optionSelected;
+		string m_mainMenuTexture;
+		vector<string> m_menuOptions;
 	public:
 		MainMenu();
 		~MainMenu();
