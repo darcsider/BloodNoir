@@ -184,6 +184,7 @@
     <ClInclude Include="code\Game.h" />
     <ClInclude Include="code\GameActor.h" />
     <ClInclude Include="code\GameState.h" />
+    <ClInclude Include="code\GameStateManager.h" />
     <ClInclude Include="code\GameTiming.h" />
     <ClInclude Include="code\Includes.h" />
     <ClInclude Include="code\LevelEditor.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="code\Game.cpp" />
     <ClCompile Include="code\GameActor.cpp" />
     <ClCompile Include="code\GameState.cpp" />
+    <ClCompile Include="code\GameStateManager.cpp" />
     <ClCompile Include="code\GameTiming.cpp" />
     <ClCompile Include="code\LevelEditor.cpp" />
     <ClCompile Include="code\Map.cpp" />

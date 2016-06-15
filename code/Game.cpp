@@ -32,7 +32,7 @@ void Game::InitializeResources()
 	string tempString;
 	string filename;
 	string resourceName;
-	ifstream inFile("..\\Resources.txt");
+	ifstream inFile("..\\data\\Resources.txt");
 	wstring_convert<codecvt_utf8<wchar_t>> converter;
 	wstring output;
 

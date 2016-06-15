@@ -1614,3 +1614,13 @@ that will change the current state over to the state being requested.  This way 
 related to each state alive in between them being added and destroyed.  The game state manager will call update on the current
 game state each frame, when a state is changed it will be changed to the current state.  Only when the game ends or the window
 is closed will all states be deleted for cleaning up memory.
+
+June 12th, 2016
+
+Day 92 of Development
+I began working on implementing the game state manager in code today.  I have not completed it yet but I'm hoping to have it up
+and working tomorrow and to be able to test it out and then hopefully move on to other parts of this project.
+
+June 14th, 2016
+
+Day 93 of Development

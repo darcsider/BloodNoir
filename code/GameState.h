@@ -16,6 +16,7 @@ class GameState
 	protected:
 		DX11RenderManager *m_graphics;
 		InputHandler *m_input;
+		bool m_stateEnds;
 	public:
 		GameState() {}
 		virtual ~GameState() {}
