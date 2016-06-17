@@ -66,7 +66,7 @@ void BannerParade::InputCallBack(bool pressedOrReleased)
 	}
 }
 
-void BannerParade::StateChangeCallBack()
+void BannerParade::TimerCallBack()
 {
 	if (m_textureNames.size() > 0)
 	{

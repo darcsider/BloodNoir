@@ -16,11 +16,13 @@ class GameState
 	protected:
 		DX11RenderManager *m_graphics;
 		InputHandler *m_input;
-		bool m_stateEnds;
+		string m_stateFileName;
+
 	public:
 		GameState() {}
 		virtual ~GameState() {}
 		virtual void Update() = 0;
+		virtual void InputSetup() = 0;
 };
 
 class BannerParade : public GameState
@@ -40,7 +42,7 @@ class BannerParade : public GameState
 		~BannerParade();
 		void BuildBanners();
 		void InputCallBack(bool pressedOrReleased);
-		void StateChangeCallBack();
+		void TimerCallBack();
 		void Update();
 };
 

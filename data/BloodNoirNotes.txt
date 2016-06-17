@@ -1624,3 +1624,15 @@ and working tomorrow and to be able to test it out and then hopefully move on to
 June 14th, 2016
 
 Day 93 of Development
+Working more on the design for the game state and game state management system, I thought I had it figured out the other day but
+I realized more the past couple days that I need to do more design to get things working correctly.  Its better to take the time
+to do this correctly than the fastest I can, this project will either be turned into the first game for the company or used as
+one hell of a portfolio piece when looking for jobs.
+
+June 16th, 2016
+
+Day 94 of Development
+Working more on design for game state and game state management hoping to have it working by the end of the week and get the first
+couple of states implemented.  I have accomplished a decent amount of understanding of how I'm going to handle game states and
+the game state manager.  I will get things implemented into the engine and hopefully get the first state working correctly and
+fully implemented and tested tomorrow.
