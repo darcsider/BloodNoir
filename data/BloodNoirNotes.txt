@@ -1636,3 +1636,13 @@ Working more on design for game state and game state management hoping to have i
 couple of states implemented.  I have accomplished a decent amount of understanding of how I'm going to handle game states and
 the game state manager.  I will get things implemented into the engine and hopefully get the first state working correctly and
 fully implemented and tested tomorrow.
+
+June 17th, 2016
+
+Day 95 of Development
+I got a little bit more work done on implementing the game state and game state manager changes but I have not completed it yet
+my goal is to still have it implemented and working by 6/25/16.
+
+June 18th, 2016
+
+Day 96 of Development

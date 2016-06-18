@@ -81,7 +81,6 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	// this crap will go away once I have completed building the other systems related to the game state
 	Command *testCommand = new Command();
 	testCommand->setKeyboardKeyBinding(Keyboard::Keys::Escape);
-	testCommand->setGamePadButtonBinding(Back);
 
 	function<void(bool)> funcPoint = bind(&Game::CloseGame, this, placeholders::_1);
 	testCommand->setCallbackFunction(funcPoint);
@@ -201,28 +200,24 @@ void Game::MouseProcess(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Game::OnActivated()
 {
-	m_input->GamePadOnResume();
 	m_timer.Start();
 	m_appPaused = false;
 }
 
 void Game::OnDeactivated()
 {
-	m_input->GamePadOnSusspend();
 	m_timer.Stop();
 	m_appPaused = true;
 }
 
 void Game::OnSuspending()
 {
-	m_input->GamePadOnSusspend();
 	m_timer.Stop();
 	m_appPaused = true;
 }
 
 void Game::OnResuming()
 {
-	m_input->GamePadOnResume();
 	m_timer.Start();
 	m_appPaused = false;
 }

@@ -19,19 +19,6 @@ enum DpadDirections
 	Right
 };
 
-enum GamePadButton
-{
-	ButtonNone,
-	A,
-	B,
-	X,
-	Y,
-	Back,
-	Start,
-	LeftShoulder,
-	RightShoulder
-};
-
 // a class that defines a specific Command or Action in the game this class
 // encompasses a keyboard control and a game pad control each instance of the
 // command class will represent a single action in this game engine the actions
@@ -40,9 +27,6 @@ class Command
 {
 	protected:
 		function<void(bool)>	m_functionPointer;		// function pointer to the callback method
-		DpadDirections			m_dpadDirection;
-		bool					m_dpadDirectionSet;
-		GamePadButton					m_gamePadButton;
 		bool					m_buttonSet;
 		Keyboard::Keys			m_key;					// keyboard key that is set to the action
 														// no matter what the default is that a keyboard key is required
@@ -74,33 +58,6 @@ class Command
 			m_key = key;
 		}
 
-		void setGamePadDpadBinding(DpadDirections dpad)
-		{
-			m_dpadDirection = dpad;
-			m_dpadDirectionSet = true;
-		}
-
-		DpadDirections getGamePadDpadBinding()
-		{
-			return m_dpadDirection;
-		}
-
-		void setGamePadButtonBinding(GamePadButton button)
-		{
-			m_gamePadButton = button;
-			m_buttonSet = true;
-		}
-
-		GamePadButton getGamePadButtonBinding()
-		{
-			return m_gamePadButton;
-		}
-
-		bool getIsDPadDirectionSet()
-		{
-			return m_dpadDirectionSet;
-		}
-
 		bool getIsGamePadButtonSet()
 		{
 			return m_buttonSet;
@@ -129,15 +86,5 @@ class InputHandler
 		void AddCommand(Command *comm);
 		void ClearCommands();
 		void HandleInput();
-
-		void GamePadOnSusspend()
-		{
-			m_gamePad->Suspend();
-		}
-
-		void GamePadOnResume()
-		{
-			m_gamePad->Resume();
-		}
 };
 #endif

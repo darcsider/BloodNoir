@@ -28,19 +28,6 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
   can set certain settings like key bindings and music and effect volumes.
 - On Exit - THis state is accessible from Paused as well as any other state by pressing Escape when this state is
   invoked it will ask the player if they would like to save their game before exiting.*/
-enum StateTypes
-{
-	Banner,
-	MainMenu,
-	NewGame,
-	Tutorial,
-	MapSelect,
-	Map,
-	Paused,
-	LoadSave,
-	Options,
-	OnExit
-};
 
 class GameStateManager
 {

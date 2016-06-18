@@ -11,12 +11,28 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "EventManager.h"
 #include "InputCommand.h"
 
+enum StateTypes
+{
+	Banner,
+	MainMenu,
+	NewGame,
+	Tutorial,
+	MapSelect,
+	Map,
+	Paused,
+	LoadSave,
+	Options,
+	OnExit
+};
+
 class GameState
 {
 	protected:
 		DX11RenderManager *m_graphics;
 		InputHandler *m_input;
 		string m_stateFileName;
+		StateTypes m_type;
+		function<void(StateTypes)> m_callBack;
 
 	public:
 		GameState() {}
@@ -44,6 +60,8 @@ class BannerParade : public GameState
 		void InputCallBack(bool pressedOrReleased);
 		void TimerCallBack();
 		void Update();
+		void InputSetup();
+		void SetCallback(function<void(StateTypes)> point);
 };
 
 class MainMenu : public GameState

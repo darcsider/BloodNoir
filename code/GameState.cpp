@@ -11,18 +11,20 @@ BannerParade::BannerParade(DX11RenderManager *graphics, InputHandler *input, str
 	m_graphics = graphics;
 	m_input = input;
 	m_fileName = file;
-	
+
+	m_currentBanner = 0;
+	BuildBanners();
+}
+
+void BannerParade::InputSetup()
+{
 	m_input->ClearCommands();
 
 	Command *skipCommand = new Command();
 	skipCommand->setKeyboardKeyBinding(Keyboard::Keys::Enter);
-	skipCommand->setGamePadDpadBinding(Left);
 
 	function<void(bool)> functionPointer = bind(&BannerParade::InputCallBack, this, placeholders::_1);
 	skipCommand->setCallbackFunction(functionPointer);
-
-	m_currentBanner = 0;
-	BuildBanners();
 }
 
 void BannerParade::BuildBanners()
@@ -66,6 +68,11 @@ void BannerParade::InputCallBack(bool pressedOrReleased)
 	}
 }
 
+void BannerParade::SetCallback(function<void(StateTypes)> point)
+{
+	m_callBack = point;
+}
+
 void BannerParade::TimerCallBack()
 {
 	if (m_textureNames.size() > 0)
@@ -79,22 +86,29 @@ void BannerParade::TimerCallBack()
 
 void BannerParade::Update()
 {
-	if (m_changeBanner)
+	if (m_textureNames.size() > 0)
 	{
-		if (m_skipBanner[m_currentBanner])
+		if (m_changeBanner)
 		{
-			m_textureNames.erase(m_textureNames.begin() + m_currentBanner);
-			m_skipBanner.erase(m_skipBanner.begin() + m_currentBanner);
-			m_nextBanner = true;
+			if (m_skipBanner[m_currentBanner])
+			{
+				m_textureNames.erase(m_textureNames.begin() + m_currentBanner);
+				m_skipBanner.erase(m_skipBanner.begin() + m_currentBanner);
+				m_nextBanner = true;
+			}
 		}
-	}
 
-	if (m_nextBanner)
+		if (m_nextBanner)
+		{
+			m_currentBanner++;
+			m_nextBanner = false;
+			m_changeBanner = false;
+		}
+
+		m_graphics->DrawObject(m_textureNames[m_currentBanner], Vector2(0.0, 0.0));
+	}
+	else
 	{
-		m_currentBanner++;
-		m_nextBanner = false;
-		m_changeBanner = false;
+		m_callBack(MainMenu);
 	}
-
-	m_graphics->DrawObject(m_textureNames[m_currentBanner], Vector2(0.0, 0.0));
 }
