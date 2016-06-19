@@ -42,7 +42,7 @@ class GameStateManager
 		GameStateManager(DX11RenderManager *graphics, InputHandler *input);
 		~GameStateManager();
 		void BuildStateManager();
-		void Update();
+		void Process();
 		void ChangeState(StateTypes type);
 };
 #endif

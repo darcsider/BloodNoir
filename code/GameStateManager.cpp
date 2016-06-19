@@ -31,6 +31,8 @@ GameStateManager::~GameStateManager()
 void GameStateManager::BuildStateManager()
 {
 	BannerParade *bannerParade = new BannerParade(m_graphicsSystem, m_inputHandler, "..\\data\\bannerParade.txt");
+	function<void(bool)> functionPointer = bind(&GameStateManager::ChangeState, this, placeholders::_1);
+	bannerParade->SetCallback(functionPointer);
 	m_gameStates.push_back(bannerParade);
 
 }
@@ -60,7 +62,7 @@ void GameStateManager::ChangeState(StateTypes type)
 	}
 }
 
-void GameStateManager::Update()
+void GameStateManager::Process()
 {
 	m_currentState->Update();
 }

@@ -1646,3 +1646,9 @@ my goal is to still have it implemented and working by 6/25/16.
 June 18th, 2016
 
 Day 96 of Development
+More work done on implementing the new design for game state and game state manager, the grind continues the deadline for this
+system is coming.
+
+June 19th, 2016
+
+Day 97 of Development
