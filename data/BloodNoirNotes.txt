@@ -1649,6 +1649,32 @@ Day 96 of Development
 More work done on implementing the new design for game state and game state manager, the grind continues the deadline for this
 system is coming.
 
-June 19th, 2016
+June 20th, 2016
 
 Day 97 of Development
+Updates to the plan for this project and the deadline I'm setting for myself to get certain parts done. I'm going to set a new
+deadline for this milestone of the project the new deadline is 7/1/2016 The requirements for considering this milestone is
+successful one are:
+Game States: Banner Parade will be fully implemented and functional without final art, Main Menu will be fully implemented and
+functional again without final art, New Game/Tutorial will have basic functionality, will not be fully implemented and
+functional and will not contain final art, Map Select I will have dialog boxes working for the dossier system on the map select
+screen, I will have the ability to select a map section and go to it implemented and functional.
+
+Map I will have the ability to transition from Map Select to the map working, I will have trigger points at a basic level working,
+the player can go into and out of buildings, and move between blocks of the city.  The buildings will not be fully implemented the
+inside will show up like they are supposed to but the player will not be able to move between floors in the building yet.
+
+Character/Player I will get the class for this system implemented with animations, and I will implement the ability component
+system for the engine, I will not have any of the abilities implemented in the engine but I will have the system there for adding
+the abilities at a later date.
+
+June 21st, 2016
+
+Day 98 of Development
+I worked on the game state for banner parade as well as the system for changing between states in the state manager I did not get
+it fully functional today but I will do so tomorrow and test that it works.  Tomorrow I will also get more work done on the main
+menu game state.
+
+June 22nd, 2016
+
+Day 99 of Development

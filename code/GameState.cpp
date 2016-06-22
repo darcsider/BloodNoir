@@ -13,6 +13,8 @@ BannerParade::BannerParade(DX11RenderManager *graphics, InputHandler *input, str
 	m_fileName = file;
 
 	m_currentBanner = 0;
+
+	m_type = Banner;
 	BuildBanners();
 }
 

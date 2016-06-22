@@ -37,6 +37,7 @@ class GameState
 	public:
 		GameState() {}
 		virtual ~GameState() {}
+		virtual StateTypes ReturnType() = 0;
 		virtual void Update() = 0;
 		virtual void InputSetup() = 0;
 };
@@ -62,6 +63,11 @@ class BannerParade : public GameState
 		void Update();
 		void InputSetup();
 		void SetCallback(function<void(StateTypes)> point);
+
+		StateTypes ReturnType()
+		{
+			return m_type;
+		}
 };
 
 class MainMenu : public GameState
@@ -78,34 +84,3 @@ class MainMenu : public GameState
 		void Update();
 };
 #endif
-
-/*
-- MainMenu- Game State
-InputObject - inherited from base GameState set in constructor
-Input callback methods for up, down, and AcceptButton press - these will be set in constructor
-current Menu option selected variable
-Constructor()
-Destructor()
-Update()
-draw titleScreen
-draw MenuItems in current state
-
-input Callback for Up
-If first menu option is selected then
-switch to last menu option
-else
-menu option selected - 1
-
-input callback for down
-if last menu option is selected then
-switch to first menu option
-else
-menu option selected + 1
-
-input callback accept button
-fire an event off for changing the GameState
-if New Game Selected set GameState to NewGame/Tutorial
-if LoadGame Selected set GameState to LoadGame
-if Options Selected set GameState to OptionsMenu
-if Exit Selected set GameState to OnExit
-*/
