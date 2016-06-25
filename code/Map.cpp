@@ -27,7 +27,6 @@ void Map::InitializeMap(DX11RenderManager *graphics, InputHandler *input, int sc
 
 	Command *testCommand = new Command();
 	testCommand->setKeyboardKeyBinding(Keyboard::Keys::Left);
-	testCommand->setGamePadDpadBinding(Left);
 
 	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
 	testCommand->setCallbackFunction(funcPointLeft);
@@ -36,7 +35,6 @@ void Map::InitializeMap(DX11RenderManager *graphics, InputHandler *input, int sc
 
 	Command *testCommand2 = new Command();
 	testCommand2->setKeyboardKeyBinding(Keyboard::Keys::Right);
-	testCommand2->setGamePadDpadBinding(Right);
 	
 	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
 	testCommand2->setCallbackFunction(funcPointRight);

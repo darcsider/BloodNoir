@@ -53,12 +53,10 @@ class EventManager
 	protected:
 		vector<Event*> m_events;
 		static int m_eventID;
-		DX11RenderManager *m_graphicSystem;
 	
 	public:
-		EventManager(DX11RenderManager *graphics) 
+		EventManager() 
 		{
-			m_graphicSystem = graphics;
 		}
 
 		~EventManager() {}

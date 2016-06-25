@@ -14,6 +14,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Console.h"
 #include "InputCommand.h"
 #include "WinAudio.h"
+#include "GameStateManager.h"
 
 // not complete must do more work just doing this to get started
 class Game
@@ -35,6 +36,8 @@ class Game
 
 		bool m_fpsOn;
 		Map testMap;
+
+		GameStateManager *m_stateManager;
 
 		unique_ptr<InputHandler> m_input;
 

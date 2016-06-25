@@ -1678,3 +1678,52 @@ menu game state.
 June 22nd, 2016
 
 Day 99 of Development
+I started trying to implement the new stuff into the engine and get it compiling and displaying correctly I ran into a problem with
+the game state manager there is something that it doesn't like about my code that I need to fix to get it working.  Hopefully I can
+figure it out fast and then move on.
+
+I found the initial error not allowing it to compile and now can get the code to compile and the window opens up like it is
+supposed to again but nothing is displaying on the screen at the moment.  I will investigate this issue more tomorrow after a good
+night sleep.
+
+June 24th, 2016
+
+Day 100 of Development
+New List of Things to do- notes from work today
+Banner Parade - get rid of event manager move the timing related code over to game state in general and make it an optional piece
+of data for each game state, because several states will need access to timing related stuff so what I will probably do is just
+have the game state manager take the time delta from the main game timer in and pass it along to the update method for each state.
+
+While thinking about this stuff I have another idea that I'm going to implement maybe for the game state manager instead of holding
+onto a pointer to the current state I can have a value that every state has that is called active it will be a bool value, and when
+a state is active that is set to true and when it is not it is set to false.  And each frame each state will take in the time delta
+and if it is a currently active state it will update its stuff if not than the only thing it will update is the timer variable to
+make sure that we don't end up with a huge jump in action when switching between states because of a giant time delta being built
+up for that state.
+
+Main Menu State - Graphics: title screen, new Game option, Load Game Option, Options Option, Exit Option, Press Any Key Option and
+their inverse selected versions.
+
+Tutorial / New Game States - The New game state will be a state showing text and the town the player lives in giving them a glimpse
+of the world.  It explains that you are dieing and have given up on life, One day you travel to the local mall to buy some mundane
+thing.  This is when the tutorial will introduce the player to the combat system with the basic controls for moving the character
+around on the screen and using Offensive and Defensive moves / abilities.  The mall level / map will be represented as a special
+map of only one section and multiple layers.
+
+Map Select State
+- Graphics for Map select screen
+- Vector of available map sections currently accessible - will probably all be in the vector at start and will be set invisible
+based on a bool unlocked value.
+- Graphics - Back Drop, Small Glimpse / thumbnail image of the map section that the selected area is for.
+- Border for text box / dialog box for dossier.
+
+- Figure out text / dialog boxes for the engine
+
+Start on Player / Character class
+- Graphics
+- Animations
+- Abilities - components
+
+June 25th, 2016
+
+Day 101 of Development

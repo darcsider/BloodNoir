@@ -18,7 +18,7 @@ enum StateTypes
 	NewGame,
 	Tutorial,
 	MapSelect,
-	Map,
+	InGame,
 	Paused,
 	LoadSave,
 	Options,
@@ -53,6 +53,7 @@ class BannerParade : public GameState
 		vector<bool> m_skipBanner;
 		EventManager *m_eventManager;
 		Command *m_actionCommand;
+		TimedEvent *timeEvent;
 
 	public:
 		BannerParade(DX11RenderManager *graphics, InputHandler *input, string file);

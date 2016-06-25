@@ -6,17 +6,6 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "GameStateManager.h"
 
-/*
-BannerParade,
-MainMenu,
-NewGame,
-Tutorial,
-MapSelect,
-Paused,
-LoadSave,
-Options,
-OnExit
-*/
 GameStateManager::GameStateManager(DX11RenderManager *graphics, InputHandler *input)
 {
 	m_graphicsSystem = graphics;
@@ -30,12 +19,14 @@ GameStateManager::~GameStateManager()
 
 void GameStateManager::BuildStateManager()
 {
-	BannerParade *bannerParade = new BannerParade(m_graphicsSystem, m_inputHandler, "..\\data\\bannerParade.txt");
-	function<void(bool)> functionPointer = bind(&GameStateManager::ChangeState, this, placeholders::_1);
+	BannerParade *bannerParade = new BannerParade(m_graphicsSystem, m_inputHandler, "..\\data\\BannerParade.txt");
+	function<void(StateTypes)> functionPointer = bind(&GameStateManager::ChangeState, this, placeholders::_1);
 	bannerParade->SetCallback(functionPointer);
 	bannerParade->InputSetup();
 	m_gameStates.push_back(bannerParade);
 
+	// NOTE TODO change this at a later date just here for testing purposes
+	m_currentState = m_gameStates[0];
 }
 
 void GameStateManager::ChangeState(StateTypes type)
@@ -57,6 +48,9 @@ void GameStateManager::ChangeState(StateTypes type)
 			break;
 		case MapSelect:
 			newType = MapSelect;
+			break;
+		case InGame:
+			newType = InGame;
 			break;
 		case Paused:
 			newType = Paused;

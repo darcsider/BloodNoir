@@ -102,6 +102,10 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	m_audioSystem->SetBackgroundMusic("..\\Music\\Electro.wav");
 	m_audioSystem->AddSoundEffect("heli", "..\\Music\\heli.wav");
 
+	m_stateManager = new GameStateManager(m_graphicSystem.get(), m_input.get());
+
+	m_stateManager->BuildStateManager();
+
 	//m_audioSystem->StartBackgroundMusic();
 	m_gameInitialized = true;
 	return true;
@@ -123,7 +127,8 @@ void Game::DrawScene()
 {
 	m_graphicSystem->ClearScene();
 	m_graphicSystem->BeginScene();
-	testMap.DrawMap();
+	//testMap.DrawMap();
+	m_stateManager->Process();
 	m_graphicSystem->EndScene();
 	editorConsole->Draw();
 	m_graphicSystem->PresentScene();
