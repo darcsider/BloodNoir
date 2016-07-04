@@ -1799,3 +1799,9 @@ system and try to get the first 2 states working correctly.
 July 4th, 2016
 
 Day 105 of Development
+Today I'm spending some time figuring out how I want to move forward with the engine for this game, I am debating between leaving
+things the way they are with the rendering where I have the single class for DirectX11 that does all rendering the challenging with
+doing things this way is that if I want to port this game over to another platform a game console or whatever then I will have to
+re write this entire class for that console as opposed to making a layer between that class and the game play and have this other
+class call in to the specific graphics class based on what build the game it being built for.
+

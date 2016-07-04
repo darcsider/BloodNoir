@@ -14,6 +14,7 @@ Game::Game() :
 	m_graphicSystem = make_unique<DX11Graphics>();
 	editorConsole = NULL;
 #if DEBUG || _DEBUG
+//#if _WIN32
 	m_fpsOn = true;
 #endif
 }
