@@ -1,12 +1,12 @@
 /*=====================================================================================
-$File: DX11RenderManager.cpp
-$Date: April 25, 2016
+$File: DX11Graphics.cpp
+$Date: June 27, 2016
 $Creator: Jamie Cooper
 $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserved.
 =====================================================================================*/
-#include "DX11RenderManager.h"
+#include "DX11Graphics.h"
 
-DX11RenderManager::DX11RenderManager()
+DX11Graphics::DX11Graphics()
 {
 	m_window = nullptr;
 	graphicsInitialized = false;
@@ -15,7 +15,7 @@ DX11RenderManager::DX11RenderManager()
 	m_gameHeight = 0;
 }
 
-DX11RenderManager::~DX11RenderManager()
+DX11Graphics::~DX11Graphics()
 {
 	m_depthStencil.Reset();
 	m_depthStencilView.Reset();
@@ -29,7 +29,7 @@ DX11RenderManager::~DX11RenderManager()
 	m_textures.clear();
 }
 
-bool DX11RenderManager::InitDirectXTKObjects()
+bool DX11Graphics::InitDirectXTKObjects()
 {
 	m_graphicStates.reset(new CommonStates(m_d3dDevice.Get()));
 	m_effectFactory.reset(new EffectFactory(m_d3dDevice.Get()));
@@ -55,7 +55,7 @@ bool DX11RenderManager::InitDirectXTKObjects()
 	return true;
 }
 
-bool DX11RenderManager::InitializeGraphics(HWND Window, int width, int height)
+bool DX11Graphics::InitializeGraphics(HWND Window, int width, int height)
 {
 	m_window = Window;
 	m_gameWidth = width;
@@ -72,7 +72,7 @@ bool DX11RenderManager::InitializeGraphics(HWND Window, int width, int height)
 	return true;
 }
 
-void DX11RenderManager::InitDirectX11()
+void DX11Graphics::InitDirectX11()
 {
 	// Create the device and device context.
 	HRESULT Result;
@@ -117,7 +117,7 @@ void DX11RenderManager::InitDirectX11()
 			m_d3dDevice.ReleaseAndGetAddressOf(),
 			&m_featureLevel,
 			m_d3dContext.ReleaseAndGetAddressOf()
-			);
+		);
 	}
 
 	DX::ThrowIfFailed(Result);
@@ -152,175 +152,7 @@ void DX11RenderManager::InitDirectX11()
 		(void)m_d3dContext.As(&m_d3dContext1);
 }
 
-bool DX11RenderManager::AddTexture(wstring filename, string name)
-{
-	ComPtr<ID3D11ShaderResourceView> texture;
-
-	if ((!filename.empty()) && (!name.empty()))
-	{
-		auto textureIndex = m_textures.find(name);
-
-		if (textureIndex == m_textures.end())
-		{
-			if (SUCCEEDED(CreateWICTextureFromFile(m_d3dDevice.Get(), filename.c_str(), nullptr, texture.ReleaseAndGetAddressOf())))
-			{
-				m_textures.insert(pair<string, ComPtr<ID3D11ShaderResourceView>>(name, texture));
-			}
-			else
-			{
-				return false;
-			}
-			return true;
-		}
-		else
-		{
-			return true;
-		}
-	}
-	else
-	{
-		return false;
-	}
-	return true;
-}
-
-void DX11RenderManager::BeginScene()
-{
-	if (m_spriteBatch != NULL)
-	{
-		m_spriteBatch->Begin();
-	}
-}
-
-void DX11RenderManager::ClearScene()
-{
-	// Clear the views
-	m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), Colors::Green);
-	m_d3dContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
-
-	m_d3dContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
-
-	// set the viewport
-	CD3D11_VIEWPORT screenViewport(0.0f, 0.0f, static_cast<float>(m_gameWidth), static_cast<float>(m_gameHeight));
-	m_d3dContext->RSSetViewports(1, &screenViewport);
-}
-
-void DX11RenderManager::DrawObject(string textureName, Vector2 position)
-{
-	if (graphicsInitialized)
-	{
-		if (!textureName.empty())
-		{
-			auto textureIndex = m_textures.find(textureName);
-			if (textureIndex != m_textures.end())
-			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), position);
-			}
-		}
-	}
-}
-
-void DX11RenderManager::DrawObject(string textureName, RECT sourceRect, Vector2 position)
-{
-	if (graphicsInitialized)
-	{
-		if (!textureName.empty())
-		{
-			auto textureIndex = m_textures.find(textureName);
-			if (textureIndex != m_textures.end())
-			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), position, &sourceRect);
-			}
-		}
-	}
-}
-
-void DX11RenderManager::DrawQuad(Vector2 position, int width, int height, XMFLOAT4 color)
-{
-	float startX = position.x;
-	float startY = position.y;
-
-	float endX = position.x + width;
-	float endY = position.y + height;
-
-	VertexPositionColor v1(XMFLOAT3(startX, startY, 0), color);
-	VertexPositionColor v2(XMFLOAT3(endX, startY, 0), color);
-	VertexPositionColor v3(XMFLOAT3(endX, endY, 0), color);
-	VertexPositionColor v4(XMFLOAT3(startX, endY, 0), color);
-
-	m_d3dContext.Get()->OMSetBlendState(m_graphicStates.get()->AlphaBlend(), nullptr, 0xFFFFFFFF);
-	m_d3dContext.Get()->OMSetDepthStencilState(m_graphicStates.get()->DepthNone(), 0);
-	m_d3dContext.Get()->RSSetState(m_graphicStates.get()->CullNone());
-
-	m_effectSystem->Apply(m_d3dContext.Get());
-	m_d3dContext.Get()->IASetInputLayout(m_inputLayout.Get());
-
-	m_primitiveBatch->Begin();
-	m_primitiveBatch->DrawQuad(v1, v2, v3, v4);
-	m_primitiveBatch->End();
-}
-
-D3D11_TEXTURE2D_DESC DX11RenderManager::getTextureDesc(string textureName)
-{
-	D3D11_TEXTURE2D_DESC textDesc = { 0 };
-	ComPtr<ID3D11Texture2D>	texture;
-	ComPtr<ID3D11Resource> resource;
-	D3D11_RESOURCE_DIMENSION dim;
-
-	if (graphicsInitialized)
-	{
-		if (!textureName.empty())
-		{
-			auto textureIndex = m_textures.find(textureName);
-			if (textureIndex != m_textures.end())
-			{
-				textureIndex->second.Get()->GetResource(resource.GetAddressOf());
-				resource->GetType(&dim);
-				if (dim != D3D11_RESOURCE_DIMENSION_TEXTURE2D)
-					throw exception("No texture2D no fun");
-				resource.As(&texture);
-				texture->GetDesc(&textDesc);
-			}
-		}
-	}
-	return textDesc;
-}
-
-void DX11RenderManager::EndScene()
-{
-	m_spriteBatch->End();
-}
-
-void DX11RenderManager::PresentScene()
-{
-	// The first argument instructs DXGI to block until VSync, putting the application
-	// to sleep until the next VSync. This ensures we don't waste any cycles rendering
-	// frames that will never be displayed to the screen.
-	HRESULT hr = m_swapChain->Present(1, 0);
-
-	// If the device was reset we must completely reinitialize the renderer
-	if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET)
-	{
-		OnDeviceLost();
-	}
-	else
-	{
-		DX::ThrowIfFailed(hr);
-	}
-}
-
-void DX11RenderManager::DrawTextToScreen(string text, Vector2 position)
-{
-	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, Colors::BlueViolet);
-}
-
-void DX11RenderManager::DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color)
-{
-	
-	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, color);
-}
-
-void DX11RenderManager::CreateResources()
+void DX11Graphics::CreateResources()
 {
 	// Clear the previous window size specific context
 	ID3D11RenderTargetView* nullViews[] = { nullptr };
@@ -436,7 +268,175 @@ void DX11RenderManager::CreateResources()
 	// TODO Initialize windows' size dependent objects here.
 }
 
-void DX11RenderManager::OnDeviceLost()
+bool DX11Graphics::AddTexture(wstring filename, string name)
+{
+	ComPtr<ID3D11ShaderResourceView> texture;
+
+	if ((!filename.empty()) && (!name.empty()))
+	{
+		auto textureIndex = m_textures.find(name);
+
+		if (textureIndex == m_textures.end())
+		{
+			if (SUCCEEDED(CreateWICTextureFromFile(m_d3dDevice.Get(), filename.c_str(), nullptr, texture.ReleaseAndGetAddressOf())))
+			{
+				m_textures.insert(pair<string, ComPtr<ID3D11ShaderResourceView>>(name, texture));
+			}
+			else
+			{
+				return false;
+			}
+			return true;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return true;
+}
+
+void DX11Graphics::BeginScene()
+{
+	if (m_spriteBatch != NULL)
+	{
+		m_spriteBatch->Begin();
+	}
+}
+
+void DX11Graphics::ClearScene()
+{
+	// Clear the views
+	m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), Colors::Green);
+	m_d3dContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+	m_d3dContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
+
+	// set the viewport
+	CD3D11_VIEWPORT screenViewport(0.0f, 0.0f, static_cast<float>(m_gameWidth), static_cast<float>(m_gameHeight));
+	m_d3dContext->RSSetViewports(1, &screenViewport);
+}
+
+void DX11Graphics::PresentScene()
+{
+	// The first argument instructs DXGI to block until VSync, putting the application
+	// to sleep until the next VSync. This ensures we don't waste any cycles rendering
+	// frames that will never be displayed to the screen.
+	HRESULT hr = m_swapChain->Present(1, 0);
+
+	// If the device was reset we must completely reinitialize the renderer
+	if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET)
+	{
+		OnDeviceLost();
+	}
+	else
+	{
+		DX::ThrowIfFailed(hr);
+	}
+}
+
+void DX11Graphics::EndScene()
+{
+	m_spriteBatch->End();
+}
+
+void DX11Graphics::DrawTextToScreen(string text, Vector2 position)
+{
+	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, Colors::BlueViolet);
+}
+
+void DX11Graphics::DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color)
+{
+
+	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, color);
+}
+
+void DX11Graphics::DrawObject(string textureName, Vector2 position)
+{
+	if (graphicsInitialized)
+	{
+		if (!textureName.empty())
+		{
+			auto textureIndex = m_textures.find(textureName);
+			if (textureIndex != m_textures.end())
+			{
+				m_spriteBatch->Draw(textureIndex->second.Get(), position);
+			}
+		}
+	}
+}
+
+void DX11Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 position)
+{
+	if (graphicsInitialized)
+	{
+		if (!textureName.empty())
+		{
+			auto textureIndex = m_textures.find(textureName);
+			if (textureIndex != m_textures.end())
+			{
+				m_spriteBatch->Draw(textureIndex->second.Get(), position, &sourceRect);
+			}
+		}
+	}
+}
+
+void DX11Graphics::DrawQuad(Vector2 position, int width, int height, XMFLOAT4 color)
+{
+	float startX = position.x;
+	float startY = position.y;
+
+	float endX = position.x + width;
+	float endY = position.y + height;
+
+	VertexPositionColor v1(XMFLOAT3(startX, startY, 0), color);
+	VertexPositionColor v2(XMFLOAT3(endX, startY, 0), color);
+	VertexPositionColor v3(XMFLOAT3(endX, endY, 0), color);
+	VertexPositionColor v4(XMFLOAT3(startX, endY, 0), color);
+
+	m_d3dContext.Get()->OMSetBlendState(m_graphicStates.get()->AlphaBlend(), nullptr, 0xFFFFFFFF);
+	m_d3dContext.Get()->OMSetDepthStencilState(m_graphicStates.get()->DepthNone(), 0);
+	m_d3dContext.Get()->RSSetState(m_graphicStates.get()->CullNone());
+
+	m_effectSystem->Apply(m_d3dContext.Get());
+	m_d3dContext.Get()->IASetInputLayout(m_inputLayout.Get());
+
+	m_primitiveBatch->Begin();
+	m_primitiveBatch->DrawQuad(v1, v2, v3, v4);
+	m_primitiveBatch->End();
+}
+
+D3D11_TEXTURE2D_DESC DX11Graphics::getTextureDesc(string textureName)
+{
+	D3D11_TEXTURE2D_DESC textDesc = { 0 };
+	ComPtr<ID3D11Texture2D>	texture;
+	ComPtr<ID3D11Resource> resource;
+	D3D11_RESOURCE_DIMENSION dim;
+
+	if (graphicsInitialized)
+	{
+		if (!textureName.empty())
+		{
+			auto textureIndex = m_textures.find(textureName);
+			if (textureIndex != m_textures.end())
+			{
+				textureIndex->second.Get()->GetResource(resource.GetAddressOf());
+				resource->GetType(&dim);
+				if (dim != D3D11_RESOURCE_DIMENSION_TEXTURE2D)
+					throw exception("No texture2D no fun");
+				resource.As(&texture);
+				texture->GetDesc(&textDesc);
+			}
+		}
+	}
+	return textDesc;
+}
+
+void DX11Graphics::OnDeviceLost()
 {
 	m_depthStencil.Reset();
 	m_depthStencilView.Reset();
@@ -451,6 +451,5 @@ void DX11RenderManager::OnDeviceLost()
 	m_effectSystem.reset();
 	m_primitiveBatch.reset();
 	m_inputLayout.Reset();
-	InitDirectX11();
 	CreateResources();
 }

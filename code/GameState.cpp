@@ -6,22 +6,13 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "GameState.h"
 
-BannerParade::BannerParade(DX11RenderManager *graphics, InputHandler *input, string file)
+BannerParade::BannerParade(DX11Graphics *graphics, InputHandler *input, string file)
 {
 	m_graphics = graphics;
 	m_input = input;
 	m_fileName = file;
 
 	m_currentBanner = 0;
-
-	// change this in the future just here for testing purposes
-	timeEvent = new TimedEvent(1, 5.0);
-	function<void()> funcPoint = bind(&BannerParade::TimerCallBack, this);
-	timeEvent->SetCallBack(funcPoint);
-
-	m_eventManager = new EventManager();
-
-	m_eventManager->AddEvent(timeEvent);
 
 	m_type = Banner;
 	BuildBanners();
@@ -69,8 +60,6 @@ BannerParade::~BannerParade()
 	delete m_graphics;
 	m_textureNames.clear();
 	m_skipBanner.clear();
-	delete timeEvent;
-	delete m_eventManager;
 }
 
 void BannerParade::InputCallBack(bool pressedOrReleased)
@@ -100,7 +89,6 @@ void BannerParade::TimerCallBack()
 
 void BannerParade::Update()
 {
-	m_eventManager->ProcessEvents();
 	if (m_textureNames.size() > 0)
 	{
 		if (m_changeBanner)

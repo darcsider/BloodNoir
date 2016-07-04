@@ -10,9 +10,8 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define WIN32_LEAN_AND_MEAN
 
 #include <string>
-#include <deque>
 #include "Includes.h"
-#include "EventManager.h"
+#include "DX11Graphics.h"
 #include "InputCommand.h"
 
 #pragma warning(disable : 4018)
@@ -20,7 +19,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 class Console
 {
 	private:
-		DX11RenderManager				*m_graphicSystem;		// Graphics System variable
+		DX11Graphics				*m_graphicSystem;		// Graphics System variable
 		InputHandler					*m_input;				// Input variable
 		string							m_commandString;		// string holding the command entered in by the user
 		string							m_prompt;				// the prompt that displays on the screen
@@ -54,7 +53,7 @@ class Console
 		virtual ~Console();
 
 		// Initialize the Console
-		bool initialize(DX11RenderManager *graphics, InputHandler *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor);
+		bool initialize(DX11Graphics *graphics, InputHandler *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor);
 
 		void Draw();
 

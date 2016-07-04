@@ -8,7 +8,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 #include "Includes.h"
-#include "EventManager.h"
+#include "DX11Graphics.h"
 #include "InputCommand.h"
 
 enum StateTypes
@@ -28,7 +28,7 @@ enum StateTypes
 class GameState
 {
 	protected:
-		DX11RenderManager *m_graphics;
+		DX11Graphics *m_graphics;
 		InputHandler *m_input;
 		string m_stateFileName;
 		StateTypes m_type;
@@ -51,12 +51,10 @@ class BannerParade : public GameState
 		string m_fileName;
 		vector<string> m_textureNames;
 		vector<bool> m_skipBanner;
-		EventManager *m_eventManager;
 		Command *m_actionCommand;
-		TimedEvent *timeEvent;
 
 	public:
-		BannerParade(DX11RenderManager *graphics, InputHandler *input, string file);
+		BannerParade(DX11Graphics *graphics, InputHandler *input, string file);
 		~BannerParade();
 		void BuildBanners();
 		void InputCallBack(bool pressedOrReleased);

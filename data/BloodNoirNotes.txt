@@ -1689,7 +1689,7 @@ night sleep.
 June 24th, 2016
 
 Day 100 of Development
-New List of Things to do- notes from work today
+New List of Things to do- notes from today
 Banner Parade - get rid of event manager move the timing related code over to game state in general and make it an optional piece
 of data for each game state, because several states will need access to timing related stuff so what I will probably do is just
 have the game state manager take the time delta from the main game timer in and pass it along to the update method for each state.
@@ -1727,3 +1727,75 @@ Start on Player / Character class
 June 25th, 2016
 
 Day 101 of Development
+Notes From Today
+
+Character Class
+- Data -
+string Name
+Vector<Animations> animations
+Vector<AttackAbilities> attacks
+Vector<DefenseAbilities> defenses
+float bloodLife
+Vector<InvObjects> inventory
+
+Inventory Object
+ObjectID
+Graphic when on the map
+Graphic when on Inventory screen
+
+- Animations -
+Do I handle it locally in each class that needs animations or do I add it to the Graphics Class?
+And While I'm thinking about the Graphics Class do I change that class? Maybe keep Direct X Initialization stuff in a separate
+class and have a separate class that handles rendering of everything.  I need to figure out a way to create a level of indirection
+for the graphics classes for the rendering and the system specific calls aka DX, or for a console there libraries.
+
+So DX 11 class will create DX 11 device, context, etc... It will create stuff needed and will give access to device and whatever
+else is needed.
+
+In rendering class I can use ##IFDEF directive for windows, vs Mac OS, vs Linux vs Console.
+
+Maybe figure out a way with those directives to change which class Objects are used when rendering? Or maybe have Generic Rendering
+class and use Inheritance where other derived classes will be for specific OS- Windows, Mac OS, Linux, Console, etc...
+
+So when the renderer is first initialized it can get initialized as a specific version.
+
+Tomorrow I will get to work on implementing the changes that I added as notes to this from the past 2 days.
+
+June 27th, 2016
+
+Day 102 of Development
+Getting started for today and trying to decide which item on my task list I want to handle first?  I think the best thing I could
+start off taking care of would be re working the graphics code moving things around so that DX 11 Graphics is handled in a separate
+class from the rendering.  The code to create the window on a windows environment should be separate from the rendering of graphics
+on the screen, and the system for rendering graphics on the screen should be handled differently depending on the operating system
+the game is being played on.
+
+I did not get very much coding done today as I have been working out how I'm going to handle the various build configuration stuff
+in visual studio.  I need to figure out the indirection or whatever the term is that I'm thinking of, I want to make it so that
+based on the build that is currently being compiled it will use specific files, because then I can make specific classes to get the
+game to run on a Mac, classes for Linux, and classes for consoles this way I can use one project for all planned platforms.  I am
+going to make this work because I want our games to be releasable on just about any platform.  But I will have to work on this more
+tomorrow as it is time for bed to recharge my brain because tomorrow will be a full day of development.
+
+June 28th, 2016
+
+Day 103 of Development
+Today I did not get any programming done because when I started thinking about how to move forward with the project and the engine
+I realized I needed to take a step back and look at the total class structure and flow for the engine and make sure I have all of
+the systems figured out, what connects to what, and what contains what in the engine.  I think with what I have figured out today
+I have a real clear path to what needs to be done to make this demo and in the end this game a complete professional title that I
+can be proud that I developed.  I don't know that I will meet the deadline that I had set I'm still going to try to see how close I
+can get to it.  Tomorrow my goal is to flesh out the details of as many of the classes on the flowchart that I created today I would
+like to get them all written out tomorrow and then go in and implement changes that I need to make and create the new ones that need
+to be developed.
+
+July 3rd, 2016
+
+Day 104 of Development
+Today I was working on getting the game compiling again after a few days of making changes, moving code around to different classes
+in order to fit the new direction I want to take the game engine for this project.  Tomorrow I will work on the game state manager
+system and try to get the first 2 states working correctly.
+
+July 4th, 2016
+
+Day 105 of Development

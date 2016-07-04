@@ -15,7 +15,6 @@ class WinAudio
 		unique_ptr<AudioEngine> m_audioEngine;
 		unique_ptr<SoundEffect> m_backgroundMusic;
 		unique_ptr<SoundEffectInstance> m_backgroundEffect;
-		//unique_ptr<SoundEffect> m_soundEffect;
 		unique_ptr<SoundEffectInstance> m_effect;
 		map<string, SoundEffect> m_soundEffects;
 

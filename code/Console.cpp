@@ -15,7 +15,7 @@ Console::~Console()
 	onLostDevice();            // call onLostDevice() for every graphics item
 }
 
-bool Console::initialize(DX11RenderManager *graphics, InputHandler *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor)
+bool Console::initialize(DX11Graphics *graphics, InputHandler *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor)
 {
 	m_graphicSystem = graphics;
 	m_input = input;

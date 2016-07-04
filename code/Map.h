@@ -8,7 +8,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #ifndef MAP_H
 #define MAP_H
 #include "Includes.h"
-#include "DX11RenderManager.h"
+#include "DX11Graphics.h"
 #include "InputCommand.h"
 #pragma warning(disable : 4244)
 #pragma warning(disable : 4018)
@@ -124,7 +124,7 @@ class Building
 class MapSection
 {
 	protected:
-		DX11RenderManager		*m_graphicSystem;
+		DX11Graphics		*m_graphicSystem;
 		int						m_numberOfLayers;
 		int						m_numberOfObjects;
 		int						m_numberOfTriggers;
@@ -140,7 +140,7 @@ class MapSection
 		{ }
 
 		void UpdateVelocity(int value);
-		void BuildMapSection(DX11RenderManager *graphics, string fileName);
+		void BuildMapSection(DX11Graphics *graphics, string fileName);
 		void DrawMapSection();
 		RECT UpdateMapSection(float delta);
 };
@@ -152,7 +152,7 @@ class MapSection
 class Map
 {
 	protected:
-		DX11RenderManager	*m_graphicSystem;
+		DX11Graphics	*m_graphicSystem;
 		InputHandler		*m_input;
 		string				m_mapName;
 		vector<MapSection>	m_mapSections;
@@ -165,7 +165,7 @@ class Map
 		Map();
 		~Map();
 
-		void InitializeMap(DX11RenderManager *graphics, InputHandler *input, int screenWidth, int screenHeight);
+		void InitializeMap(DX11Graphics *graphics, InputHandler *input, int screenWidth, int screenHeight);
 		void BuildMap(string mapTextFile);
 		void UpdateMap(float timeDelta);
 		void DrawMap();

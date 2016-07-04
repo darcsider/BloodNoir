@@ -1,15 +1,14 @@
 #pragma once
 /*=====================================================================================
-$File: DX11RenderManager.h
-$Date: April 25, 2016
+$File: DX11Graphics.h
+$Date: June 27, 2016
 $Creator: Jamie Cooper
 $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserved.
 =====================================================================================*/
-#ifndef DX11RENDERMANAGER_H
-#define DX11RENDERMANAGER_H
+#ifndef DX11GRAPHICS_H
+#define DX11GRAPHICS_H
 #include "Includes.h"
-
-class DX11RenderManager
+class DX11Graphics
 {
 	protected:
 		D3D_FEATURE_LEVEL				m_featureLevel;
@@ -43,8 +42,8 @@ class DX11RenderManager
 		map<string, ComPtr<ID3D11ShaderResourceView>> m_textures;
 
 	public:
-		DX11RenderManager();
-		~DX11RenderManager();
+		DX11Graphics();
+		~DX11Graphics();
 
 		void InitDirectX11();
 		bool InitializeGraphics(HWND Window, int width, int height);

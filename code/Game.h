@@ -9,7 +9,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define GAME_H
 #include "Includes.h"
 #include "GameTiming.h"
-#include "DX11RenderManager.h"
+#include "DX11Graphics.h"
 #include "Map.h"
 #include "Console.h"
 #include "InputCommand.h"
@@ -41,15 +41,9 @@ class Game
 
 		unique_ptr<InputHandler> m_input;
 
-		unique_ptr<DX11RenderManager> m_graphicSystem;
+		unique_ptr<DX11Graphics> m_graphicSystem;
 
 		unique_ptr<WinAudio> m_audioSystem;
-
-		//unique_ptr<Keyboard::KeyboardStateTracker> m_keyboardTracker;
-		//unique_ptr<Keyboard> m_keyboard;
-		//unique_ptr<GamePad> m_gamePad;
-
-		//unique_ptr<Mouse> m_mouse;
 
 	public:
 		Game();

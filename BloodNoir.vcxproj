@@ -18,6 +18,14 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Test|Win32">
+      <Configuration>Test</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Test|x64">
+      <Configuration>Test</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F939EDD0-55CD-4B52-97DC-DC0D3ABF7F9E}</ProjectGuid>
@@ -51,6 +59,12 @@
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -179,8 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Console.h" />
-    <ClInclude Include="code\DX11RenderManager.h" />
-    <ClInclude Include="code\EventManager.h" />
+    <ClInclude Include="code\DX11Graphics.h" />
     <ClInclude Include="code\Game.h" />
     <ClInclude Include="code\GameActor.h" />
     <ClInclude Include="code\GameState.h" />
@@ -189,14 +202,14 @@
     <ClInclude Include="code\Includes.h" />
     <ClInclude Include="code\LevelEditor.h" />
     <ClInclude Include="code\Map.h" />
+    <ClInclude Include="code\RenderingManager.h" />
     <ClInclude Include="code\Win32_Window.h" />
     <ClInclude Include="code\WinAudio.h" />
     <ClInclude Include="code\InputCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Console.cpp" />
-    <ClCompile Include="code\DX11RenderManager.cpp" />
-    <ClCompile Include="code\EventManager.cpp" />
+    <ClCompile Include="code\DX11Graphics.cpp" />
     <ClCompile Include="code\Game.cpp" />
     <ClCompile Include="code\GameActor.cpp" />
     <ClCompile Include="code\GameState.cpp" />
@@ -204,6 +217,7 @@
     <ClCompile Include="code\GameTiming.cpp" />
     <ClCompile Include="code\LevelEditor.cpp" />
     <ClCompile Include="code\Map.cpp" />
+    <ClCompile Include="code\RenderingManager.cpp" />
     <ClCompile Include="code\Win32_Window.cpp" />
     <ClCompile Include="code\WinAudio.cpp" />
     <ClCompile Include="code\InputCommand.cpp" />

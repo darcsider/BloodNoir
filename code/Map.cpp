@@ -14,7 +14,7 @@ Map::~Map()
 {
 }
 
-void Map::InitializeMap(DX11RenderManager *graphics, InputHandler *input, int screenWidth, int screenHeight)
+void Map::InitializeMap(DX11Graphics *graphics, InputHandler *input, int screenWidth, int screenHeight)
 {
 	m_graphicSystem = graphics;
 	m_input = input;
@@ -212,7 +212,7 @@ void Building::BuildBuilding(string fileName)
 	inFile.close();
 }
 
-void MapSection::BuildMapSection(DX11RenderManager *graphics, string fileName)
+void MapSection::BuildMapSection(DX11Graphics *graphics, string fileName)
 {
 	string tempString;
 	SectionLayer tempLayer;

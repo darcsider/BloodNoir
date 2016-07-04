@@ -6,7 +6,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "GameStateManager.h"
 
-GameStateManager::GameStateManager(DX11RenderManager *graphics, InputHandler *input)
+GameStateManager::GameStateManager(DX11Graphics *graphics, InputHandler *input)
 {
 	m_graphicsSystem = graphics;
 	m_inputHandler = input;

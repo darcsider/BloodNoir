@@ -34,12 +34,12 @@ class GameStateManager
 	protected:
 		GameState *m_currentState;
 		vector<GameState*> m_gameStates;
-		DX11RenderManager *m_graphicsSystem;
+		DX11Graphics *m_graphicsSystem;
 		InputHandler *m_inputHandler;
 
 	public:
 		GameStateManager() { }
-		GameStateManager(DX11RenderManager *graphics, InputHandler *input);
+		GameStateManager(DX11Graphics *graphics, InputHandler *input);
 		~GameStateManager();
 		void BuildStateManager();
 		void Process();
