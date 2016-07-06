@@ -14,7 +14,6 @@ Game::Game() :
 	m_graphicSystem = make_unique<DX11Graphics>();
 	editorConsole = NULL;
 #if DEBUG || _DEBUG
-//#if _WIN32
 	m_fpsOn = true;
 #endif
 }
@@ -46,8 +45,8 @@ void Game::InitializeResources()
 		{
 			getline(inFile, filename);
 			getline(inFile, resourceName);
-			output = converter.from_bytes(filename);
-			m_graphicSystem->AddTexture(output, resourceName);
+			//output = converter.from_bytes(filename);
+			m_graphicSystem->AddTexture(filename, resourceName);
 		}
 		getline(inFile, tempString);
 		numberOfMaps = atoi(tempString.c_str());

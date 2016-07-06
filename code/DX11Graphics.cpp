@@ -268,9 +268,10 @@ void DX11Graphics::CreateResources()
 	// TODO Initialize windows' size dependent objects here.
 }
 
-bool DX11Graphics::AddTexture(wstring filename, string name)
+bool DX11Graphics::AddTexture(string filename, string name)
 {
 	ComPtr<ID3D11ShaderResourceView> texture;
+	wstring convFilename = ConvertSTRtoWSTR(filename);
 
 	if ((!filename.empty()) && (!name.empty()))
 	{
@@ -278,7 +279,7 @@ bool DX11Graphics::AddTexture(wstring filename, string name)
 
 		if (textureIndex == m_textures.end())
 		{
-			if (SUCCEEDED(CreateWICTextureFromFile(m_d3dDevice.Get(), filename.c_str(), nullptr, texture.ReleaseAndGetAddressOf())))
+			if (SUCCEEDED(CreateWICTextureFromFile(m_d3dDevice.Get(), convFilename.c_str(), nullptr, texture.ReleaseAndGetAddressOf())))
 			{
 				m_textures.insert(pair<string, ComPtr<ID3D11ShaderResourceView>>(name, texture));
 			}
@@ -355,7 +356,7 @@ void DX11Graphics::DrawTextToScreen(string text, Vector2 position, const XMVECTO
 	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, color);
 }
 
-void DX11Graphics::DrawObject(string textureName, Vector2 position)
+void DX11Graphics::DrawObject(string textureName, Vector2 position, const XMVECTORF32& color)
 {
 	if (graphicsInitialized)
 	{
@@ -364,13 +365,13 @@ void DX11Graphics::DrawObject(string textureName, Vector2 position)
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), position);
+				m_spriteBatch->Draw(textureIndex->second.Get(), position, color);
 			}
 		}
 	}
 }
 
-void DX11Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 position)
+void DX11Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 position, const XMVECTORF32& color)
 {
 	if (graphicsInitialized)
 	{
@@ -379,7 +380,7 @@ void DX11Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 posit
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), position, &sourceRect);
+				m_spriteBatch->Draw(textureIndex->second.Get(), position, &sourceRect, color);
 			}
 		}
 	}

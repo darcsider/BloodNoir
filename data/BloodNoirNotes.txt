@@ -1805,3 +1805,20 @@ doing things this way is that if I want to port this game over to another platfo
 re write this entire class for that console as opposed to making a layer between that class and the game play and have this other
 class call in to the specific graphics class based on what build the game it being built for.
 
+I found out how to target a platform #if _WIN32 this allows me to target windows 32 bit, I will add those in certain files as needed
+to tell when to use certain code.
+
+So I'm calling it a night now tonight I have gotten some work done quite a bit of design work done on a new sprite class, as well as
+the Render Manager class.  I'm hoping to get both the Sprite class and the Render Manager class written tomorrow and working so that
+I can move on to the game state stuff again and try to get the first 2 states implemented and working correctly like I want them to
+be.
+
+July 5th, 2016
+
+Day 106 of Development
+I began work on the sprite class today I have not fully implemented it but I'm hoping in the next few days to get it completed and
+functioning as well as the rendering manager class.
+
+July 6th, 2016
+
+Day 107 of Development

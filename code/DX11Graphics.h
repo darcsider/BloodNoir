@@ -49,15 +49,15 @@ class DX11Graphics
 		bool InitializeGraphics(HWND Window, int width, int height);
 		bool InitDirectXTKObjects();
 
-		bool AddTexture(wstring filename, string name);
+		bool AddTexture(string filename, string name);
 		void CreateResources();
 		void OnDeviceLost();
 
 		void BeginScene();
 		void ClearScene();
 		void PresentScene();
-		void DrawObject(string textureName, Vector2 position);
-		void DrawObject(string textureName, RECT sourceRect, Vector2 position = Vector2(0, 0));
+		void DrawObject(string textureName, Vector2 position, const XMVECTORF32& color = Colors::White);
+		void DrawObject(string textureName, RECT sourceRect, Vector2 position = Vector2(0.0, 0.0), const XMVECTORF32& color = Colors::White);
 		void DrawQuad(Vector2 position, int width, int height, XMFLOAT4 color);
 		void EndScene();
 

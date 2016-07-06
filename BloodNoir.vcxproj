@@ -188,6 +188,8 @@
     <ClInclude Include="code\Includes.h" />
     <ClInclude Include="code\LevelEditor.h" />
     <ClInclude Include="code\Map.h" />
+    <ClInclude Include="code\RenderManager.h" />
+    <ClInclude Include="code\Sprite.h" />
     <ClInclude Include="code\Win32_Window.h" />
     <ClInclude Include="code\WinAudio.h" />
     <ClInclude Include="code\InputCommand.h" />
@@ -202,6 +204,8 @@
     <ClCompile Include="code\GameTiming.cpp" />
     <ClCompile Include="code\LevelEditor.cpp" />
     <ClCompile Include="code\Map.cpp" />
+    <ClCompile Include="code\RenderManager.cpp" />
+    <ClCompile Include="code\Sprite.cpp" />
     <ClCompile Include="code\Win32_Window.cpp" />
     <ClCompile Include="code\WinAudio.cpp" />
     <ClCompile Include="code\InputCommand.cpp" />

@@ -65,6 +65,12 @@
     <ClInclude Include="code\DX11Graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="code\RenderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Win32_Window.cpp">
@@ -101,6 +107,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\DX11Graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\RenderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
