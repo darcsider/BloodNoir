@@ -8,8 +8,8 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 #include "Includes.h"
-#include "DX11Graphics.h"
-#include "InputCommand.h"
+#include "RenderManager.h"
+#include "Win32_Input.h"
 
 enum StateTypes
 {
@@ -28,58 +28,85 @@ enum StateTypes
 class GameState
 {
 	protected:
-		DX11Graphics *m_graphics;
-		InputHandler *m_input;
-		string m_stateFileName;
-		StateTypes m_type;
-		function<void(StateTypes)> m_callBack;
+		RenderManager *m_graphics;
+		InputManager *m_input;
+		function<void(StateTypes)> m_stateChange;
+		StateTypes m_stateType;
 
 	public:
 		GameState() {}
 		virtual ~GameState() {}
-		virtual StateTypes ReturnType() = 0;
-		virtual void Update() = 0;
-		virtual void InputSetup() = 0;
+		virtual StateTypes GetStateType() = 0;
+		virtual void InputCallBack(bool pressed) = 0;
+		virtual void SetupInput() = 0;
+		virtual void Update(float delta) = 0;
+		virtual void Execute() = 0;
 };
 
-class BannerParade : public GameState
+class BannerParadeState : public GameState
 {
 	protected:
-		bool m_nextBanner;
-		int m_currentBanner;
-		bool m_changeBanner;
-		string m_fileName;
-		vector<string> m_textureNames;
-		vector<bool> m_skipBanner;
-		Command *m_actionCommand;
+		map<string, bool> m_banners;
+		string m_currentBanner;
+		float m_bannerTimer;
+		float m_bannerDelay;
 
 	public:
-		BannerParade(DX11Graphics *graphics, InputHandler *input, string file);
-		~BannerParade();
-		void BuildBanners();
-		void InputCallBack(bool pressedOrReleased);
-		void TimerCallBack();
-		void Update();
-		void InputSetup();
-		void SetCallback(function<void(StateTypes)> point);
+		BannerParadeState();
+		BannerParadeState(RenderManager *graphics, InputManager *input, function<void(StateTypes)> funcPoint, string filename);
+		virtual ~BannerParadeState();
+		StateTypes GetStateType();
+		void BuildBanners(string filename);
+		void InputCallBack(bool pressed);
+		void SetupInput();
+		void Update(float delta);
+		void Execute();
+};
 
-		StateTypes ReturnType()
+class MainMenuState : public GameState
+{
+	protected:
+		float m_mainMenuDelay;				// this will be used later to show a gameplay video if player sits at MainMenu to long
+		string m_mainMenuBackground;		// string for the main menu background texture
+		vector<string> m_menuTextures;		// vector of the text for the menu options and their selected counter parts
+		vector<string> m_renderTextures;	// vector of the current textures to be rendered on the screen.
+		string m_pressAnyKey;				// text saying press any key to start
+		int m_currentSelection;				// currently selected menu option
+		bool anyKeyPressed;					// have we moved beyond the press any key screen
+		bool initialized;
+
+	public:
+		MainMenuState();
+		MainMenuState(RenderManager *graphics, InputManager *input, function<void(StateTypes)> funcPoint, string filename);
+		virtual ~MainMenuState();
+		StateTypes GetStateType();
+		void BuildMainMenu(string filename);
+		void InputCallBack(bool pressed);
+		void InputUpCallBack(bool pressed);
+		void InputDownCallBack(bool pressed);
+		void SetupInput();
+		void Update(float delta);
+		void Execute();
+};
+
+class OnExitState : public GameState
+{
+	public:
+		OnExitState() 
 		{
-			return m_type;
+			m_stateType = OnExit;
 		}
-};
-
-class MainMenu : public GameState
-{
-	protected:
-		int m_optionSelected;
-		string m_mainMenuTexture;
-		vector<string> m_menuOptions;
-	public:
-		MainMenu();
-		~MainMenu();
-		void InputCallBack(bool pressedOrReleased);
-		void StateChangeCallBack();
-		void Update();
+		virtual ~OnExitState() {}
+		StateTypes GetStateType()
+		{
+			return m_stateType;
+		}
+		void InputCallBack(bool notUsed) {}
+		void SetupInput() {}
+		void Update(float notUsed) {}
+		void Execute()
+		{
+			PostQuitMessage(0);
+		}
 };
 #endif

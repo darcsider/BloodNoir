@@ -8,6 +8,8 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #ifndef SPRITE_H
 #define SPRITE_H
 #include "Includes.h"
+#include "RenderManager.h"
+
 struct SpriteData
 {
 	int width;
@@ -19,6 +21,8 @@ struct SpriteData
 	float scale;
 	RECT sourceRect;
 	string texture;
+	const XMVECTORF32& color;
+	SpriteData() : color(Colors::White) {}
 };
 
 struct AnimatedAction
@@ -35,12 +39,14 @@ class Sprite
 		SpriteData m_spriteInfo;
 		map<string, AnimatedAction> m_actions;
 		AnimatedAction m_currentAction;
-
+		RenderManager *m_graphicSystem;
+		
 	public:
 		Sprite();
+		Sprite(RenderManager *graphics);
 		~Sprite();
-		void AddAction(int start, int end, string name);
-		void BuildSprite(int w, int h, float scale, float startx, float starty, string filename, const XMVECTORF32& color = Colors::White);
+		void AddAction(int start, int end, float frameD, string name);
+		void BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string filename, string name, const XMVECTORF32& color = Colors::White);
 		void SetCurrentAction(string name);
 };
 #endif

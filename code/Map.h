@@ -8,10 +8,8 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #ifndef MAP_H
 #define MAP_H
 #include "Includes.h"
-#include "DX11Graphics.h"
-#include "InputCommand.h"
-#pragma warning(disable : 4244)
-#pragma warning(disable : 4018)
+#include "RenderManager.h"
+#include "Win32_Input.h"
 
 // The various object types available in the game
 // Money used to travel faster and potentially other upgrades
@@ -124,7 +122,7 @@ class Building
 class MapSection
 {
 	protected:
-		DX11Graphics		*m_graphicSystem;
+		RenderManager			*m_graphicSystem;
 		int						m_numberOfLayers;
 		int						m_numberOfObjects;
 		int						m_numberOfTriggers;
@@ -140,9 +138,9 @@ class MapSection
 		{ }
 
 		void UpdateVelocity(int value);
-		void BuildMapSection(DX11Graphics *graphics, string fileName);
+		void BuildMapSection(RenderManager *graphics, string fileName);
 		void DrawMapSection();
-		RECT UpdateMapSection(float delta);
+		void UpdateMapSection(float delta);
 };
 
 // This is the map class it defines a section of the city that the player
@@ -152,21 +150,16 @@ class MapSection
 class Map
 {
 	protected:
-		DX11Graphics	*m_graphicSystem;
-		InputHandler		*m_input;
+		RenderManager		*m_graphicSystem;
+		InputManager		*m_input;
 		string				m_mapName;
 		vector<MapSection>	m_mapSections;
-		vector<string>		m_sectionNames;
-		RECT				m_currentPosition;
 		MapSection			m_currentSection;
-		int					m_numberOfMapSections;
 	
 	public:
 		Map();
 		~Map();
-
-		void InitializeMap(DX11Graphics *graphics, InputHandler *input, int screenWidth, int screenHeight);
-		void BuildMap(string mapTextFile);
+		void InitializeMap(RenderManager *graphics, InputManager *input, string mapTextFile);
 		void UpdateMap(float timeDelta);
 		void DrawMap();
 		void SetCurrentMapSection(int mapSection);

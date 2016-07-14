@@ -1626,8 +1626,7 @@ June 14th, 2016
 Day 93 of Development
 Working more on the design for the game state and game state management system, I thought I had it figured out the other day but
 I realized more the past couple days that I need to do more design to get things working correctly.  Its better to take the time
-to do this correctly than the fastest I can, this project will either be turned into the first game for the company or used as
-one hell of a portfolio piece when looking for jobs.
+to do this correctly than the fastest I can.
 
 June 16th, 2016
 
@@ -1819,6 +1818,64 @@ Day 106 of Development
 I began work on the sprite class today I have not fully implemented it but I'm hoping in the next few days to get it completed and
 functioning as well as the rendering manager class.
 
-July 6th, 2016
+July 8th, 2016
 
 Day 107 of Development
+ Today I got to work on getting the sprite class written as well as the render manager class written and working.  I have both 
+ working and ready to go, the render manager class has been tested and works just fine the real test however will be whenever we
+ are able to add console development to the project how it will work when there are 2 different build types if the system will 
+ handle it correctly but for now it works correctly.  Now I'm moving on to trying to get the game state system working so that I
+ can verify functionality of the first couple of game states namely banner parade and main menu my goal is by the end of the
+ weekend I can have the 2 states working correctly.
+
+ July 10th, 2016
+
+ Day 108 of Development
+ Completed a lot of work on the rework for the input system that I decided to do in the past couple of days, the decision to do
+ this came around because when I was trying to figure out how to handle the game states and the game state manager I realized I
+ needed to re think how I was handling input.  I have almost everything implemented correctly this time for the input system I
+ have run into a bug that I'm hoping I can figure out right away tomorrow and get moving forward on the State system and get that
+ working correctly, updating and displaying so that I can start to build the states and move this demo closer to being ready to
+ show off.
+
+ July 11th, 2016
+
+ Day 109 of Development
+OK today's goal first is to figure out the error with the input code and I'm happy to say that I have fixed the issue with this
+system right away this morning and the input works correctly for the keyboard stuff now I need to make sure that the gamepad stuff
+works correctly as well so that I can work with both keyboard and gamepad in the game.  Once I have that working then the rest of
+the day will be spent working on the game state system getting that stuff working.
+
+OK I'm so excited after all the trouble I had in the past with trying to get Game Pad stuff working in this engine after the changes
+that I made yesterday I have been able to get the gamepad stuff to work flawlessly.  So now I have input working properly for both
+a keyboard and the gamepad.  Now this means that my only task for today is to work on the game state stuff getting hopefully the
+first 2 states working properly namely the banner parade and the main menu states.  If I can accomplish this today it will be a HUGE
+step towards demo completion.
+
+I'm ending the night on a really good note I have made excellent progress on the project today getting the input system buttoned up
+is a huge step forward, I was hoping to finish the first 2 states and the state manager tonight as well but I didn't quite make it
+before I could no longer see straight anymore.  But I am very confident that I will complete the first 2 states and the state
+manager tomorrow and get it implemented and tested.  From there I can move on to other states in the state system to get more of
+the demo completed.  I did get the Banner Parade State completed I believe, without testing I can't be sure and I can't test it
+until I get the 2nd state done and the state manager completed as well.  But this puts me in a good spot to complete those 2 pieces
+tomorrow and get things working.
+
+July 12th, 2016
+
+Day 110 of Development
+Today I set out with the goal to get 2 of the game states working and the game state manager and I'm so happy to be able to say that
+I have been able to get 3 game states finished and working and the game state manager working as well.  The project is coming along
+so well now I know there is still a lot to go but I can now do a big check mark next to a section that seemed so very daunting to
+get working correctly.  I still have several states to get implemented and working but still a great accomplishment.  Tomorrow I
+will move on to more of the various systems of the engine I have not decided what I will work on tomorrow but I will figure that
+out tomorrow morning.
+
+July 13th, 2016
+
+Day 111 of Development
+Today I have decided to put my time into looking at the design of the map system and figure out what I need to do to get moving 
+between sections, trigger points, buildings, and objects working properly.  So my project is to work on the design of this system.
+
+July 14th, 2016
+
+Day 112 of Development

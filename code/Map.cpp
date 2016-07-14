@@ -14,36 +14,23 @@ Map::~Map()
 {
 }
 
-void Map::InitializeMap(DX11Graphics *graphics, InputHandler *input, int screenWidth, int screenHeight)
+void Map::InitializeMap(RenderManager *graphics, InputManager *input, string mapTextFile)
 {
+	int numberOfSections = 0;
+
 	m_graphicSystem = graphics;
 	m_input = input;
-	m_currentPosition.top = 0;
-	m_currentPosition.left = 0;
-	m_currentPosition.right = screenWidth;
-	m_currentPosition.bottom = screenHeight;
 
 	// this stuff here is temporary while I continue to work on finishing various systems
 
-	Command *testCommand = new Command();
-	testCommand->setKeyboardKeyBinding(Keyboard::Keys::Left);
-
 	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
-	testCommand->setCallbackFunction(funcPointLeft);
+	m_input->AddKeyboardCommand(Keyboard::Keys::Left, funcPointLeft);
+	m_input->AddGamePadDpadCommand(Left, funcPointLeft);
 
-	m_input->AddCommand(testCommand);
-
-	Command *testCommand2 = new Command();
-	testCommand2->setKeyboardKeyBinding(Keyboard::Keys::Right);
-	
 	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
-	testCommand2->setCallbackFunction(funcPointRight);
+	m_input->AddKeyboardCommand(Keyboard::Keys::Right, funcPointRight);
+	m_input->AddGamePadDpadCommand(Right, funcPointRight);
 
-	m_input->AddCommand(testCommand2);
-}
-
-void Map::BuildMap(string mapTextFile)
-{
 	string tempString;
 
 	ifstream inFile(mapTextFile);
@@ -51,21 +38,16 @@ void Map::BuildMap(string mapTextFile)
 	{
 		getline(inFile, m_mapName);
 		getline(inFile, tempString);
-		m_numberOfMapSections = atoi(tempString.c_str());
-		for (int i = 0; i < m_numberOfMapSections; i++)
+		numberOfSections = atoi(tempString.c_str());
+		for (int i = 0; i < numberOfSections; i++)
 		{
 			getline(inFile, tempString);
-			m_sectionNames.push_back(tempString);
+			MapSection newSection;
+			newSection.BuildMapSection(m_graphicSystem, tempString);
+			m_mapSections.push_back(newSection);
 		}
 	}
 	inFile.close();
-
-	for (int i = 0; i < m_numberOfMapSections; i++)
-	{
-		MapSection newSection;
-		newSection.BuildMapSection(m_graphicSystem, m_sectionNames[i]);
-		m_mapSections.push_back(newSection);
-	}
 }
 
 void Map::MoveMapLeft(bool move)
@@ -79,16 +61,14 @@ void Map::MoveMapLeft(bool move)
 void Map::MoveMapRight(bool move)
 {
 	if (move)
-	{
 		m_currentSection.UpdateVelocity(1);
-	}
 	else
 		m_currentSection.UpdateVelocity(0);
 }
 
 void Map::UpdateMap(float timeDelta)
 {
-	m_currentPosition = m_currentSection.UpdateMapSection(timeDelta);
+	m_currentSection.UpdateMapSection(timeDelta);
 }
 
 void Map::DrawMap()
@@ -157,9 +137,9 @@ void Building::BuildBuilding(string fileName)
 				string s2;
 
 				getline(ss, s2, ',');
-				tempObject.m_position.x = atof(s2.c_str());
+				tempObject.m_position.x = (float)atof(s2.c_str());
 				getline(ss, s2, ',');
-				tempObject.m_position.y = atof(s2.c_str());
+				tempObject.m_position.y = (float)atof(s2.c_str());
 
 				getline(inFile, tempString);
 				if (tempString == "Money")
@@ -190,18 +170,18 @@ void Building::BuildBuilding(string fileName)
 
 				string s2;
 				getline(ss, s2, ',');
-				tempTrigger.m_mapPosition.x = atof(s2.c_str());
+				tempTrigger.m_mapPosition.x = (float)atof(s2.c_str());
 				getline(ss, s2, ',');
-				tempTrigger.m_mapPosition.y = atof(s2.c_str());
+				tempTrigger.m_mapPosition.y = (float)atof(s2.c_str());
 
 
 				getline(inFile, tempString);
 				istringstream ss2(tempString);
 
 				getline(ss2, s2, ',');
-				tempTrigger.m_moveToPosition.x = atof(s2.c_str());
+				tempTrigger.m_moveToPosition.x = (float)atof(s2.c_str());
 				getline(ss2, s2, ',');
-				tempTrigger.m_moveToPosition.y = atof(s2.c_str());
+				tempTrigger.m_moveToPosition.y = (float)atof(s2.c_str());
 
 				tempFloor.m_floorTriggers.push_back(tempTrigger);
 			}
@@ -212,7 +192,11 @@ void Building::BuildBuilding(string fileName)
 	inFile.close();
 }
 
-void MapSection::BuildMapSection(DX11Graphics *graphics, string fileName)
+void Building::DrawBuilding()
+{
+}
+
+void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 {
 	string tempString;
 	SectionLayer tempLayer;
@@ -231,7 +215,7 @@ void MapSection::BuildMapSection(DX11Graphics *graphics, string fileName)
 		{
 			getline(inFile, tempLayer.m_textureName);
 			getline(inFile, tempString);
-			tempLayer.m_scrollSpeed = atof(tempString.c_str());
+			tempLayer.m_scrollSpeed = (float)atof(tempString.c_str());
 			getline(inFile, tempString);
 			if (tempString == "TRUE")
 				tempLayer.m_autoScroll = true;
@@ -267,9 +251,9 @@ void MapSection::BuildMapSection(DX11Graphics *graphics, string fileName)
 			string s2;
 
 			getline(ss, s2, ',');
-			tempObject.m_position.x = atof(s2.c_str());
+			tempObject.m_position.x = (float)atof(s2.c_str());
 			getline(ss, s2, ',');
-			tempObject.m_position.y = atof(s2.c_str());
+			tempObject.m_position.y = (float)atof(s2.c_str());
 
 
 			getline(inFile, tempString);
@@ -301,17 +285,17 @@ void MapSection::BuildMapSection(DX11Graphics *graphics, string fileName)
 
 			string s2;
 			getline(ss, s2, ',');
-			tempTrigger.m_mapPosition.x = atof(s2.c_str());
+			tempTrigger.m_mapPosition.x = (float)atof(s2.c_str());
 			getline(ss, s2, ',');
-			tempTrigger.m_mapPosition.y = atof(s2.c_str());
+			tempTrigger.m_mapPosition.y = (float)atof(s2.c_str());
 
 			getline(inFile, tempString);
 			istringstream ss2(tempString);
 
 			getline(ss2, s2, ',');
-			tempTrigger.m_moveToPosition.x = atof(s2.c_str());
+			tempTrigger.m_moveToPosition.x = (float)atof(s2.c_str());
 			getline(ss2, s2, ',');
-			tempTrigger.m_moveToPosition.y = atof(s2.c_str());
+			tempTrigger.m_moveToPosition.y = (float)atof(s2.c_str());
 
 			m_triggerPoints.push_back(tempTrigger);
 		}
@@ -330,56 +314,61 @@ void MapSection::BuildMapSection(DX11Graphics *graphics, string fileName)
 
 void MapSection::UpdateVelocity(int value)
 {
-	for (int i = 0; i < m_layers.size(); i++)
+	vector<SectionLayer>::iterator layerIterator;
+
+	for (layerIterator = m_layers.begin(); layerIterator != m_layers.end(); layerIterator++)
 	{
-		if (!m_layers[i].m_autoScroll)
-			m_layers[i].m_velocity = m_layers[i].m_scrollSpeed * value;
+		if (!(layerIterator)->m_autoScroll)
+			(layerIterator)->m_velocity = (layerIterator)->m_scrollSpeed * value;
 	}
 }
 
-RECT MapSection::UpdateMapSection(float delta)
+void MapSection::UpdateMapSection(float delta)
 {
-	for (int layers = 0; layers < m_layers.size(); layers++)
-	{
-		m_layers[layers].m_sourceRectangle.left += m_layers[layers].m_velocity * delta;
-		m_layers[layers].m_sourceRectangle.right += m_layers[layers].m_velocity * delta;
+	vector<SectionLayer>::iterator layerIterator;
 
-		if (!m_layers[layers].m_autoScroll)
+	for (layerIterator = m_layers.begin(); layerIterator != m_layers.end(); layerIterator++)
+	{
+		(layerIterator)->m_sourceRectangle.left += (LONG)((layerIterator)->m_velocity * delta);
+		(layerIterator)->m_sourceRectangle.right += (LONG)((layerIterator)->m_velocity * delta);
+
+		if (!(layerIterator)->m_autoScroll)
 		{
-			if (m_layers[layers].m_sourceRectangle.left < 0)
+			if ((layerIterator)->m_sourceRectangle.left < 0)
 			{
-				m_layers[layers].m_sourceRectangle.left = 0;
-				m_layers[layers].m_sourceRectangle.right = m_layers[layers].m_sourceRectangle.left + m_graphicSystem->getWidth();
+				(layerIterator)->m_sourceRectangle.left = 0;
+				(layerIterator)->m_sourceRectangle.right = (layerIterator)->m_sourceRectangle.left + m_graphicSystem->GetGameWidth();
 			}
 
-			if (m_layers[layers].m_sourceRectangle.right > m_layers[layers].m_width)
+			if ((layerIterator)->m_sourceRectangle.right >(layerIterator)->m_width)
 			{
-				m_layers[layers].m_sourceRectangle.right = m_layers[layers].m_width;
-				m_layers[layers].m_sourceRectangle.left = m_layers[layers].m_sourceRectangle.right - m_graphicSystem->getWidth();
+				(layerIterator)->m_sourceRectangle.right = (layerIterator)->m_width;
+				(layerIterator)->m_sourceRectangle.left = (layerIterator)->m_sourceRectangle.right - m_graphicSystem->GetGameWidth();
 			}
 		}
 		else
 		{
-			if (m_layers[layers].m_sourceRectangle.right > m_layers[layers].m_width)
+			if ((layerIterator)->m_sourceRectangle.right > (layerIterator)->m_width)
 			{
-				m_layers[layers].m_sourceRectangle.left = 0;
-				m_layers[layers].m_sourceRectangle.right = m_graphicSystem->getWidth();
+				(layerIterator)->m_sourceRectangle.left = 0;
+				(layerIterator)->m_sourceRectangle.right = m_graphicSystem->GetGameWidth();
 			}
 		}
 	}
-
-	return m_layers[m_layers.size() - 1].m_sourceRectangle;
 }
 
 void MapSection::DrawMapSection()
 {
-	for (int layers = 0; layers < m_layers.size(); layers++)
+	vector<SectionLayer>::iterator layerIterator;
+	vector<Object>::iterator objectIterator;
+
+	for (layerIterator = m_layers.begin(); layerIterator != m_layers.end(); layerIterator++)
 	{
-		m_graphicSystem->DrawObject(m_layers[layers].m_textureName, m_layers[layers].m_sourceRectangle);
+		m_graphicSystem->RenderObject((layerIterator)->m_textureName, (layerIterator)->m_sourceRectangle);
 	}
 
-	for (int objects = 0; objects < m_objects.size(); objects++)
+	for (objectIterator = m_objects.begin(); objectIterator != m_objects.end(); objectIterator++)
 	{
-		m_graphicSystem->DrawObject(m_objects[objects].m_textureName, m_objects[objects].m_position);
+		m_graphicSystem->RenderObject((objectIterator)->m_textureName, (objectIterator)->m_position);
 	}
 }

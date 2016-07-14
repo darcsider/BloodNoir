@@ -34,7 +34,7 @@ bool DX11Graphics::InitDirectXTKObjects()
 	m_graphicStates.reset(new CommonStates(m_d3dDevice.Get()));
 	m_effectFactory.reset(new EffectFactory(m_d3dDevice.Get()));
 	m_effectSystem.reset(new BasicEffect(m_d3dDevice.Get()));
-	m_effectSystem->SetProjection(XMMatrixOrthographicOffCenterLH(0, m_gameWidth, m_gameHeight, 0, 0, 1));
+	m_effectSystem->SetProjection(XMMatrixOrthographicOffCenterLH(0.0f, (float)m_gameWidth, (float)m_gameHeight, 0.0f, 0.0f, 1.0f));
 	m_effectSystem->SetVertexColorEnabled(true);
 
 	{

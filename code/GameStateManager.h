@@ -9,6 +9,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define GAMESTATEMANAGER_H
 #include "Includes.h"
 #include "GameState.h"
+
 /*Banner Parade - timed show opening screens including the company logo and any other screens required
 - Main Menu - main title screen where it will be waiting for input from the user to progress the state
 - New Game - Load new game specific stuff then move state to tutorial
@@ -32,17 +33,18 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 class GameStateManager
 {
 	protected:
+		RenderManager *m_graphicsSystem;
+		InputManager *m_inputHandler;
 		GameState *m_currentState;
 		vector<GameState*> m_gameStates;
-		DX11Graphics *m_graphicsSystem;
-		InputHandler *m_inputHandler;
 
 	public:
 		GameStateManager() { }
-		GameStateManager(DX11Graphics *graphics, InputHandler *input);
+		GameStateManager(RenderManager *graphics, InputManager *input);
 		~GameStateManager();
 		void BuildStateManager();
-		void Process();
 		void ChangeState(StateTypes type);
+		void Update(float delta);
+		void Execute();
 };
 #endif

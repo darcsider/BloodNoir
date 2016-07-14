@@ -15,7 +15,7 @@ Console::~Console()
 	onLostDevice();            // call onLostDevice() for every graphics item
 }
 
-bool Console::initialize(DX11Graphics *graphics, InputHandler *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor)
+bool Console::Initialize(RenderManager *graphics, InputManager *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor)
 {
 	m_graphicSystem = graphics;
 	m_input = input;
@@ -37,13 +37,8 @@ bool Console::initialize(DX11Graphics *graphics, InputHandler *input, Vector2 st
 
 	m_prompt = "|:>";
 
-	Command *testCommand = new Command();
-	testCommand->setKeyboardKeyBinding(Keyboard::Keys::OemTilde);
-
 	function<void(bool)> funcPoint = bind(&Console::HideShow, this, placeholders::_1);
-	testCommand->setCallbackFunction(funcPoint);
-
-	m_input->AddCommand(testCommand);
+	m_input->AddKeyboardCommand(Keyboard::Keys::OemTilde, funcPoint);
 
 	return true;
 }
@@ -69,7 +64,7 @@ void Console::Draw()
 {
 	if (m_visible)
 	{
-		m_graphicSystem->DrawQuad(m_consolePosition, m_width, m_height, m_backgroundColor);
+		m_graphicSystem->RenderQuad(m_consolePosition, m_width, m_height, m_backgroundColor);
 
 		m_textPosition = Vector2(m_promptPosition.x, (m_promptPosition.y + m_lineSpacing));
 
@@ -82,14 +77,14 @@ void Console::Draw()
 				m_textPosition = Vector2(m_promptPosition.x, (m_promptPosition.y + m_lineSpacing));
 				m_textPosition.y += (m_lineSpacing * float(line));
 
-				m_graphicSystem->DrawTextToScreen(m_history[line], m_textPosition, Colors::Green);
+				m_graphicSystem->RenderText(m_history[line], m_textPosition, Colors::Green);
 			}
 		}
 
 		m_prompt = "|:>";
 		m_prompt += m_textInput;
 
-		m_graphicSystem->DrawTextToScreen(m_prompt, m_promptPosition, Colors::Green);
+		m_graphicSystem->RenderText(m_prompt, m_promptPosition, Colors::Green);
 		m_graphicSystem->EndScene();
 	}
 }

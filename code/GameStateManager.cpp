@@ -6,7 +6,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "GameStateManager.h"
 
-GameStateManager::GameStateManager(DX11Graphics *graphics, InputHandler *input)
+GameStateManager::GameStateManager(RenderManager *graphics, InputManager *input)
 {
 	m_graphicsSystem = graphics;
 	m_inputHandler = input;
@@ -19,14 +19,18 @@ GameStateManager::~GameStateManager()
 
 void GameStateManager::BuildStateManager()
 {
-	BannerParade *bannerParade = new BannerParade(m_graphicsSystem, m_inputHandler, "..\\data\\BannerParade.txt");
-	function<void(StateTypes)> functionPointer = bind(&GameStateManager::ChangeState, this, placeholders::_1);
-	bannerParade->SetCallback(functionPointer);
-	bannerParade->InputSetup();
-	m_gameStates.push_back(bannerParade);
+	function<void(StateTypes)> funcPointer = bind(&GameStateManager::ChangeState, this, placeholders::_1);
+	BannerParadeState *banner = new BannerParadeState(m_graphicsSystem, m_inputHandler, funcPointer, "..\\data\\BannerParade.txt");
+	m_gameStates.push_back(banner);
 
-	// NOTE TODO change this at a later date just here for testing purposes
-	m_currentState = m_gameStates[0];
+	MainMenuState *menu = new MainMenuState(m_graphicsSystem, m_inputHandler, funcPointer, "..\\data\\MainMenu.txt");
+	m_gameStates.push_back(menu);
+
+	OnExitState *exit = new OnExitState();
+	m_gameStates.push_back(exit);
+
+	m_currentState = m_gameStates.at(0);
+	m_currentState->SetupInput();
 }
 
 void GameStateManager::ChangeState(StateTypes type)
@@ -70,12 +74,21 @@ void GameStateManager::ChangeState(StateTypes type)
 
 	for (stateIterator = m_gameStates.begin(); stateIterator != m_gameStates.end(); stateIterator++)
 	{
-		if ((*stateIterator)->ReturnType() == newType)
+		if ((*stateIterator)->GetStateType() == newType)
+		{
 			m_currentState = (*stateIterator);
+			break;
+		}
 	}
+	m_currentState->SetupInput();
 }
 
-void GameStateManager::Process()
+void GameStateManager::Update(float delta)
 {
-	m_currentState->Update();
+	m_currentState->Update(delta);
+}
+
+void GameStateManager::Execute()
+{
+	m_currentState->Execute();
 }

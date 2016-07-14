@@ -71,22 +71,22 @@ class DX11Graphics
 
 		D3D11_TEXTURE2D_DESC getTextureDesc(string textureName);
 
-		void setWidth(int width)
+		void SetWidth(int width)
 		{
 			m_gameWidth = width;
 		}
 
-		int getWidth()
+		int GetWidth()
 		{
 			return m_gameWidth;
 		}
 
-		void setHeight(int height)
+		void SetHeight(int height)
 		{
 			m_gameHeight = height;
 		}
 
-		int getHeight()
+		int GetHeight()
 		{
 			return m_gameHeight;
 		}
@@ -101,7 +101,7 @@ class DX11Graphics
 			return m_d3dContext.Get();
 		}
 
-		void setWindowHandle(HWND Window)
+		void SetWindowHandle(HWND Window)
 		{
 			m_window = Window;
 		}

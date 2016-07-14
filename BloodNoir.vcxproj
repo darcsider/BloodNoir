@@ -181,7 +181,6 @@
     <ClInclude Include="code\Console.h" />
     <ClInclude Include="code\DX11Graphics.h" />
     <ClInclude Include="code\Game.h" />
-    <ClInclude Include="code\GameActor.h" />
     <ClInclude Include="code\GameState.h" />
     <ClInclude Include="code\GameStateManager.h" />
     <ClInclude Include="code\GameTiming.h" />
@@ -192,13 +191,12 @@
     <ClInclude Include="code\Sprite.h" />
     <ClInclude Include="code\Win32_Window.h" />
     <ClInclude Include="code\WinAudio.h" />
-    <ClInclude Include="code\InputCommand.h" />
+    <ClInclude Include="code\Win32_Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Console.cpp" />
     <ClCompile Include="code\DX11Graphics.cpp" />
     <ClCompile Include="code\Game.cpp" />
-    <ClCompile Include="code\GameActor.cpp" />
     <ClCompile Include="code\GameState.cpp" />
     <ClCompile Include="code\GameStateManager.cpp" />
     <ClCompile Include="code\GameTiming.cpp" />
@@ -208,7 +206,7 @@
     <ClCompile Include="code\Sprite.cpp" />
     <ClCompile Include="code\Win32_Window.cpp" />
     <ClCompile Include="code\WinAudio.cpp" />
-    <ClCompile Include="code\InputCommand.cpp" />
+    <ClCompile Include="code\Win32_Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -11,16 +11,16 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 
 #include <string>
 #include "Includes.h"
-#include "DX11Graphics.h"
-#include "InputCommand.h"
+#include "RenderManager.h"
+#include "Win32_Input.h"
 
 #pragma warning(disable : 4018)
 
 class Console
 {
 	private:
-		DX11Graphics				*m_graphicSystem;		// Graphics System variable
-		InputHandler					*m_input;				// Input variable
+		RenderManager					*m_graphicSystem;		// Graphics System variable
+		InputManager					*m_input;				// Input variable
 		string							m_commandString;		// string holding the command entered in by the user
 		string							m_prompt;				// the prompt that displays on the screen
 		string							m_textInput;			// the text that is being entered in by the keyboard
@@ -53,7 +53,7 @@ class Console
 		virtual ~Console();
 
 		// Initialize the Console
-		bool initialize(DX11Graphics *graphics, InputHandler *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor);
+		bool Initialize(RenderManager *graphics, InputManager *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor);
 
 		void Draw();
 

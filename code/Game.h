@@ -9,14 +9,13 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define GAME_H
 #include "Includes.h"
 #include "GameTiming.h"
-#include "DX11Graphics.h"
+#include "RenderManager.h"
 #include "Map.h"
 #include "Console.h"
-#include "InputCommand.h"
+#include "Win32_Input.h"
 #include "WinAudio.h"
 #include "GameStateManager.h"
 
-// not complete must do more work just doing this to get started
 class Game
 {
 	private:
@@ -34,15 +33,10 @@ class Game
 		int	backgroundIndex;
 		Console *editorConsole;
 
-		bool m_fpsOn;
-		Map testMap;
-
 		GameStateManager *m_stateManager;
 
-		unique_ptr<InputHandler> m_input;
-
-		unique_ptr<DX11Graphics> m_graphicSystem;
-
+		unique_ptr<InputManager> m_input;
+		unique_ptr<RenderManager> m_graphicSystem;
 		unique_ptr<WinAudio> m_audioSystem;
 
 	public:
@@ -51,8 +45,6 @@ class Game
 		~Game();
 
 		bool GameInitialize(HWND window, int width, int height);
-
-		void InitializeResources();
 
 		void GameUpdate();
 
