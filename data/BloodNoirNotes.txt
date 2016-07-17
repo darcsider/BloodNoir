@@ -1876,6 +1876,17 @@ Day 111 of Development
 Today I have decided to put my time into looking at the design of the map system and figure out what I need to do to get moving 
 between sections, trigger points, buildings, and objects working properly.  So my project is to work on the design of this system.
 
-July 14th, 2016
+July 16th, 2016
 
 Day 112 of Development
+Today my goal was to get mouse input working as well as getting dialog boxes working.  I'm sad to say that I did not get either of
+these 2 tasks completed but I'm happy that I set out to do this because these 2 tasks forced me to look at some code and I found a
+bug in the game state system that I had implemented the other day this bug was going to prevent me from moving forward with any new
+task no matter what it was.  So tomorrow hopefully I can get further along with the tasks that I had set out.
+
+I have decided though that I will make getting a map displaying on the screen again my first task because with switching things over
+to the state system it has broken the map system.
+
+July 17th, 2016
+
+Day 113 of Development

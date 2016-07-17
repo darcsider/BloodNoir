@@ -150,20 +150,28 @@ class MapSection
 class Map
 {
 	protected:
-		RenderManager		*m_graphicSystem;
-		InputManager		*m_input;
-		string				m_mapName;
-		vector<MapSection>	m_mapSections;
-		MapSection			m_currentSection;
+		RenderManager			*m_graphicSystem;
+		InputManager			*m_input;
+		string					m_mapName;
+		vector<MapSection>		m_mapSections;
+		MapSection				m_currentSection;
+		string					m_mapFileName;
 	
 	public:
 		Map();
 		~Map();
 		void InitializeMap(RenderManager *graphics, InputManager *input, string mapTextFile);
+		void SetupInput();
+		void BuildMap();
 		void UpdateMap(float timeDelta);
 		void DrawMap();
 		void SetCurrentMapSection(int mapSection);
 		void MoveMapLeft(bool move);
 		void MoveMapRight(bool move);
+
+		void CloseGame(bool notUsed)
+		{
+			PostQuitMessage(0);
+		}
 };
 #endif

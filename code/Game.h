@@ -31,6 +31,7 @@ class Game
 		HWND m_window;
 		
 		int	backgroundIndex;
+
 		Console *editorConsole;
 
 		GameStateManager *m_stateManager;

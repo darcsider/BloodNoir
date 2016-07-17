@@ -16,24 +16,17 @@ Map::~Map()
 
 void Map::InitializeMap(RenderManager *graphics, InputManager *input, string mapTextFile)
 {
-	int numberOfSections = 0;
-
 	m_graphicSystem = graphics;
 	m_input = input;
+	m_mapFileName = mapTextFile;
+}
 
-	// this stuff here is temporary while I continue to work on finishing various systems
-
-	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
-	m_input->AddKeyboardCommand(Keyboard::Keys::Left, funcPointLeft);
-	m_input->AddGamePadDpadCommand(Left, funcPointLeft);
-
-	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
-	m_input->AddKeyboardCommand(Keyboard::Keys::Right, funcPointRight);
-	m_input->AddGamePadDpadCommand(Right, funcPointRight);
-
+void Map::BuildMap()
+{
+	int numberOfSections = 0;
 	string tempString;
 
-	ifstream inFile(mapTextFile);
+	ifstream inFile(m_mapFileName);
 	if (inFile)
 	{
 		getline(inFile, m_mapName);
@@ -48,6 +41,22 @@ void Map::InitializeMap(RenderManager *graphics, InputManager *input, string map
 		}
 	}
 	inFile.close();
+	SetCurrentMapSection(0);
+}
+
+void Map::SetupInput()
+{
+	function<void(bool)> funcPoint = bind(&Map::CloseGame, this, placeholders::_1);
+	m_input->AddKeyboardCommand(Keyboard::Keys::Escape, funcPoint);
+	m_input->AddGamePadButtonCommand(Back, funcPoint);
+
+	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
+	m_input->AddKeyboardCommand(Keyboard::Keys::Left, funcPointLeft);
+	m_input->AddGamePadDpadCommand(Left, funcPointLeft);
+
+	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
+	m_input->AddKeyboardCommand(Keyboard::Keys::Right, funcPointRight);
+	m_input->AddGamePadDpadCommand(Right, funcPointRight);
 }
 
 void Map::MoveMapLeft(bool move)

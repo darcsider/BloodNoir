@@ -10,6 +10,7 @@ GameStateManager::GameStateManager(RenderManager *graphics, InputManager *input)
 {
 	m_graphicsSystem = graphics;
 	m_inputHandler = input;
+	m_stateChange = false;
 }
 
 GameStateManager::~GameStateManager()
@@ -26,11 +27,13 @@ void GameStateManager::BuildStateManager()
 	MainMenuState *menu = new MainMenuState(m_graphicsSystem, m_inputHandler, funcPointer, "..\\data\\MainMenu.txt");
 	m_gameStates.push_back(menu);
 
+	NewGameState *newGame = new NewGameState(m_graphicsSystem, m_inputHandler, funcPointer, "..\\data\\NewGame.txt");
+	m_gameStates.push_back(newGame);
+
 	OnExitState *exit = new OnExitState();
 	m_gameStates.push_back(exit);
 
 	m_currentState = m_gameStates.at(0);
-	m_currentState->SetupInput();
 }
 
 void GameStateManager::ChangeState(StateTypes type)
@@ -76,11 +79,11 @@ void GameStateManager::ChangeState(StateTypes type)
 	{
 		if ((*stateIterator)->GetStateType() == newType)
 		{
-			m_currentState = (*stateIterator);
+			m_currentStateType = newType;
+			m_stateChange = true;
 			break;
 		}
 	}
-	m_currentState->SetupInput();
 }
 
 void GameStateManager::Update(float delta)
@@ -91,4 +94,19 @@ void GameStateManager::Update(float delta)
 void GameStateManager::Execute()
 {
 	m_currentState->Execute();
+	if (m_stateChange)
+	{
+		vector<GameState*>::iterator stateIterator;
+
+		for (stateIterator = m_gameStates.begin(); stateIterator != m_gameStates.end(); stateIterator++)
+		{
+			if ((*stateIterator)->GetStateType() == m_currentStateType)
+			{
+				m_currentState = (*stateIterator);
+				m_stateChange = false;
+				break;
+			}
+		}
+		m_currentState->SetupInput();
+	}
 }

@@ -20,6 +20,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include <string>
 #include <stack>
 #include <vector>
+#include <list>
 #include <map>
 #include <wrl/client.h>
 #include <locale>

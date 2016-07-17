@@ -37,6 +37,9 @@ class GameStateManager
 		InputManager *m_inputHandler;
 		GameState *m_currentState;
 		vector<GameState*> m_gameStates;
+		bool m_stateChange;
+		StateTypes m_currentStateType;
+		StateTypes m_previousStateType;
 
 	public:
 		GameStateManager() { }

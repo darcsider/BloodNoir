@@ -12,7 +12,6 @@ Game::Game() :
 	m_gameHeight(1080)
 {
 	m_graphicSystem = make_unique<RenderManager>();
-	editorConsole = NULL;
 }
 
 Game::~Game()
@@ -41,12 +40,12 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	// that other systems can subscribe to the Console class and can setup their own commands that the console
 	// will recognize and process.
 	editorConsole = new Console();
-	editorConsole->Initialize(m_graphicSystem.get(), m_input.get(), Vector2(0,0), m_gameWidth, 200, XMFLOAT4(0,0,0,0.8f));
+	editorConsole->Initialize(m_graphicSystem.get(), m_input.get(), Vector2(0, 0), m_graphicSystem->GetGameWidth(), 200, XMFLOAT4(0, 0, 0, 0.8f));
+	
 	m_audioSystem->SetBackgroundMusic("..\\Music\\Electro.wav");
 	m_audioSystem->AddSoundEffect("heli", "..\\Music\\heli.wav");
 
 	m_stateManager = new GameStateManager(m_graphicSystem.get(), m_input.get());
-
 	m_stateManager->BuildStateManager();
 
 	//m_audioSystem->StartBackgroundMusic();

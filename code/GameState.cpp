@@ -68,6 +68,7 @@ void BannerParadeState::BuildBanners(string fileName)
 
 void BannerParadeState::InputCallBack(bool pressed)
 {
+	// add input back into this system today some point before showing off tonight
 }
 
 void BannerParadeState::SetupInput()
@@ -299,4 +300,80 @@ void MainMenuState::Execute()
 			m_graphics->RenderObject(m_pressAnyKey, Vector2((float)(m_graphics->GetGameWidth() / 3), startY));
 		}
 	}
+}
+
+NewGameState::NewGameState()
+{
+}
+
+NewGameState::NewGameState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
+{
+	m_graphics = graphics;
+	m_input = input;
+	m_stateChange = funcPoint;
+	m_fileName = filename;
+	m_stateType = NewGame;
+
+	BuildNewGameState();
+}
+
+NewGameState::~NewGameState()
+{
+}
+
+StateTypes NewGameState::GetStateType()
+{
+	return m_stateType;
+}
+
+void NewGameState::BuildNewGameState()
+{
+
+	ifstream inFile(m_fileName);
+	int numberOfTextures;
+	string tempString;
+	string filename;
+	string resourceName;
+	string mapFileName;
+
+	if (inFile)
+	{
+		getline(inFile, tempString);
+		numberOfTextures = atoi(tempString.c_str());
+
+		for (int i = 0; i < numberOfTextures; i++)
+		{
+			getline(inFile, filename);
+			getline(inFile, resourceName);
+			m_graphics->AddTexture(filename, resourceName);
+		}
+		getline(inFile, mapFileName);
+	}
+	inFile.close();
+
+	testMap = new Map();
+	testMap->InitializeMap(m_graphics, m_input, mapFileName);
+	testMap->BuildMap();
+}
+
+void NewGameState::InputCallBack(bool pressed)
+{
+	
+}
+
+void NewGameState::SetupInput()
+{
+	m_input->ClearCommands();
+
+	testMap->SetupInput();
+}
+
+void NewGameState::Update(float delta)
+{
+	testMap->UpdateMap(delta);
+}
+
+void NewGameState::Execute()
+{
+	testMap->DrawMap();
 }
