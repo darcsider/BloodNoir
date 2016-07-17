@@ -1890,3 +1890,10 @@ to the state system it has broken the map system.
 July 17th, 2016
 
 Day 113 of Development
+Today I have set out to fix the problem I was having last night and after some sleep I was able to track down the bug very simply so
+now I have solved the issue I was having yesterday and can move forward with another task I think I will try to tackle Dialog Boxes
+and possibly get mouse input working as well.
+
+Mouse input is out for this engine it doesn't fit for the type of games being made and I would have to redo many systems so it is
+just not worth the hassle to be able to use mouse input for the level editor that may or may not be used at all in the game.  So I
+will move on to figuring out dialog boxes in the game.

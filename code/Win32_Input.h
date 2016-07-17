@@ -61,22 +61,6 @@ class KeyboardCommand : public Command
 		void SetKeyboardBinding(Keyboard::Keys key);
 };
 
-class MouseButtonCommand : public Command
-{
-protected:
-	MouseButtons m_button;
-	Mouse::ButtonStateTracker m_mouseTracker;
-	RECT m_collisionRect;
-
-public:
-	MouseButtonCommand();
-	virtual ~MouseButtonCommand();
-	virtual void Execute();
-	virtual void SetFunctionPointer(function<void(bool)> funcPoint);
-	void SetMouseButtonBinding(MouseButtons button);
-	void SetSelectedObjectPos(RECT objectRect);
-};
-
 class GamePadDpadCommand : public Command
 {
 	protected:
@@ -117,7 +101,6 @@ class InputManager
 		~InputManager();
 		void AddCommand(Command *command);
 		void AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> funcPoint);
-		void AddMouseCommand(MouseButtons button, function<void(bool)> funcPoint);
 		void AddGamePadDpadCommand(DpadDirections dir, function<void(bool)> funcPoint);
 		void AddGamePadButtonCommand(GamePadButtons button, function<void(bool)> funcPoint);
 		void ClearCommands();

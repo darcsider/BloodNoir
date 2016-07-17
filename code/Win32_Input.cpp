@@ -36,77 +36,6 @@ void KeyboardCommand::SetKeyboardBinding(Keyboard::Keys key)
 	m_key = key;
 }
 
-MouseButtonCommand::MouseButtonCommand()
-{
-
-}
-
-MouseButtonCommand::~MouseButtonCommand()
-{
-
-}
-
-void MouseButtonCommand::Execute()
-{
-	auto mouseState = Mouse::Get().GetState();
-	XMFLOAT2 mousePosition{ (float)mouseState.x, (float)mouseState.y };
-	bool pointerInObject = false;
-
-	if ((mousePosition.x >= m_collisionRect.left && mousePosition.x <= m_collisionRect.right) 
-	&& (mousePosition.y >= m_collisionRect.top && mousePosition.y <= m_collisionRect.bottom))
-		pointerInObject = true;
-	else
-		pointerInObject = false;
-
-	m_mouseTracker.Update(mouseState);
-
-	if ((m_button == LeftButton && m_mouseTracker.leftButton == m_mouseTracker.PRESSED) && pointerInObject)
-	{
-		Mouse::Get().SetMode(Mouse::MODE_RELATIVE);
-		m_functionPointer(true);
-	}
-	else if (m_button == LeftButton && m_mouseTracker.leftButton == m_mouseTracker.RELEASED)
-	{
-		Mouse::Get().SetMode(Mouse::MODE_ABSOLUTE);
-		m_functionPointer(false);
-	}
-
-	if ((m_button == MiddleButton && m_mouseTracker.middleButton == m_mouseTracker.PRESSED) && pointerInObject)
-	{
-		m_functionPointer(true);
-	}
-	else if (m_button == MiddleButton && m_mouseTracker.middleButton == m_mouseTracker.RELEASED)
-	{
-		Mouse::Get().SetMode(Mouse::MODE_ABSOLUTE);
-		m_functionPointer(false);
-	}
-
-	if ((m_button == RightButton && m_mouseTracker.rightButton == m_mouseTracker.PRESSED) && pointerInObject)
-	{
-		m_functionPointer(true);
-	}
-	else if (m_button == RightButton && m_mouseTracker.rightButton == m_mouseTracker.RELEASED)
-	{
-		Mouse::Get().SetMode(Mouse::MODE_ABSOLUTE);
-		m_functionPointer(false);
-	}
-}
-
-void MouseButtonCommand::SetFunctionPointer(function<void(bool)> funcPoint)
-{
-	m_functionPointer = funcPoint;
-}
-
-void MouseButtonCommand::SetMouseButtonBinding(MouseButtons button)
-{
-	m_button = button;
-}
-
-void MouseButtonCommand::SetSelectedObjectPos(RECT objectRect)
-{
-	m_collisionRect = objectRect;
-}
-
 GamePadDpadCommand::GamePadDpadCommand()
 {
 	m_gamepadTracker = GamePad::ButtonStateTracker();
@@ -256,14 +185,6 @@ void InputManager::AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> f
 	keyCommand->SetFunctionPointer(funcPoint);
 	keyCommand->SetKeyboardBinding(key);
 	m_inputCommands.push_back(keyCommand);
-}
-
-void InputManager::AddMouseCommand(MouseButtons button, function<void(bool)> funcPoint)
-{
-	MouseButtonCommand *mouseCommand = new MouseButtonCommand();
-	mouseCommand->SetFunctionPointer(funcPoint);
-	mouseCommand->SetMouseButtonBinding(button);
-	m_inputCommands.push_back(mouseCommand);
 }
 
 void InputManager::AddGamePadDpadCommand(DpadDirections dir, function<void(bool)> funcPoint)
