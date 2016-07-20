@@ -1897,3 +1897,7 @@ and possibly get mouse input working as well.
 Mouse input is out for this engine it doesn't fit for the type of games being made and I would have to redo many systems so it is
 just not worth the hassle to be able to use mouse input for the level editor that may or may not be used at all in the game.  So I
 will move on to figuring out dialog boxes in the game.
+
+July 18th, 2016
+
+Day 114 of Development

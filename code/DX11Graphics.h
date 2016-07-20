@@ -66,8 +66,7 @@ class DX11Graphics
 			return m_spriteFont->GetLineSpacing();
 		}
 
-		void DrawTextToScreen(string text, Vector2 position);
-		void DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color);
+		void DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color = Colors::White);
 
 		D3D11_TEXTURE2D_DESC getTextureDesc(string textureName);
 

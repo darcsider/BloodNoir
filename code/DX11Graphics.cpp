@@ -345,11 +345,6 @@ void DX11Graphics::EndScene()
 	m_spriteBatch->End();
 }
 
-void DX11Graphics::DrawTextToScreen(string text, Vector2 position)
-{
-	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, Colors::BlueViolet);
-}
-
 void DX11Graphics::DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color)
 {
 
