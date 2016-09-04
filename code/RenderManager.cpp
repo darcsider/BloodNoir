@@ -26,21 +26,28 @@ void RenderManager::AddTexture(string filename, string name)
 #endif
 }
 
-void RenderManager::RenderObject(string name, Vector2 position, const XMVECTORF32 & color)
+void RenderManager::RenderObject(string name, RECT destRect, const XMVECTORF32& color)
+{
+#if _WIN32
+	m_win32_Graphics->DrawObject(name, destRect, color);
+#endif
+}
+
+void RenderManager::RenderObject(string name, Vector2 position, const XMVECTORF32& color)
 {
 #if _WIN32
 	m_win32_Graphics->DrawObject(name, position, color);
 #endif
 }
 
-void RenderManager::RenderObject(string name, RECT sourceRect, Vector2 position, const XMVECTORF32 & color)
+void RenderManager::RenderObject(string name, RECT sourceRect, Vector2 position, const XMVECTORF32& color)
 {
 #if _WIN32
 	m_win32_Graphics->DrawObject(name, sourceRect, position, color);
 #endif
 }
 
-void RenderManager::RenderText(string text, Vector2 position, const XMVECTORF32 & color)
+void RenderManager::RenderText(string text, Vector2 position, const XMVECTORF32& color)
 {
 #if _WIN32
 	m_win32_Graphics->DrawTextToScreen(text, position, color);

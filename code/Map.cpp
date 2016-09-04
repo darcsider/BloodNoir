@@ -373,7 +373,7 @@ void MapSection::DrawMapSection()
 
 	for (layerIterator = m_layers.begin(); layerIterator != m_layers.end(); layerIterator++)
 	{
-		m_graphicSystem->RenderObject((layerIterator)->m_textureName, (layerIterator)->m_sourceRectangle);
+		m_graphicSystem->RenderObject((layerIterator)->m_textureName, (layerIterator)->m_sourceRectangle, Vector2(0.0, 0.0));
 	}
 
 	for (objectIterator = m_objects.begin(); objectIterator != m_objects.end(); objectIterator++)

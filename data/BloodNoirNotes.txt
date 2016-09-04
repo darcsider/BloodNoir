@@ -1898,6 +1898,17 @@ Mouse input is out for this engine it doesn't fit for the type of games being ma
 just not worth the hassle to be able to use mouse input for the level editor that may or may not be used at all in the game.  So I
 will move on to figuring out dialog boxes in the game.
 
-July 18th, 2016
+September 3rd, 2016
 
 Day 114 of Development
+So I'm embarrassed to say that today is the first day in almost 2 months that I have sat and tried to get some work done on this
+project.  But due to personal problems, financial problems, and then computer problems today is the first day I tried to get some
+work done on this.  But I'm not going to stress I'm going to get back to working on this consistently and I will get more work 
+done on this tomorrow.  I started working on fixing the problem with scaling the graphics to the screen when different resolutions
+are being used on a computer.  I figured out how to handle it, the solutions appears to be working correctly I may have to tweak
+things more down the road but for now everything appears to be good.  Tomorrow I will be taking inventory of the project and seeing
+what I need to work on next to get the demo done and to get this project back on track to completion.
+
+September 4th, 2016
+
+Day 115 of Development

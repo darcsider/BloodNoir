@@ -102,7 +102,8 @@ void BannerParadeState::Update(float delta)
 
 void BannerParadeState::Execute()
 {
-	m_graphics->RenderObject(m_currentBanner);
+	RECT screenRect = { 0, 0, m_graphics->GetGameWidth(), m_graphics->GetGameHeight() };
+	m_graphics->RenderObject(m_currentBanner, screenRect);
 }
 
 MainMenuState::MainMenuState()
@@ -279,6 +280,7 @@ void MainMenuState::Execute()
 {
 	if (initialized)
 	{
+		RECT screenRect = { 0, 0, m_graphics->GetGameWidth(), m_graphics->GetGameHeight() };
 		vector<string>::iterator textureIterator;
 		float startX = (float)(m_graphics->GetGameWidth() / 3) + 150;
 		float startY = (float)(m_graphics->GetGameHeight() / 2);
@@ -286,7 +288,7 @@ void MainMenuState::Execute()
 		float currY = startY;
 		int height = m_graphics->getTextureDesc(m_renderTextures.at(0).c_str()).Height;
 
-		m_graphics->RenderObject(m_mainMenuBackground, Vector2(0.0, 0.0));
+		m_graphics->RenderObject(m_mainMenuBackground, screenRect);
 		if (anyKeyPressed)
 		{
 			for (textureIterator = m_renderTextures.begin(); textureIterator != m_renderTextures.end(); textureIterator++)

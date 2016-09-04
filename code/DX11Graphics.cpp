@@ -351,6 +351,21 @@ void DX11Graphics::DrawTextToScreen(string text, Vector2 position, const XMVECTO
 	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, color);
 }
 
+void DX11Graphics::DrawObject(string textureName, RECT destRect, const XMVECTORF32& color)
+{
+	if (graphicsInitialized)
+	{
+		if (!textureName.empty())
+		{
+			auto textureIndex = m_textures.find(textureName);
+			if (textureIndex != m_textures.end())
+			{
+				m_spriteBatch->Draw(textureIndex->second.Get(), destRect, color);
+			}
+		}
+	}
+}
+
 void DX11Graphics::DrawObject(string textureName, Vector2 position, const XMVECTORF32& color)
 {
 	if (graphicsInitialized)

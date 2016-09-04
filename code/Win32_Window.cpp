@@ -29,6 +29,23 @@ bool InitWindowClass(HINSTANCE program)
 
 	int w, h;
 	m_game->GetDefaultSize(w, h);
+
+	RECT currentDesktop;
+
+	const HWND hDesktop = GetDesktopWindow();
+	GetWindowRect(hDesktop, &currentDesktop);
+	if (w < currentDesktop.right || w > currentDesktop.right)
+	{
+		m_game->SetWindowWidth(currentDesktop.right);
+		w = currentDesktop.right;
+	}
+
+	if (h < currentDesktop.bottom || h > currentDesktop.bottom)
+	{
+		m_game->SetWindowHeight(currentDesktop.bottom);
+		h = currentDesktop.bottom;
+	}
+
 	rc.top = 0;
 	rc.left = 0;
 	rc.right = static_cast<LONG>(w);
