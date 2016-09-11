@@ -32,7 +32,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <NvGsa.h>
+//#include <NvGsa.h>
 
 // DirectX TK Stuff
 #include "CommonStates.h"

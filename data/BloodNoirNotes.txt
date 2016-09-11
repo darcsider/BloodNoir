@@ -1909,6 +1909,6 @@ are being used on a computer.  I figured out how to handle it, the solutions app
 things more down the road but for now everything appears to be good.  Tomorrow I will be taking inventory of the project and seeing
 what I need to work on next to get the demo done and to get this project back on track to completion.
 
-September 4th, 2016
+September 5th, 2016
 
 Day 115 of Development
