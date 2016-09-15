@@ -29,6 +29,8 @@ class WinAudio
 		void PlayEffect(string effectName);
 		void StartBackgroundMusic();
 		void StopBackgroundMusic();
+		void SetBackgroundVolume(float value);
+		void SetSoundEffectVolume(float value);
 
 		wstring ConvertSTRtoWSTR(string text)
 		{

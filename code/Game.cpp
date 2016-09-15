@@ -32,8 +32,8 @@ bool Game::GameInitialize(HWND window, int width, int height)
 
 	m_input = make_unique<InputManager>();
 
-	m_audioSystem = make_unique<WinAudio>();
-	m_audioSystem->InitializeAudio();
+	m_audioSystem = make_unique<AudioSystem>();
+	m_audioSystem->InitializeAudioSystem();
 
 	// EditorConsole will be going away from the game class as soon as I complete writing the level editor class
 	// then I will be moving it over to there, I will then figure out how to change the Console class in a way
@@ -43,19 +43,19 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	editorConsole->Initialize(m_graphicSystem.get(), m_input.get(), Vector2(0, 0), m_graphicSystem->GetGameWidth(), 200, XMFLOAT4(0, 0, 0, 0.8f));
 	
 	m_audioSystem->SetBackgroundMusic("..\\Music\\Electro.wav");
-	m_audioSystem->AddSoundEffect("heli", "..\\Music\\heli.wav");
+	m_audioSystem->AddEffect("heli", "..\\Music\\heli.wav");
 
 	m_stateManager = new GameStateManager(m_graphicSystem.get(), m_input.get());
 	m_stateManager->BuildStateManager();
 
-	//m_audioSystem->StartBackgroundMusic();
+	m_audioSystem->PlayBackgroundMusic();
 	m_gameInitialized = true;
 	return true;
 }
 
 void Game::SystemsUpdate()
 {
-	m_audioSystem->AudioEngineUpdate();
+	m_audioSystem->AudioSystemUpdate();
 	m_input->ProcessCommands();
 }
 

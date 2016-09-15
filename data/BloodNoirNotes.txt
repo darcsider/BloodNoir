@@ -113,6 +113,107 @@ of the larger map will consist of several blocks of areas that can be gone into 
 the stack allocator and just have it be that when you go to an area of the map it will load all content needed for that
 specific section of the map that way once the area is loaded there will be no loading time.
 
+January 6th, 2016
+
+Day 3 of Development
+Today I'm working on getting some of my basic code up and running starting to build out my classes.
+My Goals For Today:
+- Complete setting up the .h and .cpp files I have already decided on for the structure of certain components
+- Get a window displaying on the screen by completing the class for the win32 Window
+- If I have time I will complete the Input class and get it working to accept at least keyboard input
+-- I will not be able to test actual XInput functionality on this engine or anything until Friday when
+-- I get my hands on a new XBOX 360 or XBOX One Controller
+So I have reached the end of my day of programming and I have completed getting the Window displaying on the
+screen and I was able to re-purpose an old input setup and got that wired up in this game so that it works.
+I also began stubbing out the Game Class so I could get the Input working.  My goal for the next day of
+development is to get the audio system working in the game, to get everything stubbed out and ready to be
+used in the actual game.  I do anticipate having to modify current systems when I get closer to actual
+release.
+
+January 7th, 2016
+
+Day 4 of Development
+I have begun working on the audio system today I'm hoping to be able to get the main part of it up and running.
+Setting up XAudio2 is a pain in the ass it is very robust and will prove to be beneficial in the end but it this
+sucks to setup and get working.
+So I have reached the end of my day of programming again, today I did not get as much done as I was hoping to,
+I was able to get sound to play on the computer that I started up.  But I had to use exact pathing and that is
+not where I want that to be.  But that is something I can fix tomorrow as well as figuring out how to work with
+the combination of music and sound effects and to not have one stop the other.  So tomorrow will be day 2 of
+sound stuff hopefully I can complete the full sound system tomorrow so I can check that off my list of things
+to be completed in the game.
+
+January 9th, 2016
+
+Day 5 of Development
+Today is the second day of working on the sound code for the game engine.  I got my hands on an xbox one controller
+today so now I can test out my input code to verify that it is working.
+So far I have made great strides on the audio code, I have a very good framework and implementation for audio.
+Tonight I was able to verify that my input controls work both keyboard and controller, I also made some changes to some
+files so that I am able to include constants in every file that I need access to it and I won't get an error when I
+compile it.  I feel like I have everything working really well now.  My goal for tomorrow is to do some rigorous testing
+of the audio system specifically on can I play multiple sounds and have them play simultaneously.
+Notes For Another Day: - Things I want to get worked on
+- Figure out a system for game state - so that I have a system that can be checked anywhere in the game to see what state
+-- the game is in weather it is updating, running, paused, or closing.  This will lead to code for handling when the player
+-- closes the window, checking with them if they want to save there progress before they leave.
+- Once I get the audio system ironed out I want to begin working on the graphics system getting things displaying on the
+-- screen so that once I get some artwork I can get a demo put together for the game to show to potential investors.
+- Figure out a resource management system for the game this will almost have to be done before I can complete the
+-- graphics system because I will have to have a system to handle the artwork for the game.  When I figure out the
+-- resource management system I may have to revisit the audio system for changes potentially to how audio files are handled.
+- Final thought for the night on things to work on in the future is figure out a logging system for errors I need to add
+-- this close to the top of my list so that I can get it implemented right away to help catch bugs early before I get to
+-- in depth into developing various systems.
+
+January 10th, 2016
+
+Day 6 of Development
+The goal for tonight is to test out the sound code and make sure everything is working the way I want it to currently, I do
+anticipate having to make changes to the code in the future when I begin using it in actual gameplay stuff.  The other goal
+is to get a logging system up and running and to have it begin writing out data to a text file every time the program is run.
+OK I have tested out my sound code and after some bugs where worked out I was able to get it working playing multiple sounds
+simultaneously but now I just have to figure out how to make it play over and over when I press a button.
+I am ending my night of development at this point, I have been unable to complete my code for being able to play sound effects
+on command and be able to start and stop them as well.  I am stopping now for the night but tomorrow I will get around to
+completing this I believe I have found a hack that will work for this, I'm going to try to use callback methods for this issue.
+
+January 11th, 2016
+
+Day 7 of Development
+The goal for today is to finish buttoning up the sound code, testing it out, making sure that I can play sound effects on Que
+and replay them over and over as needed.  With that part being completed now my focus will be to get a logging system working
+so I can get it implemented into every system in the game engine to keep an eye out for memory leaks, and other stuff.  I have
+got a logging system working now I just need to iron out some details of how things are done.  I will come back to the Log
+System again another day as I find issues and need to make it work better.  As long as it gives me what I need as an output
+for debugging purposes it really doesn't matter if it does strange stuff, no actual player will ever see the output.
+The next thing I am going to focus my energy and attention on is Resource Management I need to get a very good and robust
+Resource Management system including memory management completed before I move on to graphics and everything else in the
+engine.  I am ending this day of development now I have completed my sound system to a level that I am quite happy with,
+I have also completed a logging system that gives me all sorts of info as I choose to have it do.  I am going to continue
+working on the ResourceManager system for the game engine and will make that my next goal for this.
+
+January 12th, 2016
+
+Day 8 of Development
+The goal for today is to continue working on the Resource Manager and deciding how I want to handle various types of data
+and resources in the game.  One thing that is tripping me up on this that I need to iron out with my business partner is
+how we want the game to look because that will help decide how I want to handle loading resources into memory.  The thing
+I'm trying to decide is at what point can the game load more resources into memory, what are going to be the choke points
+that allow for loading resources.  Also how much do I need to have on the screen, and how much can I reuse other sprites
+because if the background people on the street can be the same sprites over and over than the amount of data having to be
+loaded into memory will be minimal.
+
+January 13th, 2016
+
+Day 9 of Development
+I spent yesterday doing research on memory and resource management, after reading a bunch of stuff on various types of
+memory managers it looks like using a stack allocator for Blood Noir will work best.  I discussed with my business partner
+how we are going to handle areas that the player can go into and we have decided to use a system where the playable sections
+of the larger map will consist of several blocks of areas that can be gone into and between each block.  I am going to use
+the stack allocator and just have it be that when you go to an area of the map it will load all content needed for that
+specific section of the map that way once the area is loaded there will be no loading time.
+
 January 14th, 2016
 
 Day 10 of Development
@@ -431,10 +532,10 @@ I have made a major amount of progress again tonight although I still do not hav
 believe I have figured out the best way to handle buildings, levels, and maps in the game.  Tomorrow after I have finished
 replacing my processor and motherboard and getting things working on my machine again I will finish my work on this code
 the goal after I have completed this code is to build a test map, with 4 levels, and a set of buildings and to fill in the
-text files that I need to build to build all of the assets and then test this whole thing out.  If I can get things displaying
-then I will be able to get working on parallax scrolling and then getting a character displaying to the screen.  This will
-put me very close to the goal for the Demo for this game and as soon as we get the demo done for the game then I can send
-it to investors in order to get the company funded and then begin working on this thing full time.
+text files that I need to build to build all of the assets and then test this whole thing out.  If I can get things
+displaying then I will be able to get working on parallax scrolling and then getting a character displaying to the screen.
+This will put me very close to the goal for the Demo for this game and as soon as we get the demo done for the game then I
+can send it to investors in order to get the company funded and then begin working on this thing full time.
 
 February 9th, 2016
 
@@ -442,11 +543,11 @@ Day 28 of Development
 Today I have not gotten any programming done yet as I made some upgrades to my desktop increasing my hardware quality to
 help my computer run better.  I have spent the whole day so far getting the hardware working and then getting software
 installed again.  I will be putting time into the engine tomorrow attempting to finish the building, map and level systems
-of the game engine.  If everything goes smoothly I will attempt to build out the text files for the map, level and buildings,
-in an effort to test out the code to make sure everything gets populated correctly and that I can access the data I need to
-access correctly.  If this goes well and I'm able to successfully do this I will then move on to building out a full map
-including the 4 levels, and a set of buildings in order to test out drawing the level on the screen.  Once I get this
-accomplished I can move on to getting the actual character displaying on the screen as well and moving around.  This set
+of the game engine.  If everything goes smoothly I will attempt to build out the text files for the map, level and 
+buildings, in an effort to test out the code to make sure everything gets populated correctly and that I can access the
+data I need to access correctly.  If this goes well and I'm able to successfully do this I will then move on to building out
+a full map including the 4 levels, and a set of buildings in order to test out drawing the level on the screen.  Once I get
+this accomplished I can move on to getting the actual character displaying on the screen as well and moving around.  This set
 of tasks: verifying map, level and building are setup properly, getting a map displaying correctly on the screen and getting
 the character displaying and moving correctly would be a huge milestone for this project and this company.  From there I will
 have to get trigger points working as well so as to be able to move between levels and buildings.  I will also put a bunch of
@@ -941,18 +1042,19 @@ if I turn this project into a polished game I stand a very good chance of gettin
 another state later this year.
 
 Questions I need to resolve for this project:
-Should I allow various systems that need to draw things on the screen to access the actual graphics system directly or do I create
-some kind of a command system within the graphics system and when another system wants to send drawing commands they send the
-request into the drawing system and it will use the command system with a container that will use a first in first out system where
-each frame of the game will process whatever commands are in the container.
+Should I allow various systems that need to draw things on the screen to access the actual graphics system directly or do I
+create some kind of a command system within the graphics system and when another system wants to send drawing commands they
+send the request into the drawing system and it will use the command system with a container that will use a first in first
+out system where each frame of the game will process whatever commands are in the container.
 
-OK I have already answered my own question about what I'm going to do I need to figure out how to write out the code and logic for
-a command system where each individual system will subscribe to a specific type of Commands that the command system will process.
+OK I have already answered my own question about what I'm going to do I need to figure out how to write out the code and logic
+for a command system where each individual system will subscribe to a specific type of Commands that the command system will
+process.
 
-This is my new #1 task completing the Commands System, followed by the Game State system being 2nd, and from their I think my 3rd in
-line should be get the Game State system actually used in the game and get the startup process working, so Banner Parade, gameplay
-video, title screen, menu title screen, and get everything in the game engine even if they are just stubbed out before I go back to
-working on the level editor.  So the task for tomorrow and until it is completed is the Commands System.
+This is my new #1 task completing the Commands System, followed by the Game State system being 2nd, and from their I think my
+3rd in line should be get the Game State system actually used in the game and get the startup process working, so Banner Parade,
+gameplay video, title screen, menu title screen, and get everything in the game engine even if they are just stubbed out before
+I go back to working on the level editor.  So the task for tomorrow and until it is completed is the Commands System.
 
 April 1st, 2016
 
@@ -964,107 +1066,112 @@ this more tomorrow and I expect it will be on my priority list for the foreseeab
 April 2nd, 2016
 
 Day 59 of Development
-The plan for the day is to begin working on stubbing out the code for the Command System of the game engine. The plan I currently
-have for the system is each system will register themselves with the command system and the command system will hold a pointer to
-every systems main object. Then when I want to pass a message to a specific system it will be sent through the game class to the
-command class the command class will call the command processing method for each subsystem directly and pass the data along that
-the system needs. In the game engine the plan has for the most part been that Win32_window is the entry point for the game engine
-as soon as it creates the game object and starts it running it passes control over to the game class and every other system of the
-engine has an object that the game class controls and contains in it's class.  The plan was to not have other systems know about
-each other in the engine because making it so that each system points to each system can create some very chaotic code and it is
-not very professional and if I want to be taken serious as a game programmer I need to come up with a solution that is a more
-elegant and professional.
+The plan for the day is to begin working on stubbing out the code for the Command System of the game engine. The plan I
+currently have for the system is each system will register themselves with the command system and the command system will
+hold a pointer to every systems main object. Then when I want to pass a message to a specific system it will be sent through
+the game class to the command class the command class will call the command processing method for each subsystem directly and
+pass the data along that the system needs. In the game engine the plan has for the most part been that Win32_window is the entry
+point for the game engine as soon as it creates the game object and starts it running it passes control over to the game class
+and every other system of the engine has an object that the game class controls and contains in it's class.  The plan was to not
+have other systems know about each other in the engine because making it so that each system points to each system can create
+some very chaotic code and it is not very professional and if I want to be taken serious as a game programmer I need to come
+up with a solution that is a more elegant and professional.
 
 Getting back to the task at hand so I can't use pointers to every system in every system because it creates chaotic code but
-another option that I think will create a much more clean engine but will be complicated to implement uses the Command System where
-it has an object from each system and each system has a command system object pointer to pass commands to the command system and a
-method in each system that processes commands from the command system. So to implement this system correctly the system will contain
-an object for each individual system in the engine including a pointer to the game class itself.  Each system will contain a pointer
-to the command system object that will allow it to pass messages to other systems and each system will contain a method that
-processes commands that where passed to it.  I don't pretend to know if I am handling this 100% the way I should be or if how I'm
-doing this is professional but I'm going to use this on this project and on other projects I will continue to grow my skill set.
+another option that I think will create a much more clean engine but will be complicated to implement uses the Command System
+where it has an object from each system and each system has a command system object pointer to pass commands to the command
+system and a method in each system that processes commands from the command system. So to implement this system correctly the
+system will contain an object for each individual system in the engine including a pointer to the game class itself.  Each
+system will contain a pointer to the command system object that will allow it to pass messages to other systems and each system
+will contain a method that processes commands that where passed to it.  I don't pretend to know if I am handling this 100% the
+way I should be or if how I'm doing this is professional but I'm going to use this on this project and on other projects I will
+continue to grow my skill set.
 
 April 4th, 2016
 
 Day 60 of Development
-Today I am beginning to shell out the Command system under its new name Events I decided to name it this because although it will
-be at first only used for passing graphics commands around between the various systems I do plan to in the future grow it into
-a full events system for the engine and in future projects will be used and modified into a system for each game. I did not get
-anything done on the project today because of outside interference but I will not let this be a problem anymore starting tomorrow.
-I will be getting the Events system completed tomorrow no matter what.
+Today I am beginning to shell out the Command system under its new name Events I decided to name it this because although it
+will be at first only used for passing graphics commands around between the various systems I do plan to in the future grow
+it into a full events system for the engine and in future projects will be used and modified into a system for each game. I
+did not get anything done on the project today because of outside interference but I will not let this be a problem anymore
+starting tomorrow. I will be getting the Events system completed tomorrow no matter what.
 
 April 5th, 2016
 
 Day 61 of Development
-I'm scratching today again because of reasons that I'm not proud of but I will do what I must to fix this and do better tomorrow.
+I'm scratching today again because of reasons that I'm not proud of but I will do what I must to fix this and do better
+tomorrow.
 
 April 7th, 2016
 
 Day 62 of Development
-With certain other distractions now being out of the way I will be moving forward with this project and make some great progress
-towards my ultimate goal. I am playing around with the idea that maybe I don't actually need an event system or command system
-because of how my game engine works right now passing around a pointer to multiple systems for graphics may actually be OK in
-this instance.  I will keep going without developing the event system for now and if I get further along and find that I really
-need to fix it for some reason than I will do it at that point. I'm going to do some more thinking and planning out of things and
-if after I do this I feel like this system needs to be implemented then I will do it otherwise I'll move on without it.
+With certain other distractions now being out of the way I will be moving forward with this project and make some great
+progress towards my ultimate goal. I am playing around with the idea that maybe I don't actually need an event system or
+command system because of how my game engine works right now passing around a pointer to multiple systems for graphics
+may actually be OK in this instance.  I will keep going without developing the event system for now and if I get further
+along and find that I really need to fix it for some reason than I will do it at that point. I'm going to do some more
+thinking and planning out of things and if after I do this I feel like this system needs to be implemented then I will
+do it otherwise I'll move on without it.
 
 April 14th, 2016
 
 Day 63 of Development
-It has been a rough few weeks and I have let outside distractions in my life affect my ability to get this project moving forward,
-but this is changing today my goal for today is that by the end of the night by the time I lay down and call it a night I will get
-a map displaying on the screen and get the parallax scrolling effect working.  I don't anticipate getting the level editor finished
-or getting a character displaying or trigger points working or anything like that but I will have a single section of a map working
-on screen and scrolling correctly including with auto scrolling for certain layers auto scrolling.  Once I can get this part of the
-logic working I can move on to getting the level editor working so that Sam and Michael can test out building levels in the game so
-we can get the demo moving forward.
+It has been a rough few weeks and I have let outside distractions in my life affect my ability to get this project moving
+forward, but this is changing today my goal for today is that by the end of the night by the time I lay down and call it a
+night I will get a map displaying on the screen and get the parallax scrolling effect working.  I don't anticipate getting
+the level editor finished or getting a character displaying or trigger points working or anything like that but I will have
+a single section of a map working on screen and scrolling correctly including with auto scrolling for certain layers auto
+scrolling.  Once I can get this part of the logic working I can move on to getting the level editor working so that Sam and
+Michael can test out building levels in the game so we can get the demo moving forward.
 
-I set out today with the goal to get a map displaying on the screen by the end of the night but I am not able to complete what I
-had set out on for today.  I realize this means I did not complete my goal for today but I will live with it.  I have gotten some
-code written for displaying the map on the screen, and for updating the current map on the screen.  I am working out some bugs and
-some details for how I'm going to handle certain aspects of displaying the map, what the current position the map is in so on and
-so forth. I anticipate being able to get a map displaying on the screen by the end of the day tomorrow as I'm very close to
-accomplishing this tonight.
+I set out today with the goal to get a map displaying on the screen by the end of the night but I am not able to complete
+what I had set out on for today.  I realize this means I did not complete my goal for today but I will live with it.  I
+have gotten some code written for displaying the map on the screen, and for updating the current map on the screen.  I am
+working out some bugs and some details for how I'm going to handle certain aspects of displaying the map, what the current
+position the map is in so on and so forth. I anticipate being able to get a map displaying on the screen by the end of the
+day tomorrow as I'm very close to accomplishing this tonight.
 
-One thing I need to solve is figuring out how to handle scrolling the image that is larger than the game window that I am displaying
-it in.  I know this is a simple task but tonight I'm drawing a blank as to how to handle this.  I may have to wait until I get my
-internet connection working again tomorrow night in order to finish this because there are some great examples out there that I can
-draw upon on how to handle this but I need to be able to get online in order to download them and look at their code.
+One thing I need to solve is figuring out how to handle scrolling the image that is larger than the game window that I am
+displaying it in.  I know this is a simple task but tonight I'm drawing a blank as to how to handle this.  I may have to
+wait until I get my internet connection working again tomorrow night in order to finish this because there are some great
+examples out there that I can draw upon on how to handle this but I need to be able to get online in order to download them
+and look at their code.
 
 April 15th, 2016
 
 Day 64 of Development
-I plan to get some things done for this project today but I don't know how much I will be able to complete and how soon I'll be
-able to start working on it.  A lot of what I'm trying to figure out I need to get access to some reference that I don't have here
-at the house I need the internet to download the code for some examples that show how to do what I'm trying to do.  So I will very
-likely have to wait until my internet gets turned on some point today in order to move forward.  But that being said once it is up
-and running I will get to work on this project and work very hard today and the rest of the weekend when I'm not working at my job
-to get further on this project.
+I plan to get some things done for this project today but I don't know how much I will be able to complete and how soon I'll
+be able to start working on it.  A lot of what I'm trying to figure out I need to get access to some reference that I don't
+have here at the house I need the internet to download the code for some examples that show how to do what I'm trying to do.
+So I will very likely have to wait until my internet gets turned on some point today in order to move forward.  But that being
+said once it is up and running I will get to work on this project and work very hard today and the rest of the weekend when I'm
+not working at my job to get further on this project.
 
-I was able to get some work done but today moving towards getting the map displaying on the screen I will work on this more tomorrow
-to reach my goal of getting it displaying and moving on the screen by the end of the weekend.
+I was able to get some work done but today moving towards getting the map displaying on the screen I will work on this more
+tomorrow to reach my goal of getting it displaying and moving on the screen by the end of the weekend.
 
 April 21st, 2016
 
 Day 65 of Development
-Today I am working on cleaning up some of the code trying to figure out how to get the code for displaying the map on the screen
-working and getting the update code working as well the goal is that tomorrow I will find some graphics that I can use for testing
-purposes and get the test graphics displaying on the screen correctly and also scrolling properly both from auto scroll and from
-user input.
+Today I am working on cleaning up some of the code trying to figure out how to get the code for displaying the map on the
+screen working and getting the update code working as well the goal is that tomorrow I will find some graphics that I can
+use for testing purposes and get the test graphics displaying on the screen correctly and also scrolling properly both from
+auto scroll and from user input.
 
 April 22nd, 2016
 
 Day 66 of Development
-Today I am working on the code for displaying and updating the map on the screen and my goal for today is to get some test graphics
-to display on the screen and to update correctly.  If I am able to complete this successfully I will then move on to work on the
-level editor in the engine.  Getting that piece of the engine functional would be a major accomplishment towards completion of this
-engine. Because this would allow for easier construction of the text files used by the engine for loading the content of the game.
+Today I am working on the code for displaying and updating the map on the screen and my goal for today is to get some test
+graphics to display on the screen and to update correctly.  If I am able to complete this successfully I will then move on
+to work on the level editor in the engine.  Getting that piece of the engine functional would be a major accomplishment
+towards completion of this engine. Because this would allow for easier construction of the text files used by the engine
+for loading the content of the game.
 
-I just ran into a complication related to a system I was worried about earlier I can't use a global graphics object in the map
-system because of link error's this comes back to my question about developing a messaging system for passing commands to and from
-various systems of the engine.  Maybe this is the point when I need to step back and figure out this system. This is a problem that
-once I solve it will bring the engine back to my original design where the game class is the only class that contains the other
-systems and it passes data to the various engine support systems and then they pass commands back.
+I just ran into a complication related to a system I was worried about earlier I can't use a global graphics object in the
+map system because of link error's this comes back to my question about developing a messaging system for passing commands
+to and from various systems of the engine.  Maybe this is the point when I need to step back and figure out this system.
+This is a problem that once I solve it will bring the engine back to my original design where the game class is the only
+class that contains the other systems and it passes data to the various engine support systems and then they pass commands back.
 
 April 23rd, 2016
 
@@ -1110,24 +1217,24 @@ the conclusion that I may need to scrap using the DirectXTK keyboard entry code 
 do more research on the topic and make sure that my hypothesis is correct.  I will do this more tomorrow as well as cleaning up
 the map code to make it more stable and work correctly.
 
-So I went back and checked things out as well as some documentation and found out what I needed to do to make this work correctly
-and was able to get the keyboard code working correctly as well as the gamePad code.  So I am happy to say that I have a map
-displaying on the screen and correctly updating on the screen as well both auto scroll and keyboard entry works correctly.  I do
-need to work on the code some more to work out some weird bugs and abnormalities related to moving the actual layers when in auto
-scroll and not but that is something that I'm sure I can figure out fairly easy.  I think what I need to do is sit down and try to
-write out the pseudocode for that method and figure out the best way to handle it.  Considering the fact that all I did was write
-the code for that method as well as the draw method on the fly without taking the time to logically write it out I think it is
-pretty cool that it worked the first time I did it.
+So I went back and checked things out as well as some documentation and found out what I needed to do to make this work
+correctly and was able to get the keyboard code working correctly as well as the gamePad code.  So I am happy to say that
+I have a map displaying on the screen and correctly updating on the screen as well both auto scroll and keyboard entry works
+correctly.  I do need to work on the code some more to work out some weird bugs and abnormalities related to moving the actual
+layers when in auto scroll and not but that is something that I'm sure I can figure out fairly easy.  I think what I need to do
+is sit down and try to write out the pseudocode for that method and figure out the best way to handle it.  Considering the fact
+that all I did was write the code for that method as well as the draw method on the fly without taking the time to logically
+write it out I think it is pretty cool that it worked the first time I did it.
 
-So I'm done for tonight with a big step in the right direction I will continue my progress tomorrow when I get home from all of the
-running I must do after work.
+So I'm done for tonight with a big step in the right direction I will continue my progress tomorrow when I get home from all of
+the running I must do after work.
 
 April 30th, 2016
 
 Day 69 of Development
-Today I am starting out with changing the resolution of the window to a full 1920 x 1080 and made the window open up maximized for
-now eventually I will add the options menu where you can either make the fullscreen with no tool bars or anything or windowed where
-you can select the dimensions of the window.
+Today I am starting out with changing the resolution of the window to a full 1920 x 1080 and made the window open up maximized
+for now eventually I will add the options menu where you can either make the fullscreen with no tool bars or anything or
+windowed where you can select the dimensions of the window.
 
 One of the things I want to add to my to do list both for the Demo and just in general for the engine is to write a class for all
 the input related things, even though I'm using the DirectXTK's input classes and what not I still want to write a class around
@@ -1143,27 +1250,27 @@ Things I need to research and get books on:
 May 2nd, 2016
 
 Day 70 of Development
-Today I am spending more time researching Design Patterns as they pertain to game programming to figure out if there are any design
-changes I should make to the engine as well as figuring out how I'm going to handle some of the new systems to make sure everything
-blends together in this engine seamlessly and try to prevent bugs and issues in the future in this project as well as other projects
-that I may undertake in my programming career.
+Today I am spending more time researching Design Patterns as they pertain to game programming to figure out if there are any
+design changes I should make to the engine as well as figuring out how I'm going to handle some of the new systems to make sure
+everything blends together in this engine seamlessly and try to prevent bugs and issues in the future in this project as well
+as other projects that I may undertake in my programming career.
 
 -=Command=-
-I need to research the -=Command=- Design Pattern more and see how I can implement it into my own code, I see a use for it in the
-input end of my engine, as well as my Console Command system that I built this would do what I originally wanted it to do in a much
-better bug free way.  This will require me to re write that class but in the end if it makes my code more robust and the engine more
-stable and clear than it will benefit me in the end.  This is a part of developing video games understanding the benefits of re
-writing code for systems that you have already implemented if it means saving you hours of problems in the future then the couple
-hours it will take to re write and implement it will all be worth it.
+I need to research the -=Command=- Design Pattern more and see how I can implement it into my own code, I see a use for it in
+the input end of my engine, as well as my Console Command system that I built this would do what I originally wanted it to do
+in a much better bug free way.  This will require me to re write that class but in the end if it makes my code more robust and
+the engine more stable and clear than it will benefit me in the end.  This is a part of developing video games understanding
+the benefits of re writing code for systems that you have already implemented if it means saving you hours of problems in the
+future then the couple hours it will take to re write and implement it will all be worth it.
 
 May 4th, 2016
 
 Day 71 of Development
-So I made some changes after doing some heavy reading on design patterns, the reading I did enlightened me why using the singleton
-class design is a bad idea especially with global variables.  So I went back to doing things the way I was originally doing it with
-passing pointers to systems that need them which I have learned is actually not a bad thing because it controls the systems better
-and forces you to see where your data is going plus it makes it easier to trace bugs.  I'm hoping to take some of the advice and
-design pattern ideas that I have read and put them into use for certain systems in the engine.
+So I made some changes after doing some heavy reading on design patterns, the reading I did enlightened me why using the
+singleton class design is a bad idea especially with global variables.  So I went back to doing things the way I was originally
+doing it with passing pointers to systems that need them which I have learned is actually not a bad thing because it controls
+the systems better and forces you to see where your data is going plus it makes it easier to trace bugs.  I'm hoping to take
+some of the advice and design pattern ideas that I have read and put them into use for certain systems in the engine.
 
 I still want to figure an actual input class, and now I think I need to add an audio class so that various systems that need to
 play sound effects can do so but I need to research design patterns more to figure out how I want to handle this in the engine.
@@ -1559,50 +1666,36 @@ implemented.  I didn't get very far with this today but I will get back on track
 May 31st, 2016
 
 Day 88 of Development
-I'm getting to work on the game state system and as I start to plan out the logic for it I run into a problem that I figured I would
-run into eventually.  The rendering system the way it works now isn't going to work quite the way I need it to with the new game 
-state system of the engine.  Right now each system grabs a copy of the graphics variable and then makes their own calls to the
-system for rendering something.  But with game states switching all the time passing that variable around could get expensive
-in system resources. The questions is how can I write a system where any engine system can add draw commands that get processed
-every frame in a queue like fashion or First In First Out.  Or maybe the answer is not to write a new system but to simply create
-a new event type for drawing graphics to the screen a DrawEvent that gets the data needed to draw to the screen and instead of
-passing the graphics object around each system will have access to the EventManager and when they need to draw something to the
-screen they can add the correct event type to the manager and then when it reaches the top of the Que it will get processed and
-then removed from the Que and the next one will be processed.  So before I can work on the Game State system I need to get graphics
-draw commands throughout the engine switched over to EventManager add commands.
+I'm getting to work on the game state system and as I start to plan out the logic for it I run into a problem that I figured I
+would run into eventually.  The rendering system the way it works now isn't going to work quite the way I need it to with the
+new game state system of the engine.  Right now each system grabs a copy of the graphics variable and then makes their own
+calls to the system for rendering something.  But with game states switching all the time passing that variable around could
+get expensive in system resources. The questions is how can I write a system where any engine system can add draw commands
+that get processed every frame in a queue like fashion or First In First Out.  Or maybe the answer is not to write a new system
+but to simply create a new event type for drawing graphics to the screen a DrawEvent that gets the data needed to draw to the
+screen and instead of passing the graphics object around each system will have access to the EventManager and when they need to
+draw something to the screen they can add the correct event type to the manager and then when it reaches the top of the Que it
+will get processed and then removed from the Que and the next one will be processed.  So before I can work on the Game State
+system I need to get graphics draw commands throughout the engine switched over to EventManager add commands.
 
-Fixing this situation is going to take some time there is no way for me to finish the changes tonight, I have implemented the new
-draw event and hooked it up but with these changes I must now implement changes to all other systems that draw things to the screen.
-Which will take some time and I don't want to make that process to complicated because I will change it again as I implement the
-game state.  Maybe I need to look at this as an opportunity to re think my whole rendering scheme in general.  Maybe this is the
-point where I make it so that everything that I draw in the game is a version of a GameActor Object a class that inherits from the
-base GameActor class.
+Fixing this situation is going to take some time there is no way for me to finish the changes tonight, I have implemented the
+new draw event and hooked it up but with these changes I must now implement changes to all other systems that draw things to
+the screen. Which will take some time and I don't want to make that process to complicated because I will change it again as
+I implement the game state.  Maybe I need to look at this as an opportunity to re think my whole rendering scheme in general.
+Maybe this is the point where I make it so that everything that I draw in the game is a version of a GameActor Object a class
+that inherits from the base GameActor class.
 
-I'm going to stop working on things for tonight and pick things back up tomorrow after a good nights rest, my goal for tomorrow is
-to get some design work done for the GameActor base class and think about the various types of Actors in the game.
-
-June 2nd, 2016
-
-Day 89 of Development
-Tonight I'm going to continue my work and research into how best to handle the Actor concepts in my engine so far I'm leaning
-toward using a Component style system for this part of the engine.
-
-June 6th, 2016
-
-Day 90 of Development
-Today I'm going to get this project back on track and get the game moving forward towards a complete demo to hand off to investors
-to fund the company.  I was able to get some work done on the game state system, I do not have it complete but it is further along
-than it was when I started today, I'm hoping to get it much further along tomorrow and possibly get it linked up into the engine
-and working so that I can verify functionality.
+I'm going to stop working on things for tonight and pick things back up tomorrow after a good nights rest, my goal for tomorrow
+is to get some design work done for the GameActor base class and think about the various types of Actors in the game.
 
 June 11th, 2016
 
 Day 91 of Development
-I'm going to try to get back to working on the project again I'm sad to say that I have let outside distractions get in the way but
-I'm serious this time when I say I'm going to get back to 100% focus on the project and getting the demo done.  I'm still working
-out the details of the game state system I'm not 100% sure how I am going to handle it but I'm trying to come up with some ideas.
-This is my current task getting the game state system built and implemented because once I do this it makes things a lot easier to
-bring the demo to a playable point and also makes the future of the project seem possible.
+I'm going to try to get back to working on the project again I'm sad to say that I have let outside distractions get in the way
+but I'm serious this time when I say I'm going to get back to 100% focus on the project and getting the demo done.  I'm still
+working out the details of the game state system I'm not 100% sure how I am going to handle it but I'm trying to come up with
+some ideas. This is my current task getting the game state system built and implemented because once I do this it makes things
+a lot easier to bring the demo to a playable point and also makes the future of the project seem possible.
 
 -Game State Manager Class-
 
@@ -1631,10 +1724,10 @@ to do this correctly than the fastest I can.
 June 16th, 2016
 
 Day 94 of Development
-Working more on design for game state and game state management hoping to have it working by the end of the week and get the first
-couple of states implemented.  I have accomplished a decent amount of understanding of how I'm going to handle game states and
-the game state manager.  I will get things implemented into the engine and hopefully get the first state working correctly and
-fully implemented and tested tomorrow.
+Working more on design for game state and game state management hoping to have it working by the end of the week and get the
+first couple of states implemented.  I have accomplished a decent amount of understanding of how I'm going to handle game
+states and the game state manager.  I will get things implemented into the engine and hopefully get the first state working
+correctly and fully implemented and tested tomorrow.
 
 June 17th, 2016
 
@@ -1656,12 +1749,13 @@ deadline for this milestone of the project the new deadline is 7/1/2016 The requ
 successful one are:
 Game States: Banner Parade will be fully implemented and functional without final art, Main Menu will be fully implemented and
 functional again without final art, New Game/Tutorial will have basic functionality, will not be fully implemented and
-functional and will not contain final art, Map Select I will have dialog boxes working for the dossier system on the map select
-screen, I will have the ability to select a map section and go to it implemented and functional.
+functional and will not contain final art, Map Select I will have dialog boxes working for the dossier system on the map
+select screen, I will have the ability to select a map section and go to it implemented and functional.
 
-Map I will have the ability to transition from Map Select to the map working, I will have trigger points at a basic level working,
-the player can go into and out of buildings, and move between blocks of the city.  The buildings will not be fully implemented the
-inside will show up like they are supposed to but the player will not be able to move between floors in the building yet.
+Map I will have the ability to transition from Map Select to the map working, I will have trigger points at a basic level
+working, the player can go into and out of buildings, and move between blocks of the city.  The buildings will not be fully
+implemented the inside will show up like they are supposed to but the player will not be able to move between floors in the
+building yet.
 
 Character/Player I will get the class for this system implemented with animations, and I will implement the ability component
 system for the engine, I will not have any of the abilities implemented in the engine but I will have the system there for adding
@@ -1677,37 +1771,38 @@ menu game state.
 June 22nd, 2016
 
 Day 99 of Development
-I started trying to implement the new stuff into the engine and get it compiling and displaying correctly I ran into a problem with
-the game state manager there is something that it doesn't like about my code that I need to fix to get it working.  Hopefully I can
-figure it out fast and then move on.
+I started trying to implement the new stuff into the engine and get it compiling and displaying correctly I ran into a problem
+with the game state manager there is something that it doesn't like about my code that I need to fix to get it working.
+Hopefully I can figure it out fast and then move on.
 
 I found the initial error not allowing it to compile and now can get the code to compile and the window opens up like it is
-supposed to again but nothing is displaying on the screen at the moment.  I will investigate this issue more tomorrow after a good
-night sleep.
+supposed to again but nothing is displaying on the screen at the moment.  I will investigate this issue more tomorrow after
+a good night sleep.
 
 June 24th, 2016
 
 Day 100 of Development
 New List of Things to do- notes from today
-Banner Parade - get rid of event manager move the timing related code over to game state in general and make it an optional piece
-of data for each game state, because several states will need access to timing related stuff so what I will probably do is just
-have the game state manager take the time delta from the main game timer in and pass it along to the update method for each state.
+Banner Parade - get rid of event manager move the timing related code over to game state in general and make it an optional
+piece of data for each game state, because several states will need access to timing related stuff so what I will probably do
+is just have the game state manager take the time delta from the main game timer in and pass it along to the update method for
+each state.
 
-While thinking about this stuff I have another idea that I'm going to implement maybe for the game state manager instead of holding
-onto a pointer to the current state I can have a value that every state has that is called active it will be a bool value, and when
-a state is active that is set to true and when it is not it is set to false.  And each frame each state will take in the time delta
-and if it is a currently active state it will update its stuff if not than the only thing it will update is the timer variable to
-make sure that we don't end up with a huge jump in action when switching between states because of a giant time delta being built
-up for that state.
+While thinking about this stuff I have another idea that I'm going to implement maybe for the game state manager instead of
+holding onto a pointer to the current state I can have a value that every state has that is called active it will be a bool
+value, and when a state is active that is set to true and when it is not it is set to false.  And each frame each state will
+take in the time delta and if it is a currently active state it will update its stuff if not than the only thing it will update
+is the timer variable to make sure that we don't end up with a huge jump in action when switching between states because of a
+giant time delta being built up for that state.
 
-Main Menu State - Graphics: title screen, new Game option, Load Game Option, Options Option, Exit Option, Press Any Key Option and
-their inverse selected versions.
+Main Menu State - Graphics: title screen, new Game option, Load Game Option, Options Option, Exit Option, Press Any Key Option
+and their inverse selected versions.
 
-Tutorial / New Game States - The New game state will be a state showing text and the town the player lives in giving them a glimpse
-of the world.  It explains that you are dieing and have given up on life, One day you travel to the local mall to buy some mundane
-thing.  This is when the tutorial will introduce the player to the combat system with the basic controls for moving the character
-around on the screen and using Offensive and Defensive moves / abilities.  The mall level / map will be represented as a special
-map of only one section and multiple layers.
+Tutorial / New Game States - The New game state will be a state showing text and the town the player lives in giving them a
+glimpse of the world.  It explains that you are dieing and have given up on life, One day you travel to the local mall to buy
+some mundane thing.  This is when the tutorial will introduce the player to the combat system with the basic controls for moving
+the character around on the screen and using Offensive and Defensive moves / abilities.  The mall level / map will be represented
+as a special map of only one section and multiple layers.
 
 Map Select State
 - Graphics for Map select screen
@@ -1745,16 +1840,16 @@ Graphic when on Inventory screen
 - Animations -
 Do I handle it locally in each class that needs animations or do I add it to the Graphics Class?
 And While I'm thinking about the Graphics Class do I change that class? Maybe keep Direct X Initialization stuff in a separate
-class and have a separate class that handles rendering of everything.  I need to figure out a way to create a level of indirection
-for the graphics classes for the rendering and the system specific calls aka DX, or for a console there libraries.
+class and have a separate class that handles rendering of everything.  I need to figure out a way to create a level of
+indirection for the graphics classes for the rendering and the system specific calls aka DX, or for a console there libraries.
 
-So DX 11 class will create DX 11 device, context, etc... It will create stuff needed and will give access to device and whatever
-else is needed.
+So DX 11 class will create DX 11 device, context, etc... It will create stuff needed and will give access to device and
+whatever else is needed.
 
 In rendering class I can use ##IFDEF directive for windows, vs Mac OS, vs Linux vs Console.
 
-Maybe figure out a way with those directives to change which class Objects are used when rendering? Or maybe have Generic Rendering
-class and use Inheritance where other derived classes will be for specific OS- Windows, Mac OS, Linux, Console, etc...
+Maybe figure out a way with those directives to change which class Objects are used when rendering? Or maybe have Generic
+Rendering class and use Inheritance where other derived classes will be for specific OS- Windows, Mac OS, Linux, Console, etc...
 
 So when the renderer is first initialized it can get initialized as a specific version.
 
@@ -1763,60 +1858,60 @@ Tomorrow I will get to work on implementing the changes that I added as notes to
 June 27th, 2016
 
 Day 102 of Development
-Getting started for today and trying to decide which item on my task list I want to handle first?  I think the best thing I could
-start off taking care of would be re working the graphics code moving things around so that DX 11 Graphics is handled in a separate
-class from the rendering.  The code to create the window on a windows environment should be separate from the rendering of graphics
-on the screen, and the system for rendering graphics on the screen should be handled differently depending on the operating system
-the game is being played on.
+Getting started for today and trying to decide which item on my task list I want to handle first?  I think the best thing I
+could start off taking care of would be re working the graphics code moving things around so that DX 11 Graphics is handled
+in a separate class from the rendering.  The code to create the window on a windows environment should be separate from the
+rendering of graphics on the screen, and the system for rendering graphics on the screen should be handled differently
+depending on the operating system the game is being played on.
 
-I did not get very much coding done today as I have been working out how I'm going to handle the various build configuration stuff
-in visual studio.  I need to figure out the indirection or whatever the term is that I'm thinking of, I want to make it so that
-based on the build that is currently being compiled it will use specific files, because then I can make specific classes to get the
-game to run on a Mac, classes for Linux, and classes for consoles this way I can use one project for all planned platforms.  I am
-going to make this work because I want our games to be releasable on just about any platform.  But I will have to work on this more
-tomorrow as it is time for bed to recharge my brain because tomorrow will be a full day of development.
+I did not get very much coding done today as I have been working out how I'm going to handle the various build configuration
+stuff in visual studio.  I need to figure out the indirection or whatever the term is that I'm thinking of, I want to make it
+so that based on the build that is currently being compiled it will use specific files, because then I can make specific classes
+to get the game to run on a Mac, classes for Linux, and classes for consoles this way I can use one project for all planned
+platforms.  I am going to make this work because I want our games to be releasable on just about any platform.  But I will have
+to work on this more tomorrow as it is time for bed to recharge my brain because tomorrow will be a full day of development.
 
 June 28th, 2016
 
 Day 103 of Development
-Today I did not get any programming done because when I started thinking about how to move forward with the project and the engine
-I realized I needed to take a step back and look at the total class structure and flow for the engine and make sure I have all of
-the systems figured out, what connects to what, and what contains what in the engine.  I think with what I have figured out today
-I have a real clear path to what needs to be done to make this demo and in the end this game a complete professional title that I
-can be proud that I developed.  I don't know that I will meet the deadline that I had set I'm still going to try to see how close I
-can get to it.  Tomorrow my goal is to flesh out the details of as many of the classes on the flowchart that I created today I would
-like to get them all written out tomorrow and then go in and implement changes that I need to make and create the new ones that need
-to be developed.
+Today I did not get any programming done because when I started thinking about how to move forward with the project and the
+engine I realized I needed to take a step back and look at the total class structure and flow for the engine and make sure I
+have all of the systems figured out, what connects to what, and what contains what in the engine.  I think with what I have
+figured out today I have a real clear path to what needs to be done to make this demo and in the end this game a complete
+professional title that I can be proud that I developed.  I don't know that I will meet the deadline that I had set I'm still
+going to try to see how close I can get to it.  Tomorrow my goal is to flesh out the details of as many of the classes on the
+flowchart that I created today I would like to get them all written out tomorrow and then go in and implement changes that I
+need to make and create the new ones that need to be developed.
 
 July 3rd, 2016
 
 Day 104 of Development
-Today I was working on getting the game compiling again after a few days of making changes, moving code around to different classes
-in order to fit the new direction I want to take the game engine for this project.  Tomorrow I will work on the game state manager
-system and try to get the first 2 states working correctly.
+Today I was working on getting the game compiling again after a few days of making changes, moving code around to different
+classes in order to fit the new direction I want to take the game engine for this project.  Tomorrow I will work on the game
+state manager system and try to get the first 2 states working correctly.
 
 July 4th, 2016
 
 Day 105 of Development
-Today I'm spending some time figuring out how I want to move forward with the engine for this game, I am debating between leaving
-things the way they are with the rendering where I have the single class for DirectX11 that does all rendering the challenging with
-doing things this way is that if I want to port this game over to another platform a game console or whatever then I will have to
-re write this entire class for that console as opposed to making a layer between that class and the game play and have this other
-class call in to the specific graphics class based on what build the game it being built for.
+Today I'm spending some time figuring out how I want to move forward with the engine for this game, I am debating between
+leaving things the way they are with the rendering where I have the single class for DirectX11 that does all rendering the
+challenging with doing things this way is that if I want to port this game over to another platform a game console or whatever
+then I will have to re write this entire class for that console as opposed to making a layer between that class and the game
+play and have this other class call in to the specific graphics class based on what build the game it being built for.
 
-I found out how to target a platform #if _WIN32 this allows me to target windows 32 bit, I will add those in certain files as needed
-to tell when to use certain code.
+I found out how to target a platform #if _WIN32 this allows me to target windows 32 bit, I will add those in certain files as
+needed to tell when to use certain code.
 
-So I'm calling it a night now tonight I have gotten some work done quite a bit of design work done on a new sprite class, as well as
-the Render Manager class.  I'm hoping to get both the Sprite class and the Render Manager class written tomorrow and working so that
-I can move on to the game state stuff again and try to get the first 2 states implemented and working correctly like I want them to
-be.
+So I'm calling it a night now tonight I have gotten some work done quite a bit of design work done on a new sprite class, as
+well as the Render Manager class.  I'm hoping to get both the Sprite class and the Render Manager class written tomorrow and
+working so that I can move on to the game state stuff again and try to get the first 2 states implemented and working correctly
+like I want them to be.
 
 July 5th, 2016
 
 Day 106 of Development
-I began work on the sprite class today I have not fully implemented it but I'm hoping in the next few days to get it completed and
-functioning as well as the rendering manager class.
+I began work on the sprite class today I have not fully implemented it but I'm hoping in the next few days to get it completed
+and functioning as well as the rendering manager class.
 
 July 8th, 2016
 
@@ -1842,73 +1937,91 @@ Day 107 of Development
 
  Day 109 of Development
 OK today's goal first is to figure out the error with the input code and I'm happy to say that I have fixed the issue with this
-system right away this morning and the input works correctly for the keyboard stuff now I need to make sure that the gamepad stuff
-works correctly as well so that I can work with both keyboard and gamepad in the game.  Once I have that working then the rest of
-the day will be spent working on the game state system getting that stuff working.
+system right away this morning and the input works correctly for the keyboard stuff now I need to make sure that the gamepad
+stuff works correctly as well so that I can work with both keyboard and gamepad in the game.  Once I have that working then the
+rest of the day will be spent working on the game state system getting that stuff working.
 
-OK I'm so excited after all the trouble I had in the past with trying to get Game Pad stuff working in this engine after the changes
-that I made yesterday I have been able to get the gamepad stuff to work flawlessly.  So now I have input working properly for both
-a keyboard and the gamepad.  Now this means that my only task for today is to work on the game state stuff getting hopefully the
-first 2 states working properly namely the banner parade and the main menu states.  If I can accomplish this today it will be a HUGE
-step towards demo completion.
+OK I'm so excited after all the trouble I had in the past with trying to get Game Pad stuff working in this engine after the
+changes that I made yesterday I have been able to get the gamepad stuff to work flawlessly.  So now I have input working
+properly for both a keyboard and the gamepad.  Now this means that my only task for today is to work on the game state stuff
+getting hopefully the first 2 states working properly namely the banner parade and the main menu states.  If I can accomplish
+this today it will be a HUGE step towards demo completion.
 
-I'm ending the night on a really good note I have made excellent progress on the project today getting the input system buttoned up
-is a huge step forward, I was hoping to finish the first 2 states and the state manager tonight as well but I didn't quite make it
-before I could no longer see straight anymore.  But I am very confident that I will complete the first 2 states and the state
-manager tomorrow and get it implemented and tested.  From there I can move on to other states in the state system to get more of
-the demo completed.  I did get the Banner Parade State completed I believe, without testing I can't be sure and I can't test it
-until I get the 2nd state done and the state manager completed as well.  But this puts me in a good spot to complete those 2 pieces
-tomorrow and get things working.
+I'm ending the night on a really good note I have made excellent progress on the project today getting the input system
+buttoned up is a huge step forward, I was hoping to finish the first 2 states and the state manager tonight as well but I
+didn't quite make it before I could no longer see straight anymore.  But I am very confident that I will complete the first
+2 states and the state manager tomorrow and get it implemented and tested.  From there I can move on to other states in the
+state system to get more of the demo completed.  I did get the Banner Parade State completed I believe, without testing I
+can't be sure and I can't test it until I get the 2nd state done and the state manager completed as well.  But this puts me
+in a good spot to complete those 2 pieces tomorrow and get things working.
 
 July 12th, 2016
 
 Day 110 of Development
-Today I set out with the goal to get 2 of the game states working and the game state manager and I'm so happy to be able to say that
-I have been able to get 3 game states finished and working and the game state manager working as well.  The project is coming along
-so well now I know there is still a lot to go but I can now do a big check mark next to a section that seemed so very daunting to
-get working correctly.  I still have several states to get implemented and working but still a great accomplishment.  Tomorrow I
-will move on to more of the various systems of the engine I have not decided what I will work on tomorrow but I will figure that
-out tomorrow morning.
+Today I set out with the goal to get 2 of the game states working and the game state manager and I'm so happy to be able to
+say that I have been able to get 3 game states finished and working and the game state manager working as well.  The project
+is coming along so well now I know there is still a lot to go but I can now do a big check mark next to a section that seemed
+so very daunting to get working correctly.  I still have several states to get implemented and working but still a great
+accomplishment.  Tomorrow I will move on to more of the various systems of the engine I have not decided what I will work on
+tomorrow but I will figure that out tomorrow morning.
 
 July 13th, 2016
 
 Day 111 of Development
 Today I have decided to put my time into looking at the design of the map system and figure out what I need to do to get moving 
-between sections, trigger points, buildings, and objects working properly.  So my project is to work on the design of this system.
+between sections, trigger points, buildings, and objects working properly.  So my project is to work on the design of this
+system.
 
 July 16th, 2016
 
 Day 112 of Development
-Today my goal was to get mouse input working as well as getting dialog boxes working.  I'm sad to say that I did not get either of
-these 2 tasks completed but I'm happy that I set out to do this because these 2 tasks forced me to look at some code and I found a
-bug in the game state system that I had implemented the other day this bug was going to prevent me from moving forward with any new
-task no matter what it was.  So tomorrow hopefully I can get further along with the tasks that I had set out.
+Today my goal was to get mouse input working as well as getting dialog boxes working.  I'm sad to say that I did not get either
+of these 2 tasks completed but I'm happy that I set out to do this because these 2 tasks forced me to look at some code and I
+found a bug in the game state system that I had implemented the other day this bug was going to prevent me from moving forward
+with any new task no matter what it was.  So tomorrow hopefully I can get further along with the tasks that I had set out.
 
-I have decided though that I will make getting a map displaying on the screen again my first task because with switching things over
-to the state system it has broken the map system.
+I have decided though that I will make getting a map displaying on the screen again my first task because with switching things
+over to the state system it has broken the map system.
 
 July 17th, 2016
 
 Day 113 of Development
-Today I have set out to fix the problem I was having last night and after some sleep I was able to track down the bug very simply so
-now I have solved the issue I was having yesterday and can move forward with another task I think I will try to tackle Dialog Boxes
-and possibly get mouse input working as well.
+Today I have set out to fix the problem I was having last night and after some sleep I was able to track down the bug very
+simply so now I have solved the issue I was having yesterday and can move forward with another task I think I will try to
+tackle Dialog Boxes and possibly get mouse input working as well.
 
-Mouse input is out for this engine it doesn't fit for the type of games being made and I would have to redo many systems so it is
-just not worth the hassle to be able to use mouse input for the level editor that may or may not be used at all in the game.  So I
-will move on to figuring out dialog boxes in the game.
+Mouse input is out for this engine it doesn't fit for the type of games being made and I would have to redo many systems so
+it is just not worth the hassle to be able to use mouse input for the level editor that may or may not be used at all in the
+game.  So I will move on to figuring out dialog boxes in the game.
 
 September 3rd, 2016
 
 Day 114 of Development
-So I'm embarrassed to say that today is the first day in almost 2 months that I have sat and tried to get some work done on this
-project.  But due to personal problems, financial problems, and then computer problems today is the first day I tried to get some
-work done on this.  But I'm not going to stress I'm going to get back to working on this consistently and I will get more work 
-done on this tomorrow.  I started working on fixing the problem with scaling the graphics to the screen when different resolutions
-are being used on a computer.  I figured out how to handle it, the solutions appears to be working correctly I may have to tweak
-things more down the road but for now everything appears to be good.  Tomorrow I will be taking inventory of the project and seeing
-what I need to work on next to get the demo done and to get this project back on track to completion.
+So I'm embarrassed to say that today is the first day in almost 2 months that I have sat and tried to get some work done on
+this project.  But due to personal problems, financial problems, and then computer problems today is the first day I tried
+to get some work done on this.  But I'm not going to stress I'm going to get back to working on this consistently and I will
+get more work  done on this tomorrow.  I started working on fixing the problem with scaling the graphics to the screen when
+different resolutions are being used on a computer.  I figured out how to handle it, the solutions appears to be working
+correctly I may have to tweak things more down the road but for now everything appears to be good.  Tomorrow I will be taking
+inventory of the project and seeing what I need to work on next to get the demo done and to get this project back on track to
+completion.
 
-September 5th, 2016
+September 13th, 2016
 
 Day 115 of Development
+Today I began the conversion of the Audio system doing the same treatment to it that I did to the rendering system where I
+added a layer between it and the system that will allow me to plug in code for other platforms into the engine and simply pick
+a different Deployment platform.
+
+September 14th, 2016
+
+Day 116 of Development
+I completed the conversion of the Audio system and verified that it worked correctly now to move on to the next piece on my list
+of stuff to finish.  The next step that I have completed is I have added the necessary code to make it so that only one instance
+of the game can run at a time, the engine will not allow a new instance to be created if one is currently running.  On to the
+next step in the project. The next task I need to tackle is the input system changes.  Adding the same layer between the input
+system and the rest of the engine for adding console support in the future.
+
+September 15th, 2016
+
+Day 117 of Development

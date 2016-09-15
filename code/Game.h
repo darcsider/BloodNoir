@@ -13,7 +13,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Map.h"
 #include "Console.h"
 #include "Win32_Input.h"
-#include "WinAudio.h"
+#include "AudioSystem.h"
 #include "GameStateManager.h"
 
 class Game
@@ -38,7 +38,7 @@ class Game
 
 		unique_ptr<InputManager> m_input;
 		unique_ptr<RenderManager> m_graphicSystem;
-		unique_ptr<WinAudio> m_audioSystem;
+		unique_ptr<AudioSystem> m_audioSystem;
 
 	public:
 		Game();

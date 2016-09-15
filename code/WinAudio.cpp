@@ -85,3 +85,19 @@ void WinAudio::StopBackgroundMusic()
 {
 	m_backgroundEffect->Stop();
 }
+
+void WinAudio::SetBackgroundVolume(float value)
+{
+	m_backgroundEffect->SetVolume(value);
+}
+
+void WinAudio::SetSoundEffectVolume(float value)
+{
+	map<string, SoundEffect>::iterator effectIterator;
+
+	for (effectIterator = m_soundEffects.begin(); effectIterator != m_soundEffects.end(); effectIterator++)
+	{
+		m_effect = effectIterator->second.CreateInstance();
+		m_effect->SetVolume(value);
+	}
+}

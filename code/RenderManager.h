@@ -17,6 +17,7 @@ class RenderManager
 		int gameWidth;
 		int gameHeight;
 		// PS4Graphics *m_ps4_Graphics;
+		// XBONEGraphics *m_XBONEGraphics;
 
 	public:
 		RenderManager();

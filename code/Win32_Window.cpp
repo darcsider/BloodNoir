@@ -84,6 +84,15 @@ int WINAPI wWinMain(_In_ HINSTANCE Program, _In_opt_ HINSTANCE PreviousProgram, 
 		return 1;
 #endif
 
+	const char szUniqueNamedMutex[] = "punchdrunksquirrelgames_bloodnoir";
+	HANDLE hHandle = CreateMutex(NULL, TRUE, szUniqueNamedMutex);
+	if (ERROR_ALREADY_EXISTS == GetLastError())
+	{
+		// Program already running somewhere
+		return(1); // Exit program
+	}
+
+
 	m_game = make_unique<Game>();
 
 	if (!InitWindowClass(Program))
@@ -113,6 +122,8 @@ int WINAPI wWinMain(_In_ HINSTANCE Program, _In_opt_ HINSTANCE PreviousProgram, 
 	m_game.reset();
 
 	CoUninitialize();
+	ReleaseMutex(hHandle); // Explicitly release mutex
+	CloseHandle(hHandle); // close handle before terminating
 	return (int)msg.wParam;
 }
 
