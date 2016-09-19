@@ -9,7 +9,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define MAP_H
 #include "Includes.h"
 #include "RenderManager.h"
-#include "Win32_Input.h"
+#include "InputManager.h"
 
 // The various object types available in the game
 // Money used to travel faster and potentially other upgrades

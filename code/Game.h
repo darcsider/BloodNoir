@@ -12,7 +12,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "RenderManager.h"
 #include "Map.h"
 #include "Console.h"
-#include "Win32_Input.h"
+#include "InputManager.h"
 #include "AudioSystem.h"
 #include "GameStateManager.h"
 

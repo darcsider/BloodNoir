@@ -9,7 +9,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define GAMESTATE_H
 #include "Includes.h"
 #include "RenderManager.h"
-#include "Win32_Input.h"
+#include "InputManager.h"
 #include "Map.h"
 #include "Console.h"
 

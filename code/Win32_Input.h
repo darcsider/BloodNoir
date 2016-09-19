@@ -89,7 +89,7 @@ class GamePadButtonCommand : public Command
 		void SetGamepadButtonBinding(GamePadButtons button);
 };
 
-class InputManager
+class Win32Input
 {
 	protected:
 		vector<Command*> m_inputCommands;
@@ -97,8 +97,8 @@ class InputManager
 		unique_ptr<GamePad> m_gamePad;
 
 	public:
-		InputManager();
-		~InputManager();
+		Win32Input();
+		~Win32Input();
 		void AddCommand(Command *command);
 		void AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> funcPoint);
 		void AddGamePadDpadCommand(DpadDirections dir, function<void(bool)> funcPoint);
@@ -114,6 +114,11 @@ class InputManager
 		void GamePadResume()
 		{
 			m_gamePad->Resume();
+		}
+
+		GamePad* GetGamePad()
+		{
+			return m_gamePad.get();
 		}
 };
 #endif

@@ -2025,3 +2025,23 @@ system and the rest of the engine for adding console support in the future.
 September 15th, 2016
 
 Day 117 of Development
+Today I worked on the design for the changes to the input system, I have not gotten any code written for it becasue I still need
+to work out the details of how I'm going to handle key bindings for this system and for the game.  The system that the engine is
+currently using works great if the key bindings are going to be set statically and not changeable by the player.  But if I want
+to allow the player to make changes to what keys are bound to what actions then I need to change this system.
+
+September 18th, 2016
+
+Day 118 of Development
+After a couple days of work I have decided after some heavy research that I don't need to allow key bindings in this game, there
+are so few number of commands that the player needs to use so we will figure out the best control scheme and set it statically.
+I don't think it is worth spending time worrying about this for this game as most people will probably never change the controls
+for the game when they start playing it.  I was thinking about moving on to the map system but I think I may actually move on to
+the player class and get that displaying on the screen this will allow me to test out the sprite class which will be used by 
+other classes in the future in this project so having that working will be beneficial and having the player class working will
+be also because it will be reused for other purposes.  So my quest between today and tomorrow will be to start working on the
+player class.
+
+September 19th, 2016
+
+Day 119 of Development

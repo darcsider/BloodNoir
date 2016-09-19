@@ -164,22 +164,22 @@ void GamePadButtonCommand::SetGamepadButtonBinding(GamePadButtons button)
 	m_button = button;
 }
 
-InputManager::InputManager()
+Win32Input::Win32Input()
 {
 	m_keyboard = make_unique<Keyboard>();
 	m_gamePad = make_unique<GamePad>();
 }
 
-InputManager::~InputManager()
+Win32Input::~Win32Input()
 {
 }
 
-void InputManager::AddCommand(Command * command)
+void Win32Input::AddCommand(Command * command)
 {
 	m_inputCommands.push_back(command);
 }
 
-void InputManager::AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> funcPoint)
+void Win32Input::AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> funcPoint)
 {
 	KeyboardCommand *keyCommand = new KeyboardCommand();
 	keyCommand->SetFunctionPointer(funcPoint);
@@ -187,7 +187,7 @@ void InputManager::AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> f
 	m_inputCommands.push_back(keyCommand);
 }
 
-void InputManager::AddGamePadDpadCommand(DpadDirections dir, function<void(bool)> funcPoint)
+void Win32Input::AddGamePadDpadCommand(DpadDirections dir, function<void(bool)> funcPoint)
 {
 	GamePadDpadCommand *dpadCommand = new GamePadDpadCommand();
 	dpadCommand->SetFunctionPointer(funcPoint);
@@ -195,7 +195,7 @@ void InputManager::AddGamePadDpadCommand(DpadDirections dir, function<void(bool)
 	m_inputCommands.push_back(dpadCommand);
 }
 
-void InputManager::AddGamePadButtonCommand(GamePadButtons button, function<void(bool)> funcPoint)
+void Win32Input::AddGamePadButtonCommand(GamePadButtons button, function<void(bool)> funcPoint)
 {
 	GamePadButtonCommand *buttonCommand = new GamePadButtonCommand();
 	buttonCommand->SetFunctionPointer(funcPoint);
@@ -203,12 +203,12 @@ void InputManager::AddGamePadButtonCommand(GamePadButtons button, function<void(
 	m_inputCommands.push_back(buttonCommand);
 }
 
-void InputManager::ClearCommands()
+void Win32Input::ClearCommands()
 {
 	m_inputCommands.clear();
 }
 
-void InputManager::ProcessCommands()
+void Win32Input::ProcessCommands()
 {
 	vector<Command*>::iterator commandIterator;
 

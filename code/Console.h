@@ -12,7 +12,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include <string>
 #include "Includes.h"
 #include "RenderManager.h"
-#include "Win32_Input.h"
+#include "InputManager.h"
 
 #pragma warning(disable : 4018)
 

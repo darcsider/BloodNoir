@@ -186,8 +186,10 @@
     <ClInclude Include="code\GameStateManager.h" />
     <ClInclude Include="code\GameTiming.h" />
     <ClInclude Include="code\Includes.h" />
+    <ClInclude Include="code\InputManager.h" />
     <ClInclude Include="code\LevelEditor.h" />
     <ClInclude Include="code\Map.h" />
+    <ClInclude Include="code\Player.h" />
     <ClInclude Include="code\RenderManager.h" />
     <ClInclude Include="code\Sprite.h" />
     <ClInclude Include="code\Win32_Window.h" />
@@ -202,8 +204,10 @@
     <ClCompile Include="code\GameState.cpp" />
     <ClCompile Include="code\GameStateManager.cpp" />
     <ClCompile Include="code\GameTiming.cpp" />
+    <ClCompile Include="code\InputManager.cpp" />
     <ClCompile Include="code\LevelEditor.cpp" />
     <ClCompile Include="code\Map.cpp" />
+    <ClCompile Include="code\Player.cpp" />
     <ClCompile Include="code\RenderManager.cpp" />
     <ClCompile Include="code\Sprite.cpp" />
     <ClCompile Include="code\Win32_Window.cpp" />
