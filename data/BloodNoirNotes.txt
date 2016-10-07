@@ -2042,6 +2042,6 @@ other classes in the future in this project so having that working will be benef
 be also because it will be reused for other purposes.  So my quest between today and tomorrow will be to start working on the
 player class.
 
-September 19th, 2016
+September 30th, 2016
 
 Day 119 of Development

@@ -11,4 +11,16 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Sprite.h"
 #include "RenderManager.h"
 
+class GameCharacter
+{
+	protected:
+		string name;
+		int attack;
+		int defense;
+		int hitPoints;
+
+	public:
+
+};
+
 #endif // !PLAYER_H

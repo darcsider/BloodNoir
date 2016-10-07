@@ -74,7 +74,6 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)build\bin\</OutDir>
     <TargetName>$(ProjectName)D1_0</TargetName>
-    <SourcePath>F:\BloodNoir\code</SourcePath>
     <IntDir>$(SolutionDir)Intermediate\$(Configuration)\</IntDir>
     <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
     <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x86</LibraryPath>
@@ -91,7 +90,6 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)build\bin\</OutDir>
     <TargetName>$(ProjectName)R1_0</TargetName>
-    <SourcePath>F:\BloodNoir\code</SourcePath>
     <IntDir>$(SolutionDir)Intermediate\$(Configuration)\</IntDir>
     <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
     <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x86</LibraryPath>
