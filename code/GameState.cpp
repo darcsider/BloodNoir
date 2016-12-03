@@ -68,7 +68,7 @@ void BannerParadeState::BuildBanners(string fileName)
 
 void BannerParadeState::InputCallBack(bool pressed)
 {
-	// add input back into this system today some point before showing off tonight
+	// TODO(Jamie): Add input to banner parade
 }
 
 void BannerParadeState::SetupInput()

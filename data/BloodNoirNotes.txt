@@ -2042,6 +2042,33 @@ other classes in the future in this project so having that working will be benef
 be also because it will be reused for other purposes.  So my quest between today and tomorrow will be to start working on the
 player class.
 
-November 14th, 2016
+November 30th, 2016
 
 Day 119 of Development
+No excuses getting back to work on this project after some stuff has been going on.  All that matters is that I'm going to make
+some headway on this project and get the demo done.  I'm working on designing out the sprite system as well as the player class
+as well as enemies, bosses, and npc background characters.
+
+December 2nd, 2016
+
+Day 120 of Development
+I'm working on the sprite system today, also I did some searching again on how to do a key binding system and I may have figured
+out how to do this in my system so I'm going to go ahead and explore that topic as well.
+
+Thought for the day about key bindings Instead of doing things the way I'm doing them now where I tie a keyboard / game pad
+input to a function pointer I should actually tie an action to a function pointer and then set what key / game pad input
+is attached to that action in the key bindings option menu.  Final notes for tonight and I will continue the work on this
+tomorrow: The input manager will contain 2 containers the first will be a map that will tie a GameAction with a keyboard
+input and the second will be a map that ties a GameAction to a function Pointer.
+The game pad controls will not be able to be set by the player if I'm not mistaken your not supposed to allow that stuff
+on a console so I'm not going to worry about it on the PC.  So if the player chooses to use a game controller (right now
+the only 2 that will be supported will be the XBOX One/360 controllers or the Playstation Dual Shocks) then there controlls
+will be preset and they will just learn to use it that way of course we will take the time to plan the control scheme on the
+controllers in a way that works really well in the game.
+
+Tomorrow I'm going to work on implementing these changes to the system I'm also going to change some things in the Input
+Manager that sits over the platform specific systems I think I am going to change it so that the InputManager will only
+allow 1 way to add commands to the system it will simply have a generic AddCommand function that will accept a command
+object... I will have to look into this idea more when I get to working on this tomorrow.  Once I get this figured out
+then I will get back to the sprites system and get those working again and of course from there I will continue onto
+other systems and pieces of code on my todo list.

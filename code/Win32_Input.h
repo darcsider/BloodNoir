@@ -36,6 +36,16 @@ enum MouseButtons
 	RightButton
 };
 
+enum GameActions
+{
+	DirectionLeft,
+	DirectionRight,
+	DirectionUp,
+	DirectionDown,
+	ActionAttack,
+	ActionDefense
+};
+
 class Command
 {
 	protected:

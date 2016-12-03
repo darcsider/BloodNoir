@@ -31,6 +31,7 @@ struct AnimatedAction
 	int endFrame;
 	int currentFrame;
 	float frameDelay;
+	Vector2 speedVector;
 };
 
 class Sprite
