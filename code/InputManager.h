@@ -26,6 +26,11 @@ class InputManager
 		void ProcessCommands();
 		void ClearCommands();
 
+		// testing functions
+		// not final
+		void ChangeKeybinding(GameActions action, Keyboard::Keys key);
+		void AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint);
+
 		void GamePadSuspend()
 		{
 			m_input->GetGamePad()->Suspend();

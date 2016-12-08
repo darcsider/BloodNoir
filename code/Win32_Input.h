@@ -38,12 +38,17 @@ enum MouseButtons
 
 enum GameActions
 {
-	DirectionLeft,
-	DirectionRight,
-	DirectionUp,
-	DirectionDown,
-	ActionAttack,
-	ActionDefense
+	ActionUp = 1,
+	ActionDown = 2,
+	ActionLeft = 3,
+	ActionRight = 4,
+	ActionAccept = 5,
+	ActionCancel = 6,
+	ActionAttack = 7,
+	ActionDefense = 8,
+	SystemTest = 9,
+	SystemExitEarly = 10,
+	SystemConsole = 11
 };
 
 class Command
@@ -103,8 +108,16 @@ class Win32Input
 {
 	protected:
 		vector<Command*> m_inputCommands;
+		// test code not final yet does this work!!!!>!>!>!>
+		Keyboard::Keys m_key;
+		Keyboard::KeyboardStateTracker m_keyboardTracker;
+		map<GameActions, Keyboard::Keys> keyBindings;
+		map<GameActions, function<void(bool)>> gameActionBindings;
+
 		unique_ptr<Keyboard> m_keyboard;
 		unique_ptr<GamePad> m_gamePad;
+
+		void BuildDefaultBindings();
 
 	public:
 		Win32Input();
@@ -115,6 +128,10 @@ class Win32Input
 		void AddGamePadButtonCommand(GamePadButtons button, function<void(bool)> funcPoint);
 		void ClearCommands();
 		void ProcessCommands();
+
+		// testing functions
+		void ChangeKeybinding(GameActions action, Keyboard::Keys key);
+		void AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint);
 
 		void GamePadSuspend()
 		{

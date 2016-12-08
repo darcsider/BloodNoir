@@ -47,16 +47,19 @@ void Map::BuildMap()
 void Map::SetupInput()
 {
 	function<void(bool)> funcPoint = bind(&Map::CloseGame, this, placeholders::_1);
-	m_input->AddKeyboardCommand(Keyboard::Keys::Escape, funcPoint);
-	m_input->AddGamePadButtonCommand(Back, funcPoint);
+	//m_input->AddKeyboardCommand(Keyboard::Keys::Escape, funcPoint);
+	//m_input->AddGamePadButtonCommand(Back, funcPoint);
+	m_input->AddKeyboardActionBinding(SystemExitEarly, funcPoint);
 
 	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
-	m_input->AddKeyboardCommand(Keyboard::Keys::Left, funcPointLeft);
-	m_input->AddGamePadDpadCommand(Left, funcPointLeft);
+	//m_input->AddKeyboardCommand(Keyboard::Keys::Left, funcPointLeft);
+	//m_input->AddGamePadDpadCommand(Left, funcPointLeft);
+	m_input->AddKeyboardActionBinding(ActionLeft, funcPointLeft);
 
 	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
-	m_input->AddKeyboardCommand(Keyboard::Keys::Right, funcPointRight);
-	m_input->AddGamePadDpadCommand(Right, funcPointRight);
+	//m_input->AddKeyboardCommand(Keyboard::Keys::Right, funcPointRight);
+	//m_input->AddGamePadDpadCommand(Right, funcPointRight);
+	m_input->AddKeyboardActionBinding(ActionRight, funcPointRight);
 }
 
 void Map::MoveMapLeft(bool move)

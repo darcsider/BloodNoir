@@ -17,13 +17,13 @@ KeyboardCommand::~KeyboardCommand()
 
 void KeyboardCommand::Execute()
 {
-	auto keyboardState = Keyboard::Get().GetState();
-	m_keyboardTracker.Update(keyboardState);
+	//auto keyboardState = Keyboard::Get().GetState();
+	//m_keyboardTracker.Update(keyboardState);
 
-	if (m_keyboardTracker.IsKeyPressed(m_key))
-		m_functionPointer(true);
-	else if (m_keyboardTracker.IsKeyReleased(m_key))
-		m_functionPointer(false);
+	//if (m_keyboardTracker.IsKeyPressed(m_key))
+	//	m_functionPointer(true);
+	//else if (m_keyboardTracker.IsKeyReleased(m_key))
+		//m_functionPointer(false);
 }
 
 void KeyboardCommand::SetFunctionPointer(function<void(bool)> funcPoint)
@@ -168,6 +168,25 @@ Win32Input::Win32Input()
 {
 	m_keyboard = make_unique<Keyboard>();
 	m_gamePad = make_unique<GamePad>();
+
+	BuildDefaultBindings();
+}
+
+void Win32Input::BuildDefaultBindings()
+{
+	// Not final key bindings just for testing purposes!!!
+	// TODO: finalize key binding defaults
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionUp, Keyboard::Keys::Up));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionDown, Keyboard::Keys::Down));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionLeft, Keyboard::Keys::Left));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionRight, Keyboard::Keys::Right));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionAccept, Keyboard::Keys::Enter));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionCancel, Keyboard::Keys::LeftShift));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionAttack, Keyboard::Keys::F));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionDefense, Keyboard::Keys::G));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemTest, Keyboard::Keys::RightShift));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemExitEarly, Keyboard::Keys::Escape));
+	keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemConsole, Keyboard::Keys::OemTilde));
 }
 
 Win32Input::~Win32Input()
@@ -205,15 +224,54 @@ void Win32Input::AddGamePadButtonCommand(GamePadButtons button, function<void(bo
 
 void Win32Input::ClearCommands()
 {
-	m_inputCommands.clear();
+	//m_inputCommands.clear();
+	gameActionBindings.clear();
 }
 
 void Win32Input::ProcessCommands()
 {
-	vector<Command*>::iterator commandIterator;
+	/*vector<Command*>::iterator commandIterator;
 
 	for (commandIterator = m_inputCommands.begin(); commandIterator != m_inputCommands.end(); commandIterator++)
 	{
 		(*commandIterator)->Execute();
+	}*/
+	map<GameActions, Keyboard::Keys>::iterator actionInputIterator;
+
+	auto keyboardState = Keyboard::Get().GetState();
+	m_keyboardTracker.Update(keyboardState);
+
+	for (actionInputIterator = keyBindings.begin(); actionInputIterator != keyBindings.end(); actionInputIterator++)
+	{
+		auto funcPointIndex = gameActionBindings.find((actionInputIterator)->first);
+
+		if (m_keyboardTracker.IsKeyPressed((actionInputIterator)->second))
+		{
+			if (funcPointIndex != gameActionBindings.end())
+			{
+				if (funcPointIndex != gameActionBindings.end())
+					funcPointIndex->second(true);
+			}
+		}
+		else if (m_keyboardTracker.IsKeyReleased((actionInputIterator)->second))
+		{
+			if (funcPointIndex != gameActionBindings.end())
+			{
+				funcPointIndex->second(false);
+			}
+		}
 	}
+}
+
+void Win32Input::ChangeKeybinding(GameActions action, Keyboard::Keys key)
+{
+	auto actionIndex = keyBindings.find(action);
+
+	if (actionIndex != keyBindings.end())
+		actionIndex->second = key;
+}
+
+void Win32Input::AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint)
+{
+	gameActionBindings.insert(pair<GameActions, function<void(bool)>>(action, funcPoint));
 }

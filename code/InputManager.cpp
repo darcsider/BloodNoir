@@ -8,7 +8,9 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 
 InputManager::InputManager()
 {
-
+#if _WIN32
+	m_input = make_unique<Win32Input>();
+#endif
 }
 
 InputManager::~InputManager()
@@ -53,5 +55,19 @@ void InputManager::ClearCommands()
 {
 #if _WIN32
 	m_input->ClearCommands();
+#endif
+}
+
+void InputManager::ChangeKeybinding(GameActions action, Keyboard::Keys key)
+{
+#if _WIN32
+	m_input->ChangeKeybinding(action, key);
+#endif
+}
+
+void InputManager::AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint)
+{
+#if _WIN32
+	m_input->AddKeyboardActionBinding(action, funcPoint);
 #endif
 }

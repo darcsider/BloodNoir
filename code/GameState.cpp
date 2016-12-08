@@ -229,16 +229,20 @@ void MainMenuState::SetupInput()
 	m_input->ClearCommands();
 
 	function<void(bool)> funcPoint = bind(&MainMenuState::InputCallBack, this, placeholders::_1);
-	m_input->AddKeyboardCommand(Keyboard::Keys::Enter, funcPoint);
-	m_input->AddGamePadButtonCommand(A, funcPoint);
+	//m_input->AddKeyboardCommand(Keyboard::Keys::Enter, funcPoint);
+	//m_input->AddGamePadButtonCommand(A, funcPoint);
 
 	function<void(bool)> funcPointUp = bind(&MainMenuState::InputUpCallBack, this, placeholders::_1);
-	m_input->AddKeyboardCommand(Keyboard::Keys::Up, funcPointUp);
-	m_input->AddGamePadDpadCommand(Up, funcPointUp);
+	//m_input->AddKeyboardCommand(Keyboard::Keys::Up, funcPointUp);
+	//m_input->AddGamePadDpadCommand(Up, funcPointUp);
 
 	function<void(bool)> funcPointDown = bind(&MainMenuState::InputDownCallBack, this, placeholders::_1);
-	m_input->AddKeyboardCommand(Keyboard::Keys::Down, funcPointDown);
-	m_input->AddGamePadDpadCommand(Down, funcPointDown);
+	//m_input->AddKeyboardCommand(Keyboard::Keys::Down, funcPointDown);
+	//m_input->AddGamePadDpadCommand(Down, funcPointDown);
+
+	m_input->AddKeyboardActionBinding(ActionAccept, funcPoint);
+	m_input->AddKeyboardActionBinding(ActionUp, funcPointUp);
+	m_input->AddKeyboardActionBinding(ActionDown, funcPointDown);
 }
 
 void MainMenuState::Update(float delta)

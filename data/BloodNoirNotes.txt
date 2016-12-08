@@ -2072,3 +2072,68 @@ allow 1 way to add commands to the system it will simply have a generic AddComma
 object... I will have to look into this idea more when I get to working on this tomorrow.  Once I get this figured out
 then I will get back to the sprites system and get those working again and of course from there I will continue onto
 other systems and pieces of code on my todo list.
+
+December 5th, 2016
+
+Day 121 of Development
+I didn't write a development log entry for the past few days as I didn't have any answers to the questions I was asking and
+actually I have more questions than answers from the past few days.
+
+If I look at the Input System from an outside point of view the ultimate goal for this system is to write it in a way that
+adding support for XBOX One and Playstation 4 will be very easy to do.  And on the PC I want to for sure support Keyboard
+mouse and XBOXOne Game Pad, and possibly the PS4 controllers as well if that is doable and there are no legal implecations
+from doing so on a PC game if we don't get approved for development on PS4.
+
+The goal for the PC version is that Keyboard key bindings can be set by the player to whatever keys they want to set them
+to.  The game controller settings for like the XBOXOne and PS4 Controllers would be set statically with no way to change
+them.  This would be the same on both the PC and the Consoles.
+
+The way I want this system to work is that each individual system can tie a GameAction to a function Pointer that will
+tell the system what to do when the specific input is received.  The GameActions would also be tied to the specific inputs
+on the systems.  And the Input Manager would simply loop through the specific inputs and if a specific input that is tied
+to GameAction is triggered it would look to see what function pointer is tied to that specific GameAction and call it.
+
+So thought for this system for the game engine, the input manager could have 2 collections 1 for inputs (keyboard, mouse,
+XBOXOne/360 controller, Playstation Controller), and 1 for GameActions(Collection of Inputs(keyboard key, game controller),
+functionPointer, and methods for setting these inputs and function pointers as well as changing them as needed).  Now this
+idea obviously adds its own challenges for example in GameActions in order for me to use a single container for the various
+types of inputs keyboard, mouse???, controller the types all have to match as the container can only hold items of same
+type but the way around something like this is to create an inheritence tree of classes a Base Input Type class and then
+each type would have a class written for it that inherits from the base version and extends it with support for the
+specific input type it is supporting the class inheritence tree would likely also have to have a type value that all input
+types would have to set an enum value specifying what it is so that when searching through them you would be able to tell
+what type of input it is for being able to change the input value that is tied to it.
+
+This whole system needs more time to figure it out I will be spending any free time I have working on this system so I can
+get this fully functional.  I will not stop working on the Input System until I build it so robust that the player can set
+key bindings and that the system is capable of being used on other projects with little to no modifications because of how
+well it is built.
+
+December 6th, 2016
+
+Day 122 of Development
+Today I started attempting to implement the changes that I was thinking about yesterday I'm starting this process out by
+simply trying to get code working correctly for the keyboard figuring out that at a basic level.  I want to get it so that
+it can process keyboard commands correctly and make it so that I can change keyboard key bindings properly.  Once I can get
+this part of this system working then I can move on to other parts of the system like adding support back in for controllers
+multiple platform support, etc...
+
+I started to code the changes I wanted to make but I am reaching the end of the day and am no longer seeing straight and
+not able to think clearly about what I need to do to make this work so I'm going to stop for tonight leaving the project in
+a broken state for tonight and I will pick up where I left off tomorrow and my goal for tomorrow is to get this working
+properly for Keyboard and then modify it and massage it to working on other platforms, and other input devices.  Eventually
+I want to build the robust idea I had yesterday with each input having its own class so to speak if necessary I guess...
+
+December 7th, 2016
+
+Day 123 of Development
+Today I continued my work on the input system and implementing the changes that I wanted to make.  I was able to successfully
+get the keyboard controls working again with new system and was able to prove that I can change key bindings through code
+which means that I would be able to set it so that whatever key is pressed is the key that it sets.  Tomorrow I am going to
+continue the work on this system to implement controler again but I will not be able to test it out quite yet but I know that
+it will work I'm confident in my code system.  Hopefully I can finish my work on the Input System in the next couple days so
+I can move back over to the sprite system.
+
+December 8th, 2016
+
+Day 124 of Development

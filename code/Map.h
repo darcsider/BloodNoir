@@ -171,7 +171,8 @@ class Map
 
 		void CloseGame(bool notUsed)
 		{
-			PostQuitMessage(0);
+			if (notUsed)
+				PostQuitMessage(0);
 		}
 };
 #endif

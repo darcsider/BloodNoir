@@ -38,7 +38,7 @@ bool Console::Initialize(RenderManager *graphics, InputManager *input, Vector2 s
 	m_prompt = "|:>";
 
 	function<void(bool)> funcPoint = bind(&Console::HideShow, this, placeholders::_1);
-	m_input->AddKeyboardCommand(Keyboard::Keys::OemTilde, funcPoint);
+	m_input->AddKeyboardActionBinding(SystemConsole, funcPoint);
 
 	return true;
 }
