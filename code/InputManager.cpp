@@ -23,27 +23,6 @@ InputManager::InputManager(InputManager const & copy)
 
 }
 
-void InputManager::AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> funcPoint)
-{
-#if _WIN32
-	m_input->AddKeyboardCommand(key, funcPoint);
-#endif
-}
-
-void InputManager::AddGamePadDpadCommand(DpadDirections dir, function<void(bool)> funcPoint)
-{
-#if _WIN32
-	m_input->AddGamePadDpadCommand(dir, funcPoint);
-#endif
-}
-
-void InputManager::AddGamePadButtonCommand(GamePadButtons button, function<void(bool)> funcPoint)
-{
-#if _WIN32
-	m_input->AddGamePadButtonCommand(button, funcPoint);
-#endif
-}
-
 void InputManager::ProcessCommands()
 {
 #if _WIN32
@@ -51,10 +30,10 @@ void InputManager::ProcessCommands()
 #endif
 }
 
-void InputManager::ClearCommands()
+void InputManager::ClearFunctionPointers()
 {
 #if _WIN32
-	m_input->ClearCommands();
+	m_input->ClearFunctionPointers();
 #endif
 }
 

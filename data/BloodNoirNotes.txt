@@ -2137,3 +2137,19 @@ I can move back over to the sprite system.
 December 8th, 2016
 
 Day 124 of Development
+Today I didn't get much done on the design of the new system I have done some thinking about what I want to do but nothing set
+in stone yet.  I'm going to work on this more tomorrow and attempt to at least finalize some kind of a plan for the system and
+then work on implementing it.
+
+December 14th, 2016
+
+Day 125 of Development
+Today I was able to make some final decisions on the input system at least for now.  The system seems to be working as I wanted
+it to I can't verify functionality of the game pad because I don't have a gamepad here to test but when I get one I will test
+it and I'm very confident in the fact that it will still work with that gamepad.  The input manager class should now work the
+way I need it to even when I add support for XBOX One and Playstation 4 down the road.  So the next step in this project is to
+get back to working on the sprite system now that I am truly happy with my input system.  Also down the road there may need to
+be some minor tweeks needed when I get around to creating the screen for setting key bindings and everything but I will tackle
+that task when that comes for now I know that I can change key bindings which was my biggest goal and I have an input system
+that works great which was also a goal so I'm happy with my progress.
+

@@ -9,24 +9,20 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define WININPUT_H
 #include "Includes.h"
 
-enum DpadDirections
+enum XBOXOneGamePad
 {
-	Up,
-	Down,
-	Left,
-	Right
-};
-
-enum GamePadButtons
-{
-	Back,
-	Start,
-	LeftBumper,
-	RightBumper,
-	A,
-	X,
-	Y,
-	B
+	XBOXOneUp,
+	XBOXOneDown,
+	XBOXOneLeft,
+	XBOXOneRight,
+	XBOXOneBack,
+	XBOXOneStart,
+	XBOXOneLeftBumper,
+	XBOXOneRightBumper,
+	XBOXOneA,
+	XBOXOneX,
+	XBOXOneY,
+	XBOXOneB
 };
 
 enum MouseButtons
@@ -51,87 +47,35 @@ enum GameActions
 	SystemConsole = 11
 };
 
-class Command
-{
-	protected:
-		function<void(bool)> m_functionPointer;
-	public:
-		Command() {}
-		virtual ~Command() {}
-		virtual void Execute() = 0;
-		virtual void SetFunctionPointer(function<void(bool)> funcPoint) = 0;
-};
-
-class KeyboardCommand : public Command
-{
-	protected:
-		Keyboard::Keys m_key;
-		Keyboard::KeyboardStateTracker m_keyboardTracker;
-
-	public:
-		KeyboardCommand();
-		virtual ~KeyboardCommand();
-		virtual void Execute();
-		virtual void SetFunctionPointer(function<void(bool)> funcPoint);
-		void SetKeyboardBinding(Keyboard::Keys key);
-};
-
-class GamePadDpadCommand : public Command
-{
-	protected:
-		DpadDirections m_direction;
-		GamePad::ButtonStateTracker m_gamepadTracker;
-
-	public:
-		GamePadDpadCommand();
-		virtual ~GamePadDpadCommand();
-		virtual void Execute();
-		virtual void SetFunctionPointer(function<void(bool)> funcPoint);
-		void SetGamepadDpadBinding(DpadDirections direction);
-};
-
-class GamePadButtonCommand : public Command
-{
-	protected:
-		GamePadButtons m_button;
-		GamePad::ButtonStateTracker m_gamepadTracker;
-
-	public:
-		GamePadButtonCommand();
-		virtual ~GamePadButtonCommand();
-		virtual void Execute();
-		virtual void SetFunctionPointer(function<void(bool)> funcPoint);
-		void SetGamepadButtonBinding(GamePadButtons button);
-};
-
 class Win32Input
 {
 	protected:
-		vector<Command*> m_inputCommands;
-		// test code not final yet does this work!!!!>!>!>!>
-		Keyboard::Keys m_key;
-		Keyboard::KeyboardStateTracker m_keyboardTracker;
-		map<GameActions, Keyboard::Keys> keyBindings;
-		map<GameActions, function<void(bool)>> gameActionBindings;
+		unique_ptr<GamePad> m_gamePad;
+		GamePad::ButtonStateTracker m_gamePadTracker;
 
 		unique_ptr<Keyboard> m_keyboard;
-		unique_ptr<GamePad> m_gamePad;
+		Keyboard::Keys m_key;
+		Keyboard::KeyboardStateTracker m_keyboardTracker;
+
+		map<GameActions, XBOXOneGamePad> m_gpBindings;
+
+		map<GameActions, Keyboard::Keys> m_keyBindings;
+		map<GameActions, function<void(bool)>> m_gameActionBindings;
 
 		void BuildDefaultBindings();
 
 	public:
 		Win32Input();
 		~Win32Input();
-		void AddCommand(Command *command);
-		void AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> funcPoint);
-		void AddGamePadDpadCommand(DpadDirections dir, function<void(bool)> funcPoint);
-		void AddGamePadButtonCommand(GamePadButtons button, function<void(bool)> funcPoint);
-		void ClearCommands();
+		void ClearFunctionPointers();
 		void ProcessCommands();
 
 		// testing functions
 		void ChangeKeybinding(GameActions action, Keyboard::Keys key);
 		void AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint);
+
+		void ProcessKeyboard();
+		void ProcessGamePad();
 
 		void GamePadSuspend()
 		{

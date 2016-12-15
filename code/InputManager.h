@@ -20,14 +20,9 @@ class InputManager
 		InputManager(InputManager const& copy);
 		InputManager& operator=(InputManager const& copy);
 
-		void AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> funcPoint);
-		void AddGamePadDpadCommand(DpadDirections dir, function<void(bool)> funcPoint);
-		void AddGamePadButtonCommand(GamePadButtons button, function<void(bool)> funcPoint);
 		void ProcessCommands();
-		void ClearCommands();
+		void ClearFunctionPointers();
 
-		// testing functions
-		// not final
 		void ChangeKeybinding(GameActions action, Keyboard::Keys key);
 		void AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint);
 

@@ -6,164 +6,6 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "Win32_Input.h"
 
-KeyboardCommand::KeyboardCommand()
-{
-}
-
-KeyboardCommand::~KeyboardCommand()
-{
-
-}
-
-void KeyboardCommand::Execute()
-{
-	//auto keyboardState = Keyboard::Get().GetState();
-	//m_keyboardTracker.Update(keyboardState);
-
-	//if (m_keyboardTracker.IsKeyPressed(m_key))
-	//	m_functionPointer(true);
-	//else if (m_keyboardTracker.IsKeyReleased(m_key))
-		//m_functionPointer(false);
-}
-
-void KeyboardCommand::SetFunctionPointer(function<void(bool)> funcPoint)
-{
-	m_functionPointer = funcPoint;
-}
-
-void KeyboardCommand::SetKeyboardBinding(Keyboard::Keys key)
-{
-	m_key = key;
-}
-
-GamePadDpadCommand::GamePadDpadCommand()
-{
-	m_gamepadTracker = GamePad::ButtonStateTracker();
-}
-
-GamePadDpadCommand::~GamePadDpadCommand()
-{
-
-}
-
-void GamePadDpadCommand::Execute()
-{
-	auto state = GamePad::Get().GetState(0);
-
-	if (state.IsConnected())
-	{
-		m_gamepadTracker.Update(state);
-
-		if (m_direction == Left && (m_gamepadTracker.dpadLeft == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_direction == Left && (m_gamepadTracker.dpadLeft == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_direction == Right && (m_gamepadTracker.dpadRight == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_direction == Right && (m_gamepadTracker.dpadRight == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_direction == Up && (m_gamepadTracker.dpadUp == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_direction == Up && (m_gamepadTracker.dpadUp == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_direction == Down && (m_gamepadTracker.dpadDown == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_direction == Down && (m_gamepadTracker.dpadDown == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-	}
-	else
-	{
-		m_gamepadTracker.Reset();
-	}
-}
-
-void GamePadDpadCommand::SetFunctionPointer(function<void(bool)> funcPoint)
-{
-	m_functionPointer = funcPoint;
-}
-
-void GamePadDpadCommand::SetGamepadDpadBinding(DpadDirections direction)
-{
-	m_direction = direction;
-}
-
-GamePadButtonCommand::GamePadButtonCommand()
-{
-	m_gamepadTracker = GamePad::ButtonStateTracker();
-}
-
-GamePadButtonCommand::~GamePadButtonCommand()
-{
-
-}
-
-void GamePadButtonCommand::Execute()
-{
-	auto state = GamePad::Get().GetState(0);
-
-	if (state.IsConnected())
-	{
-		m_gamepadTracker.Update(state);
-
-		if (m_button == Back && (m_gamepadTracker.back == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_button == Back && (m_gamepadTracker.back == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_button == Start && (m_gamepadTracker.start == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_button == Start && (m_gamepadTracker.start == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_button == LeftBumper && (m_gamepadTracker.leftShoulder == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_button == LeftBumper && (m_gamepadTracker.leftShoulder == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_button == RightBumper && (m_gamepadTracker.rightShoulder == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_button == RightBumper && (m_gamepadTracker.rightShoulder == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_button == A && (m_gamepadTracker.a == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_button == A && (m_gamepadTracker.a == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_button == B && (m_gamepadTracker.b == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_button == B && (m_gamepadTracker.b == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_button == X && (m_gamepadTracker.x == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_button == X && (m_gamepadTracker.x == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-
-		if (m_button == Y && (m_gamepadTracker.y == m_gamepadTracker.PRESSED))
-			m_functionPointer(true);
-		else if (m_button == Y && (m_gamepadTracker.y == m_gamepadTracker.RELEASED))
-			m_functionPointer(false);
-	}
-	else
-	{
-		m_gamepadTracker.Reset();
-	}
-}
-
-void GamePadButtonCommand::SetFunctionPointer(function<void(bool)> funcPoint)
-{
-	m_functionPointer = funcPoint;
-}
-
-void GamePadButtonCommand::SetGamepadButtonBinding(GamePadButtons button)
-{
-	m_button = button;
-}
-
 Win32Input::Win32Input()
 {
 	m_keyboard = make_unique<Keyboard>();
@@ -176,86 +18,80 @@ void Win32Input::BuildDefaultBindings()
 {
 	// Not final key bindings just for testing purposes!!!
 	// TODO: finalize key binding defaults
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionUp, Keyboard::Keys::Up));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionDown, Keyboard::Keys::Down));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionLeft, Keyboard::Keys::Left));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionRight, Keyboard::Keys::Right));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionAccept, Keyboard::Keys::Enter));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionCancel, Keyboard::Keys::LeftShift));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionAttack, Keyboard::Keys::F));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionDefense, Keyboard::Keys::G));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemTest, Keyboard::Keys::RightShift));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemExitEarly, Keyboard::Keys::Escape));
-	keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemConsole, Keyboard::Keys::OemTilde));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionUp, Keyboard::Keys::Up));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionDown, Keyboard::Keys::Down));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionLeft, Keyboard::Keys::Left));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionRight, Keyboard::Keys::Right));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionAccept, Keyboard::Keys::Enter));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionCancel, Keyboard::Keys::LeftShift));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionAttack, Keyboard::Keys::F));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionDefense, Keyboard::Keys::G));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemTest, Keyboard::Keys::RightShift));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemExitEarly, Keyboard::Keys::Escape));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemConsole, Keyboard::Keys::OemTilde));
+	
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionUp, XBOXOneUp));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionDown, XBOXOneDown));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionLeft, XBOXOneLeft));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionRight, XBOXOneRight));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionAccept, XBOXOneStart));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionCancel, XBOXOneBack));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionAttack, XBOXOneA));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionDefense, XBOXOneB));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(SystemTest, XBOXOneLeftBumper));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(SystemExitEarly, XBOXOneRightBumper));
 }
 
 Win32Input::~Win32Input()
 {
 }
 
-void Win32Input::AddCommand(Command * command)
+void Win32Input::ClearFunctionPointers()
 {
-	m_inputCommands.push_back(command);
-}
-
-void Win32Input::AddKeyboardCommand(Keyboard::Keys key, function<void(bool)> funcPoint)
-{
-	KeyboardCommand *keyCommand = new KeyboardCommand();
-	keyCommand->SetFunctionPointer(funcPoint);
-	keyCommand->SetKeyboardBinding(key);
-	m_inputCommands.push_back(keyCommand);
-}
-
-void Win32Input::AddGamePadDpadCommand(DpadDirections dir, function<void(bool)> funcPoint)
-{
-	GamePadDpadCommand *dpadCommand = new GamePadDpadCommand();
-	dpadCommand->SetFunctionPointer(funcPoint);
-	dpadCommand->SetGamepadDpadBinding(dir);
-	m_inputCommands.push_back(dpadCommand);
-}
-
-void Win32Input::AddGamePadButtonCommand(GamePadButtons button, function<void(bool)> funcPoint)
-{
-	GamePadButtonCommand *buttonCommand = new GamePadButtonCommand();
-	buttonCommand->SetFunctionPointer(funcPoint);
-	buttonCommand->SetGamepadButtonBinding(button);
-	m_inputCommands.push_back(buttonCommand);
-}
-
-void Win32Input::ClearCommands()
-{
-	//m_inputCommands.clear();
-	gameActionBindings.clear();
+	m_gameActionBindings.clear();
 }
 
 void Win32Input::ProcessCommands()
 {
-	/*vector<Command*>::iterator commandIterator;
+	ProcessKeyboard();
+	ProcessGamePad();
+}
 
-	for (commandIterator = m_inputCommands.begin(); commandIterator != m_inputCommands.end(); commandIterator++)
-	{
-		(*commandIterator)->Execute();
-	}*/
-	map<GameActions, Keyboard::Keys>::iterator actionInputIterator;
+void Win32Input::ChangeKeybinding(GameActions action, Keyboard::Keys key)
+{
+	auto actionIndex = m_keyBindings.find(action);
+
+	if (actionIndex != m_keyBindings.end())
+		actionIndex->second = key;
+}
+
+void Win32Input::AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint)
+{
+	m_gameActionBindings.insert(pair<GameActions, function<void(bool)>>(action, funcPoint));
+}
+
+void Win32Input::ProcessKeyboard()
+{
+	map<GameActions, Keyboard::Keys>::iterator keyboardInputIterator;
 
 	auto keyboardState = Keyboard::Get().GetState();
 	m_keyboardTracker.Update(keyboardState);
 
-	for (actionInputIterator = keyBindings.begin(); actionInputIterator != keyBindings.end(); actionInputIterator++)
+	for (keyboardInputIterator = m_keyBindings.begin(); keyboardInputIterator != m_keyBindings.end(); keyboardInputIterator++)
 	{
-		auto funcPointIndex = gameActionBindings.find((actionInputIterator)->first);
+		auto funcPointIndex = m_gameActionBindings.find((keyboardInputIterator)->first);
 
-		if (m_keyboardTracker.IsKeyPressed((actionInputIterator)->second))
+		if (m_keyboardTracker.IsKeyPressed((keyboardInputIterator)->second))
 		{
-			if (funcPointIndex != gameActionBindings.end())
+			if (funcPointIndex != m_gameActionBindings.end())
 			{
-				if (funcPointIndex != gameActionBindings.end())
+				if (funcPointIndex != m_gameActionBindings.end())
 					funcPointIndex->second(true);
 			}
 		}
-		else if (m_keyboardTracker.IsKeyReleased((actionInputIterator)->second))
+		else if (m_keyboardTracker.IsKeyReleased((keyboardInputIterator)->second))
 		{
-			if (funcPointIndex != gameActionBindings.end())
+			if (funcPointIndex != m_gameActionBindings.end())
 			{
 				funcPointIndex->second(false);
 			}
@@ -263,15 +99,72 @@ void Win32Input::ProcessCommands()
 	}
 }
 
-void Win32Input::ChangeKeybinding(GameActions action, Keyboard::Keys key)
+void Win32Input::ProcessGamePad()
 {
-	auto actionIndex = keyBindings.find(action);
+	auto state = GamePad::Get().GetState(0);
 
-	if (actionIndex != keyBindings.end())
-		actionIndex->second = key;
-}
+	map<GameActions, XBOXOneGamePad>::iterator gamepadInputIterator;
 
-void Win32Input::AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint)
-{
-	gameActionBindings.insert(pair<GameActions, function<void(bool)>>(action, funcPoint));
+	if (state.IsConnected())
+	{
+		m_gamePadTracker.Update(state);
+
+		for (gamepadInputIterator = m_gpBindings.begin(); gamepadInputIterator != m_gpBindings.end(); gamepadInputIterator++)
+		{
+			auto funcPointIndex = m_gameActionBindings.find((gamepadInputIterator)->first);
+
+			if ((gamepadInputIterator)->second == XBOXOneUp && m_gamePadTracker.dpadUp == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneUp && m_gamePadTracker.dpadUp == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneDown && m_gamePadTracker.dpadDown == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneDown && m_gamePadTracker.dpadDown == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneLeft && m_gamePadTracker.dpadLeft == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneLeft && m_gamePadTracker.dpadLeft == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneRight && m_gamePadTracker.dpadRight == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneRight && m_gamePadTracker.dpadRight == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneBack && m_gamePadTracker.back == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneBack && m_gamePadTracker.back == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneStart && m_gamePadTracker.start == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneStart && m_gamePadTracker.start == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneLeftBumper && m_gamePadTracker.leftShoulder == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneLeftBumper && m_gamePadTracker.leftShoulder == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneRightBumper && m_gamePadTracker.rightShoulder == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneRightBumper && m_gamePadTracker.rightShoulder == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneA && m_gamePadTracker.a == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneA && m_gamePadTracker.a == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneX && m_gamePadTracker.x == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneX && m_gamePadTracker.x == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneY && m_gamePadTracker.y == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneY && m_gamePadTracker.y == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+			if ((gamepadInputIterator)->second == XBOXOneB && m_gamePadTracker.b == m_gamePadTracker.PRESSED)
+				funcPointIndex->second(true);
+			else if ((gamepadInputIterator)->second == XBOXOneB && m_gamePadTracker.b == m_gamePadTracker.RELEASED)
+				funcPointIndex->second(false);
+		}
+	}
+	else
+	{
+		m_gamePadTracker.Reset();
+	}
 }

@@ -73,7 +73,7 @@ void BannerParadeState::InputCallBack(bool pressed)
 
 void BannerParadeState::SetupInput()
 {
-	m_input->ClearCommands();
+	m_input->ClearFunctionPointers();
 }
 
 void BannerParadeState::Update(float delta)
@@ -226,19 +226,13 @@ void MainMenuState::InputDownCallBack(bool pressed)
 
 void MainMenuState::SetupInput()
 {
-	m_input->ClearCommands();
+	m_input->ClearFunctionPointers();
 
 	function<void(bool)> funcPoint = bind(&MainMenuState::InputCallBack, this, placeholders::_1);
-	//m_input->AddKeyboardCommand(Keyboard::Keys::Enter, funcPoint);
-	//m_input->AddGamePadButtonCommand(A, funcPoint);
 
 	function<void(bool)> funcPointUp = bind(&MainMenuState::InputUpCallBack, this, placeholders::_1);
-	//m_input->AddKeyboardCommand(Keyboard::Keys::Up, funcPointUp);
-	//m_input->AddGamePadDpadCommand(Up, funcPointUp);
 
 	function<void(bool)> funcPointDown = bind(&MainMenuState::InputDownCallBack, this, placeholders::_1);
-	//m_input->AddKeyboardCommand(Keyboard::Keys::Down, funcPointDown);
-	//m_input->AddGamePadDpadCommand(Down, funcPointDown);
 
 	m_input->AddKeyboardActionBinding(ActionAccept, funcPoint);
 	m_input->AddKeyboardActionBinding(ActionUp, funcPointUp);
@@ -369,7 +363,7 @@ void NewGameState::InputCallBack(bool pressed)
 
 void NewGameState::SetupInput()
 {
-	m_input->ClearCommands();
+	m_input->ClearFunctionPointers();
 
 	testMap->SetupInput();
 }
