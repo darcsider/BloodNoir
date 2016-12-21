@@ -56,9 +56,9 @@ class DX11Graphics
 		void BeginScene();
 		void ClearScene();
 		void PresentScene();
-		void DrawObject(string textureName, RECT destRect, const XMVECTORF32& color = Colors::White);
+		void DrawObject(string textureName, SimpleMath::Rectangle destRect, const XMVECTORF32& color = Colors::White);
 		void DrawObject(string textureName, Vector2 position = Vector2(0.0, 0.0), const XMVECTORF32& color = Colors::White);
-		void DrawObject(string textureName, RECT sourceRect, Vector2 position = Vector2(0.0, 0.0), const XMVECTORF32& color = Colors::White);
+		void DrawObject(string textureName, SimpleMath::Rectangle sourceRect, Vector2 position = Vector2(0.0, 0.0), const XMVECTORF32& color = Colors::White);
 		void DrawQuad(Vector2 position, int width, int height, XMFLOAT4 color);
 		void EndScene();
 

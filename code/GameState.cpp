@@ -102,7 +102,7 @@ void BannerParadeState::Update(float delta)
 
 void BannerParadeState::Execute()
 {
-	RECT screenRect = { 0, 0, m_graphics->GetGameWidth(), m_graphics->GetGameHeight() };
+	SimpleMath::Rectangle screenRect(0, 0, m_graphics->GetGameWidth(), m_graphics->GetGameHeight());
 	m_graphics->RenderObject(m_currentBanner, screenRect);
 }
 
@@ -278,7 +278,7 @@ void MainMenuState::Execute()
 {
 	if (initialized)
 	{
-		RECT screenRect = { 0, 0, m_graphics->GetGameWidth(), m_graphics->GetGameHeight() };
+		SimpleMath::Rectangle screenRect(0, 0, m_graphics->GetGameWidth(), m_graphics->GetGameHeight());
 		vector<string>::iterator textureIterator;
 		float startX = (float)(m_graphics->GetGameWidth() / 3) + 150;
 		float startY = (float)(m_graphics->GetGameHeight() / 2);

@@ -351,8 +351,9 @@ void DX11Graphics::DrawTextToScreen(string text, Vector2 position, const XMVECTO
 	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, color);
 }
 
-void DX11Graphics::DrawObject(string textureName, RECT destRect, const XMVECTORF32& color)
+void DX11Graphics::DrawObject(string textureName, SimpleMath::Rectangle destRect, const XMVECTORF32& color)
 {
+	RECT source = destRect;
 	if (graphicsInitialized)
 	{
 		if (!textureName.empty())
@@ -360,7 +361,7 @@ void DX11Graphics::DrawObject(string textureName, RECT destRect, const XMVECTORF
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), destRect, color);
+				m_spriteBatch->Draw(textureIndex->second.Get(), source, color);
 			}
 		}
 	}
@@ -381,8 +382,10 @@ void DX11Graphics::DrawObject(string textureName, Vector2 position, const XMVECT
 	}
 }
 
-void DX11Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 position, const XMVECTORF32& color)
+void DX11Graphics::DrawObject(string textureName, SimpleMath::Rectangle sourceRect, Vector2 position, const XMVECTORF32& color)
 {
+	RECT source = sourceRect;
+
 	if (graphicsInitialized)
 	{
 		if (!textureName.empty())
@@ -390,7 +393,7 @@ void DX11Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 posit
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), position, &sourceRect, color);
+				m_spriteBatch->Draw(textureIndex->second.Get(), position, &source, color);
 			}
 		}
 	}

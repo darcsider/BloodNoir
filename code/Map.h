@@ -62,13 +62,13 @@ struct TriggerPoint
 // that are scrolled either automatically or when the player moves the main character.
 struct SectionLayer
 {
-	string	m_textureName;
-	double	m_scrollSpeed;
-	double	m_velocity;
-	bool	m_autoScroll;
-	int		m_width;
-	int		m_height;
-	RECT	m_sourceRectangle;
+	string					m_textureName;
+	double					m_scrollSpeed;
+	double					m_velocity;
+	bool					m_autoScroll;
+	int						m_width;
+	int						m_height;
+	SimpleMath::Rectangle	m_sourceRectangle;
 };
 
 // Building Floor is all the data related to a specific layer of a building

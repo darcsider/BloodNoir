@@ -2153,3 +2153,37 @@ be some minor tweeks needed when I get around to creating the screen for setting
 that task when that comes for now I know that I can change key bindings which was my biggest goal and I have an input system
 that works great which was also a goal so I'm happy with my progress.
 
+While doing research and planning for the sprites and player code I have decided to take a broad look at rendering in the game
+not from a I want to change how its done point of view because I like how my system works right now but from a what all is
+rendered in the game.  I have looked at all the various objects, screens, game states, characters, text, and objects in the
+game and have been able to come up with a list that really defines what is actually rendered in the game.
+
+Renderables:
+- Static backgrounds - these are fullscreen textures that do not move on the screen however they may end up with some animation
+to them which will be done by simply having multiple versions of same screen slightly different.
+- Backgrounds Layers - these will again be fullscreen textures but these are used in the maps they will be scrollable left, right
+up and down on the screen and some will be automatically scrolling.
+- Text Images - Instead of rendering on screen using the basic font's that are available on computers we will create images with
+whatever text needs to be on screen this may be animated if it fits the situation, these will typically be statically placed on
+the screen.
+- Controls/Heads Up Display - These will be custom made controls so that we don't have to pay for any licensing for using some
+body else's content and these will be animated as well.
+- Characters / Sprites - all sprites will have directional animations, some will have ability animations each unique sprite will
+have a single texture with all animation tiles.
+- Objects some will be interactable, some not all will have animations to give depth on screen.
+
+Tomorrow I'm going to continue my work on the sprites / character class.
+
+December 20th, 2016
+
+Day 126 of Development
+Not much work done today and the past couple of days I have had to work but I did do some more design work for certain systems,
+after the other day i decided to make a todo list of things that need to be completed in the game engine.  The list I made is
+not a full list but just a current list that I can think of that needs to be worked on, obviously as I go along I will come up
+with more tasks and tasks related to the current list of tasks to be completed.  The current thing that I am looking into and
+trying to plan out and program is Graphical User Interface controls like buttons, labels, etc... This will be a very complicated
+task that I need to tackle but it will also be one of those tasks that will teach me a lot and will be invaluable in future games.
+
+December 21st, 2016
+
+Day 127 of Development

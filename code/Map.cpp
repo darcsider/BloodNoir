@@ -47,18 +47,12 @@ void Map::BuildMap()
 void Map::SetupInput()
 {
 	function<void(bool)> funcPoint = bind(&Map::CloseGame, this, placeholders::_1);
-	//m_input->AddKeyboardCommand(Keyboard::Keys::Escape, funcPoint);
-	//m_input->AddGamePadButtonCommand(Back, funcPoint);
 	m_input->AddKeyboardActionBinding(SystemExitEarly, funcPoint);
 
 	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
-	//m_input->AddKeyboardCommand(Keyboard::Keys::Left, funcPointLeft);
-	//m_input->AddGamePadDpadCommand(Left, funcPointLeft);
 	m_input->AddKeyboardActionBinding(ActionLeft, funcPointLeft);
 
 	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
-	//m_input->AddKeyboardCommand(Keyboard::Keys::Right, funcPointRight);
-	//m_input->AddGamePadDpadCommand(Right, funcPointRight);
 	m_input->AddKeyboardActionBinding(ActionRight, funcPointRight);
 }
 
@@ -233,10 +227,10 @@ void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 				tempLayer.m_autoScroll = true;
 			else
 				tempLayer.m_autoScroll = false;
-			tempLayer.m_sourceRectangle.top = 0;
-			tempLayer.m_sourceRectangle.left = 0;
-			tempLayer.m_sourceRectangle.bottom = 1080;
-			tempLayer.m_sourceRectangle.right = 1920;
+			tempLayer.m_sourceRectangle.x = 0;
+			tempLayer.m_sourceRectangle.y = 0;
+			tempLayer.m_sourceRectangle.width = 1920;
+			tempLayer.m_sourceRectangle.height = 1080;
 			textDesc = m_graphicSystem->getTextureDesc(tempLayer.m_textureName);
 			tempLayer.m_width = textDesc.Width;
 			tempLayer.m_height = textDesc.Height;
@@ -341,29 +335,29 @@ void MapSection::UpdateMapSection(float delta)
 
 	for (layerIterator = m_layers.begin(); layerIterator != m_layers.end(); layerIterator++)
 	{
-		(layerIterator)->m_sourceRectangle.left += (LONG)((layerIterator)->m_velocity * delta);
-		(layerIterator)->m_sourceRectangle.right += (LONG)((layerIterator)->m_velocity * delta);
+		(layerIterator)->m_sourceRectangle.x += (LONG)((layerIterator)->m_velocity * delta);
+		(layerIterator)->m_sourceRectangle.width += (LONG)((layerIterator)->m_velocity * delta);
 
 		if (!(layerIterator)->m_autoScroll)
 		{
-			if ((layerIterator)->m_sourceRectangle.left < 0)
+			if ((layerIterator)->m_sourceRectangle.x < 0)
 			{
-				(layerIterator)->m_sourceRectangle.left = 0;
-				(layerIterator)->m_sourceRectangle.right = (layerIterator)->m_sourceRectangle.left + m_graphicSystem->GetGameWidth();
+				(layerIterator)->m_sourceRectangle.x = 0;
+				(layerIterator)->m_sourceRectangle.width = (layerIterator)->m_sourceRectangle.y + m_graphicSystem->GetGameWidth();
 			}
 
-			if ((layerIterator)->m_sourceRectangle.right >(layerIterator)->m_width)
+			if ((layerIterator)->m_sourceRectangle.width >(layerIterator)->m_width)
 			{
-				(layerIterator)->m_sourceRectangle.right = (layerIterator)->m_width;
-				(layerIterator)->m_sourceRectangle.left = (layerIterator)->m_sourceRectangle.right - m_graphicSystem->GetGameWidth();
+				(layerIterator)->m_sourceRectangle.width = (layerIterator)->m_width;
+				(layerIterator)->m_sourceRectangle.x = (layerIterator)->m_sourceRectangle.width - m_graphicSystem->GetGameWidth();
 			}
 		}
 		else
 		{
-			if ((layerIterator)->m_sourceRectangle.right > (layerIterator)->m_width)
+			if ((layerIterator)->m_sourceRectangle.width > (layerIterator)->m_width)
 			{
-				(layerIterator)->m_sourceRectangle.left = 0;
-				(layerIterator)->m_sourceRectangle.right = m_graphicSystem->GetGameWidth();
+				(layerIterator)->m_sourceRectangle.x = 0;
+				(layerIterator)->m_sourceRectangle.width = m_graphicSystem->GetGameWidth();
 			}
 		}
 	}
