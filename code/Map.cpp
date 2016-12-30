@@ -147,13 +147,13 @@ void Building::BuildBuilding(string fileName)
 				getline(ss, s2, ',');
 				tempObject.m_position.y = (float)atof(s2.c_str());
 
-				getline(inFile, tempString);
-				if (tempString == "Money")
+				//getline(inFile, tempString);
+				/*if (tempString == "Money")
 					tempObject.m_objectType = Money;
 				else if (tempString == "LorePiece")
 					tempObject.m_objectType = LorePiece;
 				else if (tempString == "Upgrade")
-					tempObject.m_objectType = Upgrade;
+					tempObject.m_objectType = Upgrade;*/
 
 				tempFloor.m_floorObjects.push_back(tempObject);
 			}
@@ -164,12 +164,12 @@ void Building::BuildBuilding(string fileName)
 			{
 				getline(inFile, tempTrigger.m_name);
 				getline(inFile, tempString);
-				if (tempString == "BuildingTrigger")
-					tempTrigger.m_triggerType = BuildingTrigger;
-				else if (tempString == "BlockTrigger")
-					tempTrigger.m_triggerType = BlockTrigger;
-				else if (tempString == "FloorTrigger")
-					tempTrigger.m_triggerType = FloorTrigger;
+				if (tempString == "BuildingFloorToFloor")
+					tempTrigger.m_triggerType = BuildingFloorToFloor;
+				else if (tempString == "Tutorial")
+					tempTrigger.m_triggerType = TutorialTrigger;
+				else if (tempString == "CutScene")
+					tempTrigger.m_triggerType = CutScene;
 
 				getline(inFile, tempString);
 				istringstream ss(tempString);
@@ -262,13 +262,13 @@ void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 			tempObject.m_position.y = (float)atof(s2.c_str());
 
 
-			getline(inFile, tempString);
+			/*getline(inFile, tempString);
 			if (tempString == "Money")
 				tempObject.m_objectType = Money;
 			else if (tempString == "LorePiece")
 				tempObject.m_objectType = LorePiece;
 			else if (tempString == "Upgrade")
-				tempObject.m_objectType = Upgrade;
+				tempObject.m_objectType = Upgrade;*/
 
 			m_objects.push_back(tempObject);
 		}
@@ -279,12 +279,14 @@ void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 		{
 			getline(inFile, tempTrigger.m_name);
 			getline(inFile, tempString);
-			if (tempString == "BuildingTrigger")
-				tempTrigger.m_triggerType = BuildingTrigger;
-			else if (tempString == "BlockTrigger")
-				tempTrigger.m_triggerType = BlockTrigger;
-			else if (tempString == "FloorTrigger")
-				tempTrigger.m_triggerType = FloorTrigger;
+			if (tempString == "MapToMap")
+				tempTrigger.m_triggerType = MapToMap;
+			else if (tempString == "MapToBuilding")
+				tempTrigger.m_triggerType = MapToBuilding;
+			else if (tempString == "Tutorial")
+				tempTrigger.m_triggerType = TutorialTrigger;
+			else if (tempString == "CutScene")
+				tempTrigger.m_triggerType = CutScene;
 
 			getline(inFile, tempString);
 			istringstream ss(tempString);
@@ -310,7 +312,7 @@ void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 
 	for (int triggers = 0; triggers < m_numberOfTriggers; triggers++)
 	{
-		if (m_triggerPoints[triggers].m_triggerType == BuildingTrigger)
+		if (m_triggerPoints[triggers].m_triggerType == MapToBuilding)
 		{
 			tempBuilding.BuildBuilding(m_triggerPoints[triggers].m_name);
 			m_buildings.push_back(tempBuilding);

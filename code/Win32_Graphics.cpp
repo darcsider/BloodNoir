@@ -1,12 +1,12 @@
 /*=====================================================================================
-$File: DX11Graphics.cpp
+$File: Win32_Graphics.cpp
 $Date: June 27, 2016
 $Creator: Jamie Cooper
 $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserved.
 =====================================================================================*/
-#include "DX11Graphics.h"
+#include "Win32_Graphics.h"
 
-DX11Graphics::DX11Graphics()
+Win32_Graphics::Win32_Graphics()
 {
 	m_window = nullptr;
 	graphicsInitialized = false;
@@ -15,7 +15,7 @@ DX11Graphics::DX11Graphics()
 	m_gameHeight = 0;
 }
 
-DX11Graphics::~DX11Graphics()
+Win32_Graphics::~Win32_Graphics()
 {
 	m_depthStencil.Reset();
 	m_depthStencilView.Reset();
@@ -29,7 +29,7 @@ DX11Graphics::~DX11Graphics()
 	m_textures.clear();
 }
 
-bool DX11Graphics::InitDirectXTKObjects()
+bool Win32_Graphics::InitDirectXTKObjects()
 {
 	m_graphicStates.reset(new CommonStates(m_d3dDevice.Get()));
 	m_effectFactory.reset(new EffectFactory(m_d3dDevice.Get()));
@@ -55,7 +55,7 @@ bool DX11Graphics::InitDirectXTKObjects()
 	return true;
 }
 
-bool DX11Graphics::InitializeGraphics(HWND Window, int width, int height)
+bool Win32_Graphics::InitializeGraphics(HWND Window, int width, int height)
 {
 	m_window = Window;
 	m_gameWidth = width;
@@ -72,7 +72,7 @@ bool DX11Graphics::InitializeGraphics(HWND Window, int width, int height)
 	return true;
 }
 
-void DX11Graphics::InitDirectX11()
+void Win32_Graphics::InitDirectX11()
 {
 	// Create the device and device context.
 	HRESULT Result;
@@ -152,7 +152,7 @@ void DX11Graphics::InitDirectX11()
 		(void)m_d3dContext.As(&m_d3dContext1);
 }
 
-void DX11Graphics::CreateResources()
+void Win32_Graphics::CreateResources()
 {
 	// Clear the previous window size specific context
 	ID3D11RenderTargetView* nullViews[] = { nullptr };
@@ -268,7 +268,7 @@ void DX11Graphics::CreateResources()
 	// TODO Initialize windows' size dependent objects here.
 }
 
-bool DX11Graphics::AddTexture(string filename, string name)
+bool Win32_Graphics::AddTexture(string filename, string name)
 {
 	ComPtr<ID3D11ShaderResourceView> texture;
 	wstring convFilename = ConvertSTRtoWSTR(filename);
@@ -301,7 +301,7 @@ bool DX11Graphics::AddTexture(string filename, string name)
 	return true;
 }
 
-void DX11Graphics::BeginScene()
+void Win32_Graphics::BeginScene()
 {
 	if (m_spriteBatch != NULL)
 	{
@@ -309,7 +309,7 @@ void DX11Graphics::BeginScene()
 	}
 }
 
-void DX11Graphics::ClearScene()
+void Win32_Graphics::ClearScene()
 {
 	// Clear the views
 	m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), Colors::Green);
@@ -322,7 +322,7 @@ void DX11Graphics::ClearScene()
 	m_d3dContext->RSSetViewports(1, &screenViewport);
 }
 
-void DX11Graphics::PresentScene()
+void Win32_Graphics::PresentScene()
 {
 	// The first argument instructs DXGI to block until VSync, putting the application
 	// to sleep until the next VSync. This ensures we don't waste any cycles rendering
@@ -340,18 +340,18 @@ void DX11Graphics::PresentScene()
 	}
 }
 
-void DX11Graphics::EndScene()
+void Win32_Graphics::EndScene()
 {
 	m_spriteBatch->End();
 }
 
-void DX11Graphics::DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color)
+void Win32_Graphics::DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color)
 {
 
 	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, color);
 }
 
-void DX11Graphics::DrawObject(string textureName, SimpleMath::Rectangle destRect, const XMVECTORF32& color)
+void Win32_Graphics::DrawObject(string textureName, SimpleMath::Rectangle destRect, const XMVECTORF32& color)
 {
 	RECT source = destRect;
 	if (graphicsInitialized)
@@ -367,7 +367,7 @@ void DX11Graphics::DrawObject(string textureName, SimpleMath::Rectangle destRect
 	}
 }
 
-void DX11Graphics::DrawObject(string textureName, Vector2 position, const XMVECTORF32& color)
+void Win32_Graphics::DrawObject(string textureName, Vector2 position, const XMVECTORF32& color)
 {
 	if (graphicsInitialized)
 	{
@@ -382,7 +382,7 @@ void DX11Graphics::DrawObject(string textureName, Vector2 position, const XMVECT
 	}
 }
 
-void DX11Graphics::DrawObject(string textureName, SimpleMath::Rectangle sourceRect, Vector2 position, const XMVECTORF32& color)
+void Win32_Graphics::DrawObject(string textureName, SimpleMath::Rectangle sourceRect, Vector2 position, const XMVECTORF32& color)
 {
 	RECT source = sourceRect;
 
@@ -399,7 +399,7 @@ void DX11Graphics::DrawObject(string textureName, SimpleMath::Rectangle sourceRe
 	}
 }
 
-void DX11Graphics::DrawQuad(Vector2 position, int width, int height, XMFLOAT4 color)
+void Win32_Graphics::DrawQuad(Vector2 position, int width, int height, XMFLOAT4 color)
 {
 	float startX = position.x;
 	float startY = position.y;
@@ -424,7 +424,7 @@ void DX11Graphics::DrawQuad(Vector2 position, int width, int height, XMFLOAT4 co
 	m_primitiveBatch->End();
 }
 
-D3D11_TEXTURE2D_DESC DX11Graphics::getTextureDesc(string textureName)
+D3D11_TEXTURE2D_DESC Win32_Graphics::getTextureDesc(string textureName)
 {
 	D3D11_TEXTURE2D_DESC textDesc = { 0 };
 	ComPtr<ID3D11Texture2D>	texture;
@@ -450,7 +450,7 @@ D3D11_TEXTURE2D_DESC DX11Graphics::getTextureDesc(string textureName)
 	return textDesc;
 }
 
-void DX11Graphics::OnDeviceLost()
+void Win32_Graphics::OnDeviceLost()
 {
 	m_depthStencil.Reset();
 	m_depthStencilView.Reset();

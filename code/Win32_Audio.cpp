@@ -4,19 +4,19 @@ $Date: May 8, 2016
 $Creator: Jamie Cooper
 $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserved.
 =====================================================================================*/
-#include "WinAudio.h"
+#include "Win32_Audio.h"
 
-WinAudio::WinAudio()
+Win32_Audio::Win32_Audio()
 {
 
 }
 
-WinAudio::~WinAudio()
+Win32_Audio::~Win32_Audio()
 {
 
 }
 
-void WinAudio::InitializeAudio()
+void Win32_Audio::InitializeAudio()
 {
 	AUDIO_ENGINE_FLAGS audioFlags = AudioEngine_Default;
 #ifdef _DEBUG
@@ -26,17 +26,17 @@ void WinAudio::InitializeAudio()
 	m_audioEngine.reset(new AudioEngine(audioFlags));
 }
 
-bool WinAudio::SetBackgroundMusic(string fileName)
+bool Win32_Audio::SetBackgroundMusic(string fileName)
 {
 	m_backgroundMusic.reset(new SoundEffect(m_audioEngine.get(), ConvertSTRtoWSTR(fileName).c_str()));
 	m_backgroundEffect = m_backgroundMusic->CreateInstance();
 	return true;
 }
 
-bool WinAudio::AddSoundEffect(string effectName, string fileName)
+bool Win32_Audio::AddSoundEffect(string effectName, string fileName)
 {
 	auto soundIndex = m_soundEffects.find(effectName);
-	
+
 	if (soundIndex == m_soundEffects.end())
 	{
 		wstring file = ConvertSTRtoWSTR(fileName);
@@ -49,7 +49,7 @@ bool WinAudio::AddSoundEffect(string effectName, string fileName)
 	}
 }
 
-void WinAudio::AudioEngineUpdate()
+void Win32_Audio::AudioEngineUpdate()
 {
 	if (!m_audioEngine->Update())
 	{
@@ -62,7 +62,7 @@ void WinAudio::AudioEngineUpdate()
 	}
 }
 
-void WinAudio::PlayEffect(string effectName)
+void Win32_Audio::PlayEffect(string effectName)
 {
 	auto soundIndex = m_soundEffects.find(effectName);
 
@@ -76,22 +76,22 @@ void WinAudio::PlayEffect(string effectName)
 	}
 }
 
-void WinAudio::StartBackgroundMusic()
+void Win32_Audio::StartBackgroundMusic()
 {
 	m_backgroundEffect->Play(true);
 }
 
-void WinAudio::StopBackgroundMusic()
+void Win32_Audio::StopBackgroundMusic()
 {
 	m_backgroundEffect->Stop();
 }
 
-void WinAudio::SetBackgroundVolume(float value)
+void Win32_Audio::SetBackgroundVolume(float value)
 {
 	m_backgroundEffect->SetVolume(value);
 }
 
-void WinAudio::SetSoundEffectVolume(float value)
+void Win32_Audio::SetSoundEffectVolume(float value)
 {
 	map<string, SoundEffect>::iterator effectIterator;
 

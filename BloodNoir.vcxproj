@@ -177,8 +177,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\AudioSystem.h" />
+    <ClInclude Include="code\Character.h" />
     <ClInclude Include="code\Console.h" />
-    <ClInclude Include="code\DX11Graphics.h" />
+    <ClInclude Include="code\EventManager.h" />
     <ClInclude Include="code\Game.h" />
     <ClInclude Include="code\GameState.h" />
     <ClInclude Include="code\GameStateManager.h" />
@@ -187,17 +188,19 @@
     <ClInclude Include="code\InputManager.h" />
     <ClInclude Include="code\LevelEditor.h" />
     <ClInclude Include="code\Map.h" />
-    <ClInclude Include="code\Player.h" />
+    <ClInclude Include="code\Physics.h" />
     <ClInclude Include="code\RenderManager.h" />
     <ClInclude Include="code\Sprite.h" />
+    <ClInclude Include="code\Win32_Audio.h" />
+    <ClInclude Include="code\Win32_Graphics.h" />
     <ClInclude Include="code\Win32_Window.h" />
-    <ClInclude Include="code\WinAudio.h" />
     <ClInclude Include="code\Win32_Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\AudioSystem.cpp" />
+    <ClCompile Include="code\Character.cpp" />
     <ClCompile Include="code\Console.cpp" />
-    <ClCompile Include="code\DX11Graphics.cpp" />
+    <ClCompile Include="code\EventManager.cpp" />
     <ClCompile Include="code\Game.cpp" />
     <ClCompile Include="code\GameState.cpp" />
     <ClCompile Include="code\GameStateManager.cpp" />
@@ -205,11 +208,12 @@
     <ClCompile Include="code\InputManager.cpp" />
     <ClCompile Include="code\LevelEditor.cpp" />
     <ClCompile Include="code\Map.cpp" />
-    <ClCompile Include="code\Player.cpp" />
+    <ClCompile Include="code\Physics.cpp" />
     <ClCompile Include="code\RenderManager.cpp" />
     <ClCompile Include="code\Sprite.cpp" />
+    <ClCompile Include="code\Win32_Audio.cpp" />
+    <ClCompile Include="code\Win32_Graphics.cpp" />
     <ClCompile Include="code\Win32_Window.cpp" />
-    <ClCompile Include="code\WinAudio.cpp" />
     <ClCompile Include="code\Win32_Input.cpp" />
   </ItemGroup>
   <ItemGroup>

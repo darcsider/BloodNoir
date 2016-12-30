@@ -9,7 +9,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 AudioSystem::AudioSystem()
 {
 #if _WIN32
-	m_win32Audio = make_unique<WinAudio>();
+	m_win32Audio = make_unique<Win32_Audio>();
 #endif
 }
 

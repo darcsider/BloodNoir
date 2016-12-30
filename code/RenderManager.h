@@ -8,12 +8,12 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #ifndef RENDERMANAGER_H
 #define RENDERMANAGER_H
 #include "Includes.h"
-#include "DX11Graphics.h"
+#include "Win32_Graphics.h"
 
 class RenderManager
 {
 	private:
-		unique_ptr<DX11Graphics> m_win32_Graphics;
+		unique_ptr<Win32_Graphics> m_win32_Graphics;
 		int gameWidth;
 		int gameHeight;
 		// PS4Graphics *m_ps4_Graphics;

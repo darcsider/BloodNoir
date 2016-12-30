@@ -11,27 +11,21 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "RenderManager.h"
 #include "InputManager.h"
 
-// The various object types available in the game
-// Money used to travel faster and potentially other upgrades
-// Lore Piece's progression and achievements are tied to this
-// Upgrade pieces that will be used for upgrades in the game
-enum ObjectType
-{
-	Money,
-	LorePiece,
-	Upgrade
-};
-
 // The various trigger point types available in the game
 // Building defines a trigger point that will lead to the inside of a building
 // Block defines a trigger point that will lead the character to another map section
 // Floor will only be used inside of a building where the trigger point will move the
 // player up or down a floor in the building.
+
+// TODO finish changes to this system
 enum TriggerType
 {
-	BuildingTrigger,
-	BlockTrigger,
-	FloorTrigger
+	MapToMap,
+	MapToBuilding,
+	BuildingToMap,
+	BuildingFloorToFloor,
+	TutorialTrigger,
+	CutScene
 };
 
 // The Objects are made up of an object name, the tile index that defines
@@ -43,7 +37,7 @@ struct Object
 	string		m_textureName;
 	int			m_tileIndex;
 	Vector2		m_position;
-	ObjectType	m_objectType;
+	//ObjectType	m_objectType;
 };
 
 // a structure defining trigger points on a map, the trigger points define

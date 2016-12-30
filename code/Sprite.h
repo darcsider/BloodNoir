@@ -16,13 +16,12 @@ struct SpriteData
 	int height;
 	int columns;
 	int rows;
-	float locX;
-	float locY;
+	Vector2 position;
 	float scale;
-	RECT sourceRect;
+	SimpleMath::Rectangle sourceRect;
 	string texture;
-	const XMVECTORF32& color;
-	SpriteData() : color(Colors::White) {}
+	const XMVECTORF32& tintColor;
+	SpriteData() : tintColor(Colors::White) {}
 };
 
 struct AnimatedAction
@@ -31,7 +30,7 @@ struct AnimatedAction
 	int endFrame;
 	int currentFrame;
 	float frameDelay;
-	Vector2 speedVector;
+	float animationTimer;
 };
 
 class Sprite
@@ -46,8 +45,47 @@ class Sprite
 		Sprite();
 		Sprite(RenderManager *graphics);
 		~Sprite();
+		void UpdateSprite(float timeDelta);
 		void AddAction(int start, int end, float frameD, string name);
 		void BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string filename, string name, const XMVECTORF32& color = Colors::White);
 		void SetCurrentAction(string name);
+		void SetCurrentFrame(int frame);
+		void SetSourceRectangle();
+
+		string GetSpriteTexture()
+		{
+			return m_spriteInfo.texture;
+		}
+
+		int GetSpriteWidth()
+		{
+			return m_spriteInfo.width;
+		}
+
+		int GetSpriteHeight()
+		{
+			return m_spriteInfo.height;
+		}
+
+		Vector2 GetSpritePosition()
+		{
+			return m_spriteInfo.position;
+		}
+
+		SimpleMath::Rectangle GetSpriteRectangle()
+		{
+			return m_spriteInfo.sourceRect;
+		}
+
+		const XMVECTORF32& GetTintColor()
+		{
+			return m_spriteInfo.tintColor;
+		}
+		
+		//is there a way to make this work???
+		void ChangeTintColor(const XMVECTORF32& color)
+		{
+			//m_spriteInfo.tintColor = color;
+		}
 };
 #endif

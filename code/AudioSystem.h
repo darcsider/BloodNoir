@@ -7,11 +7,11 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #ifndef AUDIOSYSTEM_H
 #define AUDIOSYSTEM_H
-#include "WinAudio.h"
+#include "Win32_Audio.h"
 class AudioSystem
 {
 	private:
-		unique_ptr<WinAudio> m_win32Audio;
+		unique_ptr<Win32_Audio> m_win32Audio;
 		//PS4Audio m_ps4Audio;
 		//XBOXONE m_XBONEAudio;
 

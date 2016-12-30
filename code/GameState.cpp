@@ -358,12 +358,18 @@ void NewGameState::BuildNewGameState()
 
 void NewGameState::InputCallBack(bool pressed)
 {
-	
+	//Test code not staying
+	if (pressed)
+		m_stateChange(MainMenu);
 }
 
 void NewGameState::SetupInput()
 {
 	m_input->ClearFunctionPointers();
+	
+	//Test code not staying this way
+	function<void(bool)> funcPoint = bind(&NewGameState::InputCallBack, this, placeholders::_1);
+	m_input->AddKeyboardActionBinding(SystemTest, funcPoint);
 
 	testMap->SetupInput();
 }

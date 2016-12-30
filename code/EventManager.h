@@ -1,26 +1,27 @@
 #pragma once
 /*=====================================================================================
-$File: Player.h
-$Date: September 18, 2016
+$File: EventManager.h
+$Date: December 27, 2016
 $Creator: Jamie Cooper
 $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserved.
 =====================================================================================*/
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef EVENTMANAGER_H
+#define EVENTMANAGER_H
 #include "Includes.h"
-#include "Sprite.h"
-#include "RenderManager.h"
 
-class GameCharacter
+class Subject
 {
 	protected:
-		string name;
-		int attack;
-		int defense;
-		int hitPoints;
 
 	public:
 
 };
 
-#endif // !PLAYER_H
+class Observer
+{
+	protected:
+
+	public:
+
+};
+#endif // !EVENTMANAGER_H

@@ -9,7 +9,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 RenderManager::RenderManager()
 {
 #if _WIN32
-	m_win32_Graphics = make_unique<DX11Graphics>();
+	m_win32_Graphics = make_unique<Win32_Graphics>();
 #endif
 }
 

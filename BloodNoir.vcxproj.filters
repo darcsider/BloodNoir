@@ -47,16 +47,10 @@
     <ClInclude Include="code\Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\WinAudio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="code\GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\GameStateManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="code\DX11Graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\RenderManager.h">
@@ -74,7 +68,19 @@
     <ClInclude Include="code\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Player.h">
+    <ClInclude Include="code\Win32_Graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Win32_Audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\EventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -97,16 +103,10 @@
     <ClCompile Include="code\GameTiming.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\WinAudio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="code\GameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\GameStateManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="code\DX11Graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\RenderManager.cpp">
@@ -124,7 +124,19 @@
     <ClCompile Include="code\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Player.cpp">
+    <ClCompile Include="code\Win32_Graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Win32_Audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\EventManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
