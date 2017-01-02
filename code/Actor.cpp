@@ -1,34 +1,34 @@
 /*=====================================================================================
-$File: Character.cpp
+$File: Actor.cpp
 $Date: September 18, 2016
 $Creator: Jamie Cooper
 $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserved.
 =====================================================================================*/
-#include "Character.h"
+#include "Actor.h"
 
-Character::Character()
+Actor::Actor()
 {
 }
 
-Character::Character(RenderManager * graphics, InputManager *input)
+Actor::Actor(RenderManager * graphics, InputManager *input)
 {
 	m_graphicSystem = graphics;
 	m_inputSystem = input;
 }
 
-Character::~Character()
+Actor::~Actor()
 {
 
 }
 
-void Character::BuildCharacter(int a, int d, int hp)
+void Actor::BuildCharacter(int a, int d, int hp)
 {
 	m_attack = a;
 	m_defense = d;
 	m_hitPoints = hp;
 }
 
-void Character::MoveCharacter(MoveDirection direction)
+void Actor::MoveCharacter(MoveDirection direction)
 {
 	switch (direction)
 	{
@@ -53,12 +53,12 @@ void Character::MoveCharacter(MoveDirection direction)
 	}
 }
 
-void Character::UpdateCharacter(float deltaTime)
+void Actor::UpdateCharacter(float deltaTime)
 {
 	m_characterSprite.UpdateSprite(deltaTime);
 }
 
-void Character::DrawCharacter()
+void Actor::DrawCharacter()
 {
-	m_graphicSystem->RenderObject(m_characterSprite.GetSpriteTexture(), m_characterSprite.GetSpriteRectangle(), m_characterSprite.GetSpritePosition(), m_characterSprite.GetTintColor());
+	m_graphicSystem->RenderObject(m_characterSprite.GetSpriteTexture(), m_characterSprite.GetSpriteRectangle(), m_characterSprite.GetSpritePosition());
 }

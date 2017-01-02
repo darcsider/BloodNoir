@@ -1236,3 +1236,7 @@ December 29th, 2016
 Day 130 of Development
 Today I will continue my efforts to figure out the Observer, Event system that I am doing research into right now and see how best it will work for my game engine.  I also have begun thinking about a Physics class that will handle all Physics related calcuations including checking for collissions, etc...  This class will interact with the whole Observer Subject design pattern and will be used a fair amount in the game engine.
 
+January 1st, 2017
+
+Day 131 of Development
+Today marks the beginning of a new calendar year and hopefully this will be the year that we are able to get this project out to the market and start working on video games full time and not doing other jobs. 

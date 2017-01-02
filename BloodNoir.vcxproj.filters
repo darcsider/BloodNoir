@@ -74,13 +74,13 @@
     <ClInclude Include="code\Win32_Audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Character.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="code\EventManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\Physics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -130,13 +130,13 @@
     <ClCompile Include="code\Win32_Audio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\Character.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="code\EventManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\Physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

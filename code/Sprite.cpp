@@ -45,7 +45,7 @@ void Sprite::AddAction(int start, int end, float frameD, string name)
 	m_actions.insert(pair<string, AnimatedAction>(name, tempAction));
 }
 
-void Sprite::BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string filename, string name, const XMVECTORF32& color)
+void Sprite::BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string filename, string name)
 {
 	D3D11_TEXTURE2D_DESC tempDesc;
 

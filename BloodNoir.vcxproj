@@ -176,8 +176,8 @@
     <Text Include="data\BloodNoirNotes.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="code\Actor.h" />
     <ClInclude Include="code\AudioSystem.h" />
-    <ClInclude Include="code\Character.h" />
     <ClInclude Include="code\Console.h" />
     <ClInclude Include="code\EventManager.h" />
     <ClInclude Include="code\Game.h" />
@@ -197,8 +197,8 @@
     <ClInclude Include="code\Win32_Input.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="code\Actor.cpp" />
     <ClCompile Include="code\AudioSystem.cpp" />
-    <ClCompile Include="code\Character.cpp" />
     <ClCompile Include="code\Console.cpp" />
     <ClCompile Include="code\EventManager.cpp" />
     <ClCompile Include="code\Game.cpp" />

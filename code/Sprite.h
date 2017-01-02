@@ -20,8 +20,6 @@ struct SpriteData
 	float scale;
 	SimpleMath::Rectangle sourceRect;
 	string texture;
-	const XMVECTORF32& tintColor;
-	SpriteData() : tintColor(Colors::White) {}
 };
 
 struct AnimatedAction
@@ -47,7 +45,7 @@ class Sprite
 		~Sprite();
 		void UpdateSprite(float timeDelta);
 		void AddAction(int start, int end, float frameD, string name);
-		void BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string filename, string name, const XMVECTORF32& color = Colors::White);
+		void BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string filename, string name);
 		void SetCurrentAction(string name);
 		void SetCurrentFrame(int frame);
 		void SetSourceRectangle();
@@ -75,17 +73,6 @@ class Sprite
 		SimpleMath::Rectangle GetSpriteRectangle()
 		{
 			return m_spriteInfo.sourceRect;
-		}
-
-		const XMVECTORF32& GetTintColor()
-		{
-			return m_spriteInfo.tintColor;
-		}
-		
-		//is there a way to make this work???
-		void ChangeTintColor(const XMVECTORF32& color)
-		{
-			//m_spriteInfo.tintColor = color;
 		}
 };
 #endif
