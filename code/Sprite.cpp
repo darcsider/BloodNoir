@@ -42,7 +42,7 @@ void Sprite::UpdateSprite(float timeDelta)
 void Sprite::AddAction(int start, int end, float frameD, string name)
 {
 	AnimatedAction tempAction{ start, end, 0, frameD };
-	m_actions.insert(pair<string, AnimatedAction>(name, tempAction));
+	m_actionAnimations.insert(pair<string, AnimatedAction>(name, tempAction));
 }
 
 void Sprite::BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string filename, string name)
@@ -64,9 +64,9 @@ void Sprite::BuildSprite(int w, int h, int cols, int rows, float scale, float st
 
 void Sprite::SetCurrentAction(string name)
 {
-	auto actionIndex = m_actions.find(name);
+	auto actionIndex = m_actionAnimations.find(name);
 
-	if (actionIndex != m_actions.end())
+	if (actionIndex != m_actionAnimations.end())
 		m_currentAction = actionIndex->second;
 }
 

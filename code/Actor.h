@@ -23,23 +23,23 @@ enum MoveDirection
 
 class Actor
 {
-protected:
-	RenderManager *m_graphicSystem;
-	InputManager *m_inputSystem;
-	Sprite m_characterSprite;
+	protected:
+		RenderManager *m_graphicSystem;
+		InputManager *m_inputSystem;
+		Sprite m_sprite;
 
-	string m_characterName;
-	int m_attack;
-	int m_defense;
-	int m_hitPoints;
+		string m_characterName;
+		int m_attack;
+		int m_defense;
+		int m_hitPoints;
 
-public:
-	Actor();
-	Actor(RenderManager *graphics, InputManager *input);
-	~Actor();
-	void BuildCharacter(int a, int d, int hp);
-	void MoveCharacter(MoveDirection direction = NotMoving);
-	void UpdateCharacter(float deltaTime);
-	void DrawCharacter();
+	public:
+		Actor();
+		Actor(RenderManager *graphics, InputManager *input);
+		~Actor();
+		void BuildCharacter(int a, int d, int hp);
+		void MoveCharacter(MoveDirection direction = NotMoving);
+		void UpdateCharacter(float deltaTime);
+		void DrawCharacter();
 };
 #endif // !ACTOR_H

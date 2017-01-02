@@ -35,7 +35,7 @@ class Sprite
 {
 	protected:
 		SpriteData m_spriteInfo;
-		map<string, AnimatedAction> m_actions;
+		map<string, AnimatedAction> m_actionAnimations;
 		AnimatedAction m_currentAction;
 		RenderManager *m_graphicSystem;
 		

@@ -8,6 +8,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 
 Actor::Actor()
 {
+
 }
 
 Actor::Actor(RenderManager * graphics, InputManager *input)
@@ -32,33 +33,33 @@ void Actor::MoveCharacter(MoveDirection direction)
 {
 	switch (direction)
 	{
-	case NotMoving:
-		m_characterSprite.SetCurrentAction("notMoving");
-		break;
-	case MoveLeft:
-		m_characterSprite.SetCurrentAction("moveLeft");
-		break;
-	case MoveRight:
-		m_characterSprite.SetCurrentAction("moveRight");
-		break;
-	case MoveUp:
-		m_characterSprite.SetCurrentAction("moveUp");
-		break;
-	case MoveDown:
-		m_characterSprite.SetCurrentAction("moveDown");
-		break;
-	default:
-		m_characterSprite.SetCurrentAction("notMoving");
-		break;
+		case NotMoving:
+			m_sprite.SetCurrentAction("notMoving");
+			break;
+		case MoveLeft:
+			m_sprite.SetCurrentAction("moveLeft");
+			break;
+		case MoveRight:
+			m_sprite.SetCurrentAction("moveRight");
+			break;
+		case MoveUp:
+			m_sprite.SetCurrentAction("moveUp");
+			break;
+		case MoveDown:
+			m_sprite.SetCurrentAction("moveDown");
+			break;
+		default:
+			m_sprite.SetCurrentAction("notMoving");
+			break;
 	}
 }
 
 void Actor::UpdateCharacter(float deltaTime)
 {
-	m_characterSprite.UpdateSprite(deltaTime);
+	m_sprite.UpdateSprite(deltaTime);
 }
 
 void Actor::DrawCharacter()
 {
-	m_graphicSystem->RenderObject(m_characterSprite.GetSpriteTexture(), m_characterSprite.GetSpriteRectangle(), m_characterSprite.GetSpritePosition());
+	m_graphicSystem->RenderObject(m_sprite.GetSpriteTexture(), m_sprite.GetSpriteRectangle(), m_sprite.GetSpritePosition());
 }
