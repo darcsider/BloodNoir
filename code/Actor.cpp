@@ -22,14 +22,13 @@ Actor::~Actor()
 
 }
 
-void Actor::BuildCharacter(int a, int d, int hp)
+void Actor::BuildActor(int hp, float speed)
 {
-	m_attack = a;
-	m_defense = d;
 	m_hitPoints = hp;
+	m_actorSpeed = speed;
 }
 
-void Actor::MoveCharacter(MoveDirection direction)
+void Actor::MoveActor(MoveDirection direction)
 {
 	switch (direction)
 	{
@@ -54,12 +53,52 @@ void Actor::MoveCharacter(MoveDirection direction)
 	}
 }
 
-void Actor::UpdateCharacter(float deltaTime)
+void Actor::UpdateActor(float deltaTime)
 {
 	m_sprite.UpdateSprite(deltaTime);
+	m_position.x += m_velocity.x * deltaTime;
+	m_position.y += m_velocity.y * deltaTime;
 }
 
-void Actor::DrawCharacter()
+void Actor::UpdateActorVelocity(int value)
 {
-	m_graphicSystem->RenderObject(m_sprite.GetSpriteTexture(), m_sprite.GetSpriteRectangle(), m_sprite.GetSpritePosition());
+	m_velocity.x = m_actorSpeed * value;
+	m_velocity.y = m_actorSpeed * value;
+}
+
+void Actor::DrawActor()
+{
+	m_graphicSystem->RenderObject(m_sprite.GetSpriteTexture(), m_sprite.GetSpriteRectangle(), m_position);
+}
+
+void Actor::MoveActorLeft(bool pressed)
+{
+	if (pressed)
+		m_velocity.x = -1;
+	else
+		m_velocity.x = 0;
+}
+
+void Actor::MoveActorRight(bool pressed)
+{
+	if (pressed)
+		m_velocity.x = 1;
+	else
+		m_velocity.x = 0;
+}
+
+void Actor::MoveActorUp(bool pressed)
+{
+	if (pressed)
+		m_velocity.y = -1;
+	else
+		m_velocity.x = 0;
+}
+
+void Actor::MoveActorDown(bool pressed)
+{
+	if (pressed)
+		m_velocity.y = 1;
+	else
+		m_velocity.x = 0;
 }

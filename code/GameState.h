@@ -11,6 +11,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "RenderManager.h"
 #include "InputManager.h"
 #include "Map.h"
+#include "Actor.h"
 #include "Console.h"
 
 enum StateTypes
@@ -39,7 +40,7 @@ class GameState
 		GameState() {}
 		virtual ~GameState() {}
 		virtual StateTypes GetStateType() = 0;
-		virtual void InputCallBack(bool pressed) = 0;
+		virtual void InputCallBack(bool pressed,GameActions action) = 0;
 		virtual void SetupInput() = 0;
 		virtual void Update(float delta) = 0;
 		virtual void Execute() = 0;
@@ -59,7 +60,7 @@ class BannerParadeState : public GameState
 		virtual ~BannerParadeState();
 		virtual StateTypes GetStateType();
 		void BuildBanners(string filename);
-		virtual void InputCallBack(bool pressed);
+		virtual void InputCallBack(bool pressed, GameActions action);
 		virtual void SetupInput();
 		virtual void Update(float delta);
 		virtual void Execute();
@@ -83,9 +84,7 @@ class MainMenuState : public GameState
 		virtual ~MainMenuState();
 		virtual StateTypes GetStateType();
 		void BuildMainMenu(string filename);
-		virtual void InputCallBack(bool pressed);
-		void InputUpCallBack(bool pressed);
-		void InputDownCallBack(bool pressed);
+		virtual void InputCallBack(bool pressed, GameActions action);
 		virtual void SetupInput();
 		virtual void Update(float delta);
 		virtual void Execute();
@@ -97,6 +96,7 @@ class NewGameState : public GameState
 {
 	protected:
 		Map *testMap;
+		//Actor *testCharacter;
 		string m_fileName;
 
 	public:
@@ -105,10 +105,13 @@ class NewGameState : public GameState
 		virtual ~NewGameState();
 		virtual StateTypes GetStateType();
 		void BuildNewGameState();
-		virtual void InputCallBack(bool pressed);
+		virtual void InputCallBack(bool pressed, GameActions action);
 		virtual void SetupInput();
 		virtual void Update(float delta);
 		virtual void Execute();
+
+		//method for testing not staying
+		void SetupCharacter();
 };
 
 class OnExitState : public GameState
@@ -123,7 +126,7 @@ class OnExitState : public GameState
 		{
 			return m_stateType;
 		}
-		void InputCallBack(bool notUsed) {}
+		void InputCallBack(bool notUsed, GameActions action) {}
 		void SetupInput() {}
 		void Update(float notUsed) {}
 		void Execute()

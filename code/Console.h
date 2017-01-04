@@ -57,7 +57,7 @@ class Console
 
 		void Draw();
 
-		void HideShow(bool notUsed)
+		void HideShow(bool notUsed, GameActions action)
 		{
 			if (notUsed)
 			{

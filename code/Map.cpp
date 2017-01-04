@@ -44,29 +44,11 @@ void Map::BuildMap()
 	SetCurrentMapSection(0);
 }
 
-void Map::SetupInput()
+void Map::MoveMap(bool move, GameActions action)
 {
-	function<void(bool)> funcPoint = bind(&Map::CloseGame, this, placeholders::_1);
-	m_input->AddKeyboardActionBinding(SystemExitEarly, funcPoint);
-
-	function<void(bool)> funcPointLeft = bind(&Map::MoveMapLeft, this, placeholders::_1);
-	m_input->AddKeyboardActionBinding(ActionLeft, funcPointLeft);
-
-	function<void(bool)> funcPointRight = bind(&Map::MoveMapRight, this, placeholders::_1);
-	m_input->AddKeyboardActionBinding(ActionRight, funcPointRight);
-}
-
-void Map::MoveMapLeft(bool move)
-{
-	if (move)
+	if (move && action == ActionLeft)
 		m_currentSection.UpdateVelocity(-1);
-	else
-		m_currentSection.UpdateVelocity(0);
-}
-
-void Map::MoveMapRight(bool move)
-{
-	if (move)
+	else if (move && action == ActionRight)
 		m_currentSection.UpdateVelocity(1);
 	else
 		m_currentSection.UpdateVelocity(0);

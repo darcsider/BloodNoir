@@ -155,17 +155,15 @@ class Map
 		Map();
 		~Map();
 		void InitializeMap(RenderManager *graphics, InputManager *input, string mapTextFile);
-		void SetupInput();
 		void BuildMap();
 		void UpdateMap(float timeDelta);
 		void DrawMap();
 		void SetCurrentMapSection(int mapSection);
-		void MoveMapLeft(bool move);
-		void MoveMapRight(bool move);
+		void MoveMap(bool move, GameActions action);
 
-		void CloseGame(bool notUsed)
+		void CloseGame(bool pressed, GameActions action)
 		{
-			if (notUsed)
+			if (pressed)
 				PostQuitMessage(0);
 		}
 };

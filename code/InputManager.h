@@ -24,7 +24,7 @@ class InputManager
 		void ClearFunctionPointers();
 
 		void ChangeKeybinding(GameActions action, Keyboard::Keys key);
-		void AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint);
+		void AddKeyboardActionBinding(GameActions action, function<void(bool,GameActions)> funcPoint);
 
 		void GamePadSuspend()
 		{

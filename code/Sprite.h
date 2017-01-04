@@ -16,7 +16,6 @@ struct SpriteData
 	int height;
 	int columns;
 	int rows;
-	Vector2 position;
 	float scale;
 	SimpleMath::Rectangle sourceRect;
 	string texture;
@@ -63,11 +62,6 @@ class Sprite
 		int GetSpriteHeight()
 		{
 			return m_spriteInfo.height;
-		}
-
-		Vector2 GetSpritePosition()
-		{
-			return m_spriteInfo.position;
 		}
 
 		SimpleMath::Rectangle GetSpriteRectangle()

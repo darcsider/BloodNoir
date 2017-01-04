@@ -29,17 +29,24 @@ class Actor
 		Sprite m_sprite;
 
 		string m_characterName;
-		int m_attack;
-		int m_defense;
 		int m_hitPoints;
+		float m_actorSpeed;
+		Vector2 m_velocity;
+		Vector2 m_position;
 
 	public:
 		Actor();
 		Actor(RenderManager *graphics, InputManager *input);
 		~Actor();
-		void BuildCharacter(int a, int d, int hp);
-		void MoveCharacter(MoveDirection direction = NotMoving);
-		void UpdateCharacter(float deltaTime);
-		void DrawCharacter();
+		void BuildActor(int hp, float speed);
+		void MoveActor(MoveDirection direction = NotMoving);
+		void UpdateActor(float deltaTime);
+		void UpdateActorVelocity(int value);
+		void DrawActor();
+
+		void MoveActorLeft(bool pressed);
+		void MoveActorRight(bool pressed);
+		void MoveActorUp(bool pressed);
+		void MoveActorDown(bool pressed);
 };
 #endif // !ACTOR_H

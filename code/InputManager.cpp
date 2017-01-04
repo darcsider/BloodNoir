@@ -44,7 +44,7 @@ void InputManager::ChangeKeybinding(GameActions action, Keyboard::Keys key)
 #endif
 }
 
-void InputManager::AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint)
+void InputManager::AddKeyboardActionBinding(GameActions action, function<void(bool,GameActions)> funcPoint)
 {
 #if _WIN32
 	m_input->AddKeyboardActionBinding(action, funcPoint);

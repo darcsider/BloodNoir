@@ -55,8 +55,6 @@ void Sprite::BuildSprite(int w, int h, int cols, int rows, float scale, float st
 	m_spriteInfo.width = w;
 	m_spriteInfo.height = h;
 	m_spriteInfo.scale = scale;
-	m_spriteInfo.position.x = startx;
-	m_spriteInfo.position.y = starty;
 	m_spriteInfo.texture = name;
 	m_spriteInfo.columns = cols;
 	m_spriteInfo.rows = rows;

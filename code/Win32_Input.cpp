@@ -65,9 +65,9 @@ void Win32Input::ChangeKeybinding(GameActions action, Keyboard::Keys key)
 		actionIndex->second = key;
 }
 
-void Win32Input::AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint)
+void Win32Input::AddKeyboardActionBinding(GameActions action, function<void(bool,GameActions)> funcPoint)
 {
-	m_gameActionBindings.insert(pair<GameActions, function<void(bool)>>(action, funcPoint));
+	m_gameActionBindings.insert(pair<GameActions, function<void(bool,GameActions)>>(action, funcPoint));
 }
 
 void Win32Input::ProcessKeyboard()
@@ -86,14 +86,14 @@ void Win32Input::ProcessKeyboard()
 			if (funcPointIndex != m_gameActionBindings.end())
 			{
 				if (funcPointIndex != m_gameActionBindings.end())
-					funcPointIndex->second(true);
+					funcPointIndex->second(true,funcPointIndex->first);
 			}
 		}
 		else if (m_keyboardTracker.IsKeyReleased((keyboardInputIterator)->second))
 		{
 			if (funcPointIndex != m_gameActionBindings.end())
 			{
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			}
 		}
 	}
@@ -114,53 +114,53 @@ void Win32Input::ProcessGamePad()
 			auto funcPointIndex = m_gameActionBindings.find((gamepadInputIterator)->first);
 
 			if ((gamepadInputIterator)->second == XBOXOneUp && m_gamePadTracker.dpadUp == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneUp && m_gamePadTracker.dpadUp == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneDown && m_gamePadTracker.dpadDown == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneDown && m_gamePadTracker.dpadDown == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneLeft && m_gamePadTracker.dpadLeft == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneLeft && m_gamePadTracker.dpadLeft == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneRight && m_gamePadTracker.dpadRight == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneRight && m_gamePadTracker.dpadRight == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneBack && m_gamePadTracker.back == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneBack && m_gamePadTracker.back == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneStart && m_gamePadTracker.start == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneStart && m_gamePadTracker.start == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneLeftBumper && m_gamePadTracker.leftShoulder == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneLeftBumper && m_gamePadTracker.leftShoulder == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneRightBumper && m_gamePadTracker.rightShoulder == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneRightBumper && m_gamePadTracker.rightShoulder == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneA && m_gamePadTracker.a == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneA && m_gamePadTracker.a == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneX && m_gamePadTracker.x == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneX && m_gamePadTracker.x == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneY && m_gamePadTracker.y == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneY && m_gamePadTracker.y == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 			if ((gamepadInputIterator)->second == XBOXOneB && m_gamePadTracker.b == m_gamePadTracker.PRESSED)
-				funcPointIndex->second(true);
+				funcPointIndex->second(true, funcPointIndex->first);
 			else if ((gamepadInputIterator)->second == XBOXOneB && m_gamePadTracker.b == m_gamePadTracker.RELEASED)
-				funcPointIndex->second(false);
+				funcPointIndex->second(false, funcPointIndex->first);
 		}
 	}
 	else

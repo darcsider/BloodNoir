@@ -60,7 +60,8 @@ class Win32Input
 		map<GameActions, XBOXOneGamePad> m_gpBindings;
 
 		map<GameActions, Keyboard::Keys> m_keyBindings;
-		map<GameActions, function<void(bool)>> m_gameActionBindings;
+		//map<GameActions, function<void(bool)>> m_gameActionBindings;
+		map<GameActions, function<void(bool, GameActions)>> m_gameActionBindings;
 
 		void BuildDefaultBindings();
 
@@ -72,7 +73,7 @@ class Win32Input
 
 		// testing functions
 		void ChangeKeybinding(GameActions action, Keyboard::Keys key);
-		void AddKeyboardActionBinding(GameActions action, function<void(bool)> funcPoint);
+		void AddKeyboardActionBinding(GameActions action, function<void(bool,GameActions)> funcPoint);
 
 		void ProcessKeyboard();
 		void ProcessGamePad();

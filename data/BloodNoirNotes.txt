@@ -1229,14 +1229,30 @@ So today I'm going to try to get some real programming done try to get a couple 
 
 I am getting back to work on the Character and Sprite system after some careful thinking I have realized that the best way to handle this game and the engine behind it is to simply build each system with the understanding that I will probably have to change that system in the future when I write other code. Each system will continously evolve as the project reaches its final version this is the reality of making a video game when you have never actually programmed a video game from scratch before. I can't plan out all the systems and the delicate interconnections between them when I have never programmed everything in a game before. On future projects I will be able to do this as I will have done it before.
 
-So today I have gotten some good work done cleaning up some systems, making progress on the character and sprite classes I do not have them tested quite yet but I'm working on it and I'm hoping to have the character and sprite classes tested in the next week.  At the same time I'm looking into how to implement an EventManager class that would handle passing events to and from system for things like achievements, physics events, and other things where it doesn't make sense to have a system contain an object from another system.  This is going to require some planning before I try to implement it.  But that will be something I tackle another day.
+So today I have gotten some good work done cleaning up some systems, making progress on the character and sprite classes I do not have them tested quite yet but I'm working on it and I'm hoping to have the character and sprite classes tested in the next week. At the same time I'm looking into how to implement an EventManager class that would handle passing events to and from system for things like achievements, physics events, and other things where it doesn't make sense to have a system contain an object from another system. This is going to require some planning before I try to implement it. But that will be something I tackle another day.
 
 December 29th, 2016
 
 Day 130 of Development
-Today I will continue my efforts to figure out the Observer, Event system that I am doing research into right now and see how best it will work for my game engine.  I also have begun thinking about a Physics class that will handle all Physics related calcuations including checking for collissions, etc...  This class will interact with the whole Observer Subject design pattern and will be used a fair amount in the game engine.
+Today I will continue my efforts to figure out the Observer, Event system that I am doing research into right now and see how best it will work for my game engine. I also have begun thinking about a Physics class that will handle all Physics related calcuations including checking for collissions, etc... This class will interact with the whole Observer Subject design pattern and will be used a fair amount in the game engine.
 
 January 1st, 2017
 
 Day 131 of Development
-Today marks the beginning of a new calendar year and hopefully this will be the year that we are able to get this project out to the market and start working on video games full time and not doing other jobs. 
+Today marks the beginning of a new calendar year and hopefully this will be the year that we are able to get this project out to the market and start working on video games full time and not doing other jobs.
+
+January 2nd, 2017
+
+Day 132 of Development
+Today the only work I have gotten done was more research on various design patterns that I can possibly use in the systems that I am currently figuring out. I'm hoping by the end of the week to have the basic Actor class working and displaying a character on the screen and hopefully at least moving and animating properly.
+
+January 3rd, 2017
+
+Day 133 of Development
+Today I was able to get some work done on the character class as well as doing some more cleanup work from other systems that needed it. I also figured out how to set input for a specific object outside of that object's main class so that will be usefull in the future. I think that if I can I may try to have it that all setup is done within the game state classes to just have it in a central area. More work will be done tomorrow moving towards getting a character displaying on the screen.
+
+January 4th, 2017
+
+Day 134 of Development
+Today I am working more on the actor and sprite class going to continue my work to get things functional to get a character on the screen and moving around.  I am also doing more cleanup work on the various systems, I made a change to the input system the function pointer bindings now have a second parameter passed into the function pointer that tells what action is currently being handled so now I no longer have to have a seperate function pointer for each action in a system a single method can handle them all and it just checks what action is currently happening to see what needs to be done.
+

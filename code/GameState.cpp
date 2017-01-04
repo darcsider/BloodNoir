@@ -66,7 +66,7 @@ void BannerParadeState::BuildBanners(string fileName)
 	m_currentBanner = bannerIterator->first;
 }
 
-void BannerParadeState::InputCallBack(bool pressed)
+void BannerParadeState::InputCallBack(bool pressed, GameActions action)
 {
 	// TODO(Jamie): Add input to banner parade
 }
@@ -162,9 +162,43 @@ void MainMenuState::BuildMainMenu(string filename)
 	inFile.close();
 }
 
-void MainMenuState::InputCallBack(bool pressed)
+void MainMenuState::InputCallBack(bool pressed, GameActions action)
 {
-	if (pressed)
+	if (pressed && action == ActionUp)
+	{
+		if (anyKeyPressed)
+		{
+			if (m_currentSelection == 0)
+				m_currentSelection = 3;
+
+			else
+				m_currentSelection--;
+		}
+		else
+		{
+			anyKeyPressed = true;
+		}
+	}
+
+	else if (pressed && action == ActionDown)
+	{
+		if (pressed)
+		{
+			if (anyKeyPressed)
+			{
+				if (m_currentSelection == 3)
+					m_currentSelection = 0;
+				else
+					m_currentSelection++;
+			}
+			else
+			{
+				anyKeyPressed = true;
+			}
+		}
+	}
+
+	if (pressed && action == ActionAccept)
 	{
 		if (anyKeyPressed)
 		{
@@ -187,56 +221,13 @@ void MainMenuState::InputCallBack(bool pressed)
 	}
 }
 
-void MainMenuState::InputUpCallBack(bool pressed)
-{
-	if (pressed)
-	{
-		if (anyKeyPressed)
-		{
-			if (m_currentSelection == 0)
-				m_currentSelection = 3;
-
-			else
-				m_currentSelection--;
-		}
-		else
-		{
-			anyKeyPressed = true;
-		}
-	}
-}
-
-void MainMenuState::InputDownCallBack(bool pressed)
-{
-	if (pressed)
-	{
-		if (anyKeyPressed)
-		{
-			if (m_currentSelection == 3)
-				m_currentSelection = 0;
-			else
-				m_currentSelection++;
-		}
-		else
-		{
-			anyKeyPressed = true;
-		}
-	}
-}
-
 void MainMenuState::SetupInput()
 {
 	m_input->ClearFunctionPointers();
-
-	function<void(bool)> funcPoint = bind(&MainMenuState::InputCallBack, this, placeholders::_1);
-
-	function<void(bool)> funcPointUp = bind(&MainMenuState::InputUpCallBack, this, placeholders::_1);
-
-	function<void(bool)> funcPointDown = bind(&MainMenuState::InputDownCallBack, this, placeholders::_1);
-
-	m_input->AddKeyboardActionBinding(ActionAccept, funcPoint);
-	m_input->AddKeyboardActionBinding(ActionUp, funcPointUp);
-	m_input->AddKeyboardActionBinding(ActionDown, funcPointDown);
+	function<void(bool, GameActions)> inputFunctionPointer = bind(&MainMenuState::InputCallBack, this, placeholders::_1, placeholders::_2);
+	m_input->AddKeyboardActionBinding(ActionAccept, inputFunctionPointer);
+	m_input->AddKeyboardActionBinding(ActionUp, inputFunctionPointer);
+	m_input->AddKeyboardActionBinding(ActionDown, inputFunctionPointer);
 }
 
 void MainMenuState::Update(float delta)
@@ -356,7 +347,7 @@ void NewGameState::BuildNewGameState()
 	testMap->BuildMap();
 }
 
-void NewGameState::InputCallBack(bool pressed)
+void NewGameState::InputCallBack(bool pressed, GameActions action)
 {
 	//Test code not staying
 	if (pressed)
@@ -368,18 +359,42 @@ void NewGameState::SetupInput()
 	m_input->ClearFunctionPointers();
 	
 	//Test code not staying this way
-	function<void(bool)> funcPoint = bind(&NewGameState::InputCallBack, this, placeholders::_1);
+	function<void(bool, GameActions)> funcPoint = bind(&NewGameState::InputCallBack, this, placeholders::_1, placeholders::_2);
 	m_input->AddKeyboardActionBinding(SystemTest, funcPoint);
 
-	testMap->SetupInput();
+	function<void(bool, GameActions)> closeGame = bind(&Map::CloseGame, testMap, placeholders::_1, placeholders::_2);
+	m_input->AddKeyboardActionBinding(SystemExitEarly, closeGame);
+
+	function<void(bool, GameActions)> moveMap = bind(&Map::MoveMap, testMap, placeholders::_1, placeholders::_2);
+	m_input->AddKeyboardActionBinding(ActionLeft, moveMap);
+	m_input->AddKeyboardActionBinding(ActionRight, moveMap);
+
+	//SetupCharacter();
+}
+
+void NewGameState::SetupCharacter()
+{
+	/*function<void(bool)> funcMoveLeft = bind(&Actor::MoveActorLeft, &testCharacter, placeholders::_1);
+	m_input->AddKeyboardActionBinding(ActionLeft, funcMoveLeft);
+
+	function<void(bool)> funcMoveRight = bind(&Actor::MoveActorLeft, &testCharacter, placeholders::_1);
+	m_input->AddKeyboardActionBinding(ActionRight, funcMoveRight);
+
+	function<void(bool)> funcMoveUp = bind(&Actor::MoveActorLeft, &testCharacter, placeholders::_1);
+	m_input->AddKeyboardActionBinding(ActionUp, funcMoveUp);
+
+	function<void(bool)> funcMoveDown = bind(&Actor::MoveActorLeft, &testCharacter, placeholders::_1);
+	m_input->AddKeyboardActionBinding(ActionDown, funcMoveDown);*/
 }
 
 void NewGameState::Update(float delta)
 {
 	testMap->UpdateMap(delta);
+	//testCharacter->UpdateActor(delta);
 }
 
 void NewGameState::Execute()
 {
 	testMap->DrawMap();
+	//testCharacter->DrawActor();
 }
