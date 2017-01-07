@@ -39,14 +39,11 @@ class Actor
 		Actor(RenderManager *graphics, InputManager *input);
 		~Actor();
 		void BuildActor(int hp, float speed);
+		void BuildActorSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string name);
 		void MoveActor(MoveDirection direction = NotMoving);
 		void UpdateActor(float deltaTime);
 		void UpdateActorVelocity(int value);
 		void DrawActor();
-
-		void MoveActorLeft(bool pressed);
-		void MoveActorRight(bool pressed);
-		void MoveActorUp(bool pressed);
-		void MoveActorDown(bool pressed);
+		void MoveActor(bool pressed, GameActions action);
 };
 #endif // !ACTOR_H

@@ -28,6 +28,11 @@ void Actor::BuildActor(int hp, float speed)
 	m_actorSpeed = speed;
 }
 
+void Actor::BuildActorSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string name)
+{
+	m_sprite.BuildSprite(w, h, cols, rows, scale, startx, starty, name);
+}
+
 void Actor::MoveActor(MoveDirection direction)
 {
 	switch (direction)
@@ -71,34 +76,19 @@ void Actor::DrawActor()
 	m_graphicSystem->RenderObject(m_sprite.GetSpriteTexture(), m_sprite.GetSpriteRectangle(), m_position);
 }
 
-void Actor::MoveActorLeft(bool pressed)
+void Actor::MoveActor(bool pressed, GameActions action)
 {
-	if (pressed)
+	if (pressed && action == DirectionMoveLeft)
 		m_velocity.x = -1;
-	else
-		m_velocity.x = 0;
-}
-
-void Actor::MoveActorRight(bool pressed)
-{
-	if (pressed)
+	else if (pressed && action == DirectionMoveRight)
 		m_velocity.x = 1;
-	else
-		m_velocity.x = 0;
-}
-
-void Actor::MoveActorUp(bool pressed)
-{
-	if (pressed)
+	else if (pressed && action == DirectionMoveUp)
 		m_velocity.y = -1;
-	else
-		m_velocity.x = 0;
-}
-
-void Actor::MoveActorDown(bool pressed)
-{
-	if (pressed)
+	else if (pressed && action == DirectionMoveDown)
 		m_velocity.y = 1;
 	else
+	{
 		m_velocity.x = 0;
+		m_velocity.y = 0;
+	}
 }

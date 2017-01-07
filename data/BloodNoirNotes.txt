@@ -1256,3 +1256,8 @@ January 4th, 2017
 Day 134 of Development
 Today I am working more on the actor and sprite class going to continue my work to get things functional to get a character on the screen and moving around.  I am also doing more cleanup work on the various systems, I made a change to the input system the function pointer bindings now have a second parameter passed into the function pointer that tells what action is currently being handled so now I no longer have to have a seperate function pointer for each action in a system a single method can handle them all and it just checks what action is currently happening to see what needs to be done.
 
+Not much else done today did some research and thought about how I want to handle some stuff in the engine but nothing fully implemented but hopefully I can get more done tomorrow.
+
+January 5th, 2017
+
+Day 135 of Development

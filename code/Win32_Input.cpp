@@ -24,11 +24,15 @@ void Win32Input::BuildDefaultBindings()
 	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionRight, Keyboard::Keys::Right));
 	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionAccept, Keyboard::Keys::Enter));
 	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionCancel, Keyboard::Keys::LeftShift));
-	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionAttack, Keyboard::Keys::F));
-	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(ActionDefense, Keyboard::Keys::G));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(CharacterAttack, Keyboard::Keys::F));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(CharacterDefense, Keyboard::Keys::G));
 	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemTest, Keyboard::Keys::RightShift));
 	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemExitEarly, Keyboard::Keys::Escape));
 	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(SystemConsole, Keyboard::Keys::OemTilde));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(DirectionMoveUp, Keyboard::Keys::W));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(DirectionMoveDown, Keyboard::Keys::S));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(DirectionMoveLeft, Keyboard::Keys::A));
+	m_keyBindings.insert(pair<GameActions, Keyboard::Keys>(DirectionMoveRight, Keyboard::Keys::D));
 	
 	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionUp, XBOXOneUp));
 	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionDown, XBOXOneDown));
@@ -36,8 +40,8 @@ void Win32Input::BuildDefaultBindings()
 	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionRight, XBOXOneRight));
 	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionAccept, XBOXOneStart));
 	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionCancel, XBOXOneBack));
-	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionAttack, XBOXOneA));
-	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(ActionDefense, XBOXOneB));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(CharacterAttack, XBOXOneA));
+	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(CharacterDefense, XBOXOneB));
 	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(SystemTest, XBOXOneLeftBumper));
 	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(SystemExitEarly, XBOXOneRightBumper));
 }

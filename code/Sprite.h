@@ -18,7 +18,7 @@ struct SpriteData
 	int rows;
 	float scale;
 	SimpleMath::Rectangle sourceRect;
-	string texture;
+	string textureName;
 };
 
 struct AnimatedAction
@@ -44,14 +44,14 @@ class Sprite
 		~Sprite();
 		void UpdateSprite(float timeDelta);
 		void AddAction(int start, int end, float frameD, string name);
-		void BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string filename, string name);
+		void BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string name);
 		void SetCurrentAction(string name);
 		void SetCurrentFrame(int frame);
 		void SetSourceRectangle();
 
 		string GetSpriteTexture()
 		{
-			return m_spriteInfo.texture;
+			return m_spriteInfo.textureName;
 		}
 
 		int GetSpriteWidth()

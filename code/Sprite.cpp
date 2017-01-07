@@ -45,17 +45,12 @@ void Sprite::AddAction(int start, int end, float frameD, string name)
 	m_actionAnimations.insert(pair<string, AnimatedAction>(name, tempAction));
 }
 
-void Sprite::BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string filename, string name)
+void Sprite::BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string name)
 {
-	D3D11_TEXTURE2D_DESC tempDesc;
-
-	m_graphicSystem->AddTexture(filename, name);
-	tempDesc = m_graphicSystem->getTextureDesc(name);
-
 	m_spriteInfo.width = w;
 	m_spriteInfo.height = h;
 	m_spriteInfo.scale = scale;
-	m_spriteInfo.texture = name;
+	m_spriteInfo.textureName = name;
 	m_spriteInfo.columns = cols;
 	m_spriteInfo.rows = rows;
 }

@@ -11,18 +11,22 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 
 enum XBOXOneGamePad
 {
-	XBOXOneUp,
-	XBOXOneDown,
-	XBOXOneLeft,
-	XBOXOneRight,
-	XBOXOneBack,
-	XBOXOneStart,
-	XBOXOneLeftBumper,
-	XBOXOneRightBumper,
-	XBOXOneA,
-	XBOXOneX,
-	XBOXOneY,
-	XBOXOneB
+	XBOXOneUp = 1,
+	XBOXOneDown = 2,
+	XBOXOneLeft = 3,
+	XBOXOneRight = 4,
+	XBOXDirectionMoveUp = 5,
+	XBOXDirectionMoveDown = 6,
+	XBOXDirectionMoveLeft = 7,
+	XBOXDirectionMoveRight = 8,
+	XBOXOneBack = 9,
+	XBOXOneStart = 10,
+	XBOXOneLeftBumper = 11,
+	XBOXOneRightBumper = 12,
+	XBOXOneA = 13,
+	XBOXOneX = 14,
+	XBOXOneY = 15,
+	XBOXOneB = 16
 };
 
 enum MouseButtons
@@ -40,11 +44,15 @@ enum GameActions
 	ActionRight = 4,
 	ActionAccept = 5,
 	ActionCancel = 6,
-	ActionAttack = 7,
-	ActionDefense = 8,
-	SystemTest = 9,
-	SystemExitEarly = 10,
-	SystemConsole = 11
+	CharacterAttack = 7,
+	CharacterDefense = 8,
+	DirectionMoveLeft = 9,
+	DirectionMoveRight = 10,
+	DirectionMoveUp = 11,
+	DirectionMoveDown = 12,
+	SystemTest = 13,
+	SystemExitEarly = 14,
+	SystemConsole = 15
 };
 
 class Win32Input
@@ -60,7 +68,6 @@ class Win32Input
 		map<GameActions, XBOXOneGamePad> m_gpBindings;
 
 		map<GameActions, Keyboard::Keys> m_keyBindings;
-		//map<GameActions, function<void(bool)>> m_gameActionBindings;
 		map<GameActions, function<void(bool, GameActions)>> m_gameActionBindings;
 
 		void BuildDefaultBindings();
