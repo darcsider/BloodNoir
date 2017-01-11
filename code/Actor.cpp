@@ -11,10 +11,14 @@ Actor::Actor()
 
 }
 
-Actor::Actor(RenderManager * graphics, InputManager *input)
+Actor::Actor(RenderManager *graphicsManager, InputManager *inputManager, GraphicsComponent *graphics, PhysicsComponent *physics, InputComponent *input, Sprite *sprite)
 {
-	m_graphicSystem = graphics;
-	m_inputSystem = input;
+	m_graphicSystem = graphicsManager;
+	m_inputSystem = inputManager;
+	m_graphics = graphics;
+	m_physics = physics;
+	m_input = input;
+	m_sprite = sprite;
 }
 
 Actor::~Actor()
@@ -28,39 +32,34 @@ void Actor::BuildActor(int hp, float speed)
 	m_actorSpeed = speed;
 }
 
-void Actor::BuildActorSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string name)
-{
-	m_sprite.BuildSprite(w, h, cols, rows, scale, startx, starty, name);
-}
-
 void Actor::MoveActor(MoveDirection direction)
 {
 	switch (direction)
 	{
 		case NotMoving:
-			m_sprite.SetCurrentAction("notMoving");
+			m_sprite->SetCurrentAction("notMoving");
 			break;
 		case MoveLeft:
-			m_sprite.SetCurrentAction("moveLeft");
+			m_sprite->SetCurrentAction("moveLeft");
 			break;
 		case MoveRight:
-			m_sprite.SetCurrentAction("moveRight");
+			m_sprite->SetCurrentAction("moveRight");
 			break;
 		case MoveUp:
-			m_sprite.SetCurrentAction("moveUp");
+			m_sprite->SetCurrentAction("moveUp");
 			break;
 		case MoveDown:
-			m_sprite.SetCurrentAction("moveDown");
+			m_sprite->SetCurrentAction("moveDown");
 			break;
 		default:
-			m_sprite.SetCurrentAction("notMoving");
+			m_sprite->SetCurrentAction("notMoving");
 			break;
 	}
 }
 
 void Actor::UpdateActor(float deltaTime)
 {
-	m_sprite.UpdateSprite(deltaTime);
+	m_sprite->UpdateSprite(deltaTime);
 	m_position.x += m_velocity.x * deltaTime;
 	m_position.y += m_velocity.y * deltaTime;
 }
@@ -73,7 +72,7 @@ void Actor::UpdateActorVelocity(int value)
 
 void Actor::DrawActor()
 {
-	m_graphicSystem->RenderObject(m_sprite.GetSpriteTexture(), m_sprite.GetSpriteRectangle(), m_position);
+	m_graphics->update(this, m_graphicSystem);
 }
 
 void Actor::MoveActor(bool pressed, GameActions action)

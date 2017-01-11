@@ -124,3 +124,17 @@ float RenderManager::GetLineSpacing()
 #endif
 	return 0.0;
 }
+
+bool RenderManager::IsNVIDIAChipset()
+{
+#if _WIN32
+	return m_win32_Graphics->IsNVIDIAChipset();
+#endif
+}
+
+bool RenderManager::IsAMDChipset()
+{
+#if _WIN32
+	return m_win32_Graphics->IsAMDChipset();
+#endif
+}

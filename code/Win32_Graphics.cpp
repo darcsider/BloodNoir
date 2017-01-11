@@ -450,6 +450,46 @@ D3D11_TEXTURE2D_DESC Win32_Graphics::getTextureDesc(string textureName)
 	return textDesc;
 }
 
+bool Win32_Graphics::IsNVIDIAChipset()
+{
+	DXGI_ADAPTER_DESC adapterDesc;
+
+	// First, retrieve the underlying DXGI Device from the D3D Device
+	ComPtr<IDXGIDevice1> dxgiDevice;
+	DX::ThrowIfFailed(m_d3dDevice.As(&dxgiDevice));
+
+	// Identify the physical adapter (GPU or card) this device is running on.
+	ComPtr<IDXGIAdapter> dxgiAdapter;
+	DX::ThrowIfFailed(dxgiDevice->GetAdapter(dxgiAdapter.GetAddressOf()));
+
+	dxgiAdapter->GetDesc(&adapterDesc);
+
+	if (adapterDesc.VendorId == 0x10DE)
+		return true;
+
+	return false;
+}
+
+bool Win32_Graphics::IsAMDChipset()
+{
+	DXGI_ADAPTER_DESC adapterDesc;
+
+	// First, retrieve the underlying DXGI Device from the D3D Device
+	ComPtr<IDXGIDevice1> dxgiDevice;
+	DX::ThrowIfFailed(m_d3dDevice.As(&dxgiDevice));
+
+	// Identify the physical adapter (GPU or card) this device is running on.
+	ComPtr<IDXGIAdapter> dxgiAdapter;
+	DX::ThrowIfFailed(dxgiDevice->GetAdapter(dxgiAdapter.GetAddressOf()));
+
+	dxgiAdapter->GetDesc(&adapterDesc);
+
+	if (adapterDesc.VendorId == 0x1002 || adapterDesc.VendorId == 0x1022)
+		return true;
+
+	return false;
+}
+
 void Win32_Graphics::OnDeviceLost()
 {
 	m_depthStencil.Reset();

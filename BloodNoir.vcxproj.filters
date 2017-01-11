@@ -35,9 +35,6 @@
     <ClInclude Include="code\Includes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="code\LevelEditor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -86,12 +83,15 @@
     <ClInclude Include="code\Win32_Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="code\NVGSAInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="code\Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\LevelEditor.cpp">
@@ -143,6 +143,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\Win32_Platform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\NVGSAInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

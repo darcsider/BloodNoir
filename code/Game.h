@@ -10,7 +10,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Includes.h"
 #include "GameTiming.h"
 #include "RenderManager.h"
-#include "Map.h"
+#include "World.h"
 #include "Console.h"
 #include "InputManager.h"
 #include "AudioSystem.h"

@@ -342,9 +342,9 @@ void NewGameState::BuildNewGameState()
 	}
 	inFile.close();
 
-	testMap = new Map();
-	testMap->InitializeMap(m_graphics, m_input, mapFileName);
-	testMap->BuildMap();
+	testWorld = new World();
+	testWorld->InitializeMap(m_graphics, m_input, mapFileName);
+	testWorld->BuildWorld();
 }
 
 void NewGameState::InputCallBack(bool pressed, GameActions action)
@@ -362,10 +362,10 @@ void NewGameState::SetupInput()
 	function<void(bool, GameActions)> funcPoint = bind(&NewGameState::InputCallBack, this, placeholders::_1, placeholders::_2);
 	m_input->AddKeyboardActionBinding(SystemTest, funcPoint);
 
-	function<void(bool, GameActions)> closeGame = bind(&Map::CloseGame, testMap, placeholders::_1, placeholders::_2);
+	function<void(bool, GameActions)> closeGame = bind(&World::CloseGame, testWorld, placeholders::_1, placeholders::_2);
 	m_input->AddKeyboardActionBinding(SystemExitEarly, closeGame);
 
-	function<void(bool, GameActions)> moveMap = bind(&Map::MoveMap, testMap, placeholders::_1, placeholders::_2);
+	function<void(bool, GameActions)> moveMap = bind(&World::MoveWorld, testWorld, placeholders::_1, placeholders::_2);
 	m_input->AddKeyboardActionBinding(ActionLeft, moveMap);
 	m_input->AddKeyboardActionBinding(ActionRight, moveMap);
 
@@ -389,12 +389,12 @@ void NewGameState::SetupCharacter()
 
 void NewGameState::Update(float delta)
 {
-	testMap->UpdateMap(delta);
+	testWorld->UpdateWorld(delta);
 	//testCharacter->UpdateActor(delta);
 }
 
 void NewGameState::Execute()
 {
-	testMap->DrawMap();
+	testWorld->DrawWorld();
 	//testCharacter->DrawActor();
 }

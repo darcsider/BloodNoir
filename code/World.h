@@ -1,12 +1,12 @@
 #pragma once
 /*=====================================================================================
-$File: Map.h
+$File: World.h
 $Date: February 8, 2016
 $Creator: Jamie Cooper
 $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserved.
 =====================================================================================*/
-#ifndef MAP_H
-#define MAP_H
+#ifndef	WORLD_H
+#define WORLD_H
 #include "Includes.h"
 #include "RenderManager.h"
 #include "InputManager.h"
@@ -20,12 +20,13 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 // TODO finish changes to this system
 enum TriggerType
 {
-	MapToMap,
-	MapToBuilding,
-	BuildingToMap,
-	BuildingFloorToFloor,
-	TutorialTrigger,
-	CutScene
+	TriggerNone = 0,
+	WorldToWorld = 1,
+	WorldToBuilding = 2,
+	BuildingToWorld = 3,
+	BuildingFloorToFloor = 4,
+	TutorialTrigger = 5,
+	CutScene = 6
 };
 
 // The Objects are made up of an object name, the tile index that defines
@@ -91,7 +92,7 @@ class Building
 		vector<BuildingFloor>	m_floors;
 		int						m_numberOfFloors;
 		int						m_floorNumber;
-		
+
 		Building()
 		{ }
 		~Building()
@@ -102,18 +103,18 @@ class Building
 };
 
 /* the class that defines the sections of a map this class used to
-   be called levels because I said that a map was made up of 4 levels
-   but that kept getting people confused
-   when I called them levels so I have renamed it to MapSection
-   The map is setup like a grid like a real city map, the player is
-   walking on the street of a specific block of the city they can
-   go left and right without loading anything, for the full width
-   of the specific "block" if they go up at a street point it will
-   send them to the next block north of that current one. They can
-   also go down and go to the next block south of the current one.
-   however it will be restricted to however many blocks belong to 
-   that "map" or section of the city.*/
-class MapSection
+be called levels because I said that a map was made up of 4 levels
+but that kept getting people confused
+when I called them levels so I have renamed it to MapSection
+The map is setup like a grid like a real city map, the player is
+walking on the street of a specific block of the city they can
+go left and right without loading anything, for the full width
+of the specific "block" if they go up at a street point it will
+send them to the next block north of that current one. They can
+also go down and go to the next block south of the current one.
+however it will be restricted to however many blocks belong to
+that "map" or section of the city.*/
+class WorldSection
 {
 	protected:
 		RenderManager			*m_graphicSystem;
@@ -124,42 +125,45 @@ class MapSection
 		vector<Object>			m_objects;
 		vector<TriggerPoint>	m_triggerPoints;
 		vector<Building>		m_buildings;
-		
+
 	public:
-		MapSection()
+		WorldSection()
 		{ }
-		~MapSection()
+		~WorldSection()
 		{ }
 
 		void UpdateVelocity(int value);
-		void BuildMapSection(RenderManager *graphics, string fileName);
-		void DrawMapSection();
-		void UpdateMapSection(float delta);
+		void BuildWorldSection(RenderManager *graphics, string fileName);
+		void DrawWorldSection();
+		void UpdateWorldSection(float delta);
+		TriggerType CheckCollision(Vector2 position);
 };
 
 // This is the map class it defines a section of the city that the player
 // can search through and discover various enemies, bosses, and other stuff
 // it encompasses a certain number of map sections, which encompass a set
 // of buildings, and alleys for certain buildings.
-class Map
+class World
 {
 	protected:
 		RenderManager			*m_graphicSystem;
 		InputManager			*m_input;
-		string					m_mapName;
-		vector<MapSection>		m_mapSections;
-		MapSection				m_currentSection;
-		string					m_mapFileName;
-	
+		string					m_worldName;
+		vector<WorldSection>	m_worldSections;
+		WorldSection			m_currentSection;
+		string					m_worldFileName;
+
 	public:
-		Map();
-		~Map();
-		void InitializeMap(RenderManager *graphics, InputManager *input, string mapTextFile);
-		void BuildMap();
-		void UpdateMap(float timeDelta);
-		void DrawMap();
-		void SetCurrentMapSection(int mapSection);
-		void MoveMap(bool move, GameActions action);
+		World();
+		~World();
+		void InitializeMap(RenderManager *graphics, InputManager *input, string worldTextFile);
+		void BuildWorld();
+		void UpdateWorld(float timeDelta);
+		void DrawWorld();
+		void SetCurrentWorldSection(int worldSection);
+		void MoveWorld(bool move, GameActions action);
+		bool CheckCollission(Vector2 position, Vector2 velocity);
+		TriggerType CheckTriggerCollision(Vector2 position);
 
 		void CloseGame(bool pressed, GameActions action)
 		{
@@ -167,4 +171,4 @@ class Map
 				PostQuitMessage(0);
 		}
 };
-#endif
+#endif //!WORLD_H

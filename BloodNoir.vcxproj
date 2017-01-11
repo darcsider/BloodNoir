@@ -189,7 +189,7 @@
     <ClInclude Include="code\Includes.h" />
     <ClInclude Include="code\InputManager.h" />
     <ClInclude Include="code\LevelEditor.h" />
-    <ClInclude Include="code\Map.h" />
+    <ClInclude Include="code\NVGSAInterface.h" />
     <ClInclude Include="code\Physics.h" />
     <ClInclude Include="code\RenderManager.h" />
     <ClInclude Include="code\Sprite.h" />
@@ -197,6 +197,7 @@
     <ClInclude Include="code\Win32_Graphics.h" />
     <ClInclude Include="code\Win32_Platform.h" />
     <ClInclude Include="code\Win32_Input.h" />
+    <ClInclude Include="code\World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Actor.cpp" />
@@ -210,7 +211,7 @@
     <ClCompile Include="code\GameTiming.cpp" />
     <ClCompile Include="code\InputManager.cpp" />
     <ClCompile Include="code\LevelEditor.cpp" />
-    <ClCompile Include="code\Map.cpp" />
+    <ClCompile Include="code\NVGSAInterface.cpp" />
     <ClCompile Include="code\Physics.cpp" />
     <ClCompile Include="code\RenderManager.cpp" />
     <ClCompile Include="code\Sprite.cpp" />
@@ -218,6 +219,7 @@
     <ClCompile Include="code\Win32_Graphics.cpp" />
     <ClCompile Include="code\Win32_Platform.cpp" />
     <ClCompile Include="code\Win32_Input.cpp" />
+    <ClCompile Include="code\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

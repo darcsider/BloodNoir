@@ -112,6 +112,9 @@ public:
 		return static_cast<float>(m_gameWidth) / m_gameHeight;
 	}
 
+	bool IsNVIDIAChipset();
+	bool IsAMDChipset();
+
 	wstring ConvertSTRtoWSTR(string text)
 	{
 		typedef std::codecvt_utf8<wchar_t> convert_type;

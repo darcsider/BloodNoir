@@ -10,7 +10,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Includes.h"
 #include "RenderManager.h"
 #include "InputManager.h"
-#include "Map.h"
+#include "World.h"
 #include "Actor.h"
 #include "Console.h"
 
@@ -95,7 +95,7 @@ class MainMenuState : public GameState
 class NewGameState : public GameState
 {
 	protected:
-		Map *testMap;
+		World *testWorld;
 		//Actor *testCharacter;
 		string m_fileName;
 

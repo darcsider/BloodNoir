@@ -1258,6 +1258,25 @@ Today I am working more on the actor and sprite class going to continue my work 
 
 Not much else done today did some research and thought about how I want to handle some stuff in the engine but nothing fully implemented but hopefully I can get more done tomorrow.
 
-January 5th, 2017
+January 7th, 2017
 
 Day 135 of Development
+The past couple of days I have been taking inventory again and moving my written notes over to a new notebook as well as deciding what I want to focus on. I have decided to look back at the stuff for the NVIDIA GeForce Experience and how to make the game showup in there. This is not going to be easy as there is not a lot of good information about how to do this but I will figure it out hopefully tomorrow.
+
+January 8th, 2017
+
+Day 136 of Development
+Today I have decided to put the NVIDIA GeForce Experience system on the back burner until I get further along it feels like something that I will implement when the project reaches closer to the end result as then I will know exactly what features I want to support in the graphics engine if any are needed.
+
+Video playback seems to still be an issue I can't find an answer to as most of the searches I make seem to come back with nothing good.  This one of those items on my todo list that I need to continue looking into periodically.
+
+Tomorrow I think I want to spend some time working on the component system and get those implemented in the Actor class.
+
+January 9th, 2017
+
+Day 137 of Development
+Today I have begun working on getting the component system up and running and getting them implemented into the actor class to get rid of any code that is specific to a specific character type.  I also along the way had to add collission checking code to the world class in order to be able to check for trigger points.  Interestingly enough this is an issue I wasn't sure how to handle yet and now I think I have it figured out.
+
+January 10th, 2017
+
+Day 138 of Development

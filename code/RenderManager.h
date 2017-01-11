@@ -48,6 +48,9 @@ class RenderManager
 		D3D11_TEXTURE2D_DESC getTextureDesc(string name);
 		float GetLineSpacing();
 
+		bool IsNVIDIAChipset();
+		bool IsAMDChipset();
+
 		int GetGameWidth()
 		{
 			return gameWidth;

@@ -1,50 +1,50 @@
 /*=====================================================================================
-$File: Map.cpp
+$File: World.cpp
 $Date: February 8, 2016
 $Creator: Jamie Cooper
 $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserved.
 =====================================================================================*/
-#include "Map.h"
+#include "World.h"
 
-Map::Map()
+World::World()
 {
 }
 
-Map::~Map()
+World::~World()
 {
 }
 
-void Map::InitializeMap(RenderManager *graphics, InputManager *input, string mapTextFile)
+void World::InitializeMap(RenderManager *graphics, InputManager *input, string worldTextFile)
 {
 	m_graphicSystem = graphics;
 	m_input = input;
-	m_mapFileName = mapTextFile;
+	m_worldFileName = worldTextFile;
 }
 
-void Map::BuildMap()
+void World::BuildWorld()
 {
 	int numberOfSections = 0;
 	string tempString;
 
-	ifstream inFile(m_mapFileName);
+	ifstream inFile(m_worldFileName);
 	if (inFile)
 	{
-		getline(inFile, m_mapName);
+		getline(inFile, m_worldName);
 		getline(inFile, tempString);
 		numberOfSections = atoi(tempString.c_str());
 		for (int i = 0; i < numberOfSections; i++)
 		{
 			getline(inFile, tempString);
-			MapSection newSection;
-			newSection.BuildMapSection(m_graphicSystem, tempString);
-			m_mapSections.push_back(newSection);
+			WorldSection newSection;
+			newSection.BuildWorldSection(m_graphicSystem, tempString);
+			m_worldSections.push_back(newSection);
 		}
 	}
 	inFile.close();
-	SetCurrentMapSection(0);
+	SetCurrentWorldSection(0);
 }
 
-void Map::MoveMap(bool move, GameActions action)
+void World::MoveWorld(bool move, GameActions action)
 {
 	if (move && action == ActionLeft)
 		m_currentSection.UpdateVelocity(-1);
@@ -54,19 +54,29 @@ void Map::MoveMap(bool move, GameActions action)
 		m_currentSection.UpdateVelocity(0);
 }
 
-void Map::UpdateMap(float timeDelta)
+bool World::CheckCollission(Vector2 position, Vector2 velocity)
 {
-	m_currentSection.UpdateMapSection(timeDelta);
+	return true;
 }
 
-void Map::DrawMap()
+TriggerType World::CheckTriggerCollision(Vector2 position)
 {
-	m_currentSection.DrawMapSection();
+	return TriggerType();
 }
 
-void Map::SetCurrentMapSection(int mapSection)
+void World::UpdateWorld(float timeDelta)
 {
-	m_currentSection = m_mapSections[mapSection];
+	m_currentSection.UpdateWorldSection(timeDelta);
+}
+
+void World::DrawWorld()
+{
+	m_currentSection.DrawWorldSection();
+}
+
+void World::SetCurrentWorldSection(int mapSection)
+{
+	m_currentSection = m_worldSections[mapSection];
 }
 
 void Building::BuildBuilding(string fileName)
@@ -79,7 +89,7 @@ void Building::BuildBuilding(string fileName)
 	TriggerPoint tempTrigger;
 	BuildingFloor tempFloor;
 	string tempString;
-	
+
 	ifstream inFile(fileName);
 	if (inFile)
 	{
@@ -128,15 +138,6 @@ void Building::BuildBuilding(string fileName)
 				tempObject.m_position.x = (float)atof(s2.c_str());
 				getline(ss, s2, ',');
 				tempObject.m_position.y = (float)atof(s2.c_str());
-
-				//getline(inFile, tempString);
-				/*if (tempString == "Money")
-					tempObject.m_objectType = Money;
-				else if (tempString == "LorePiece")
-					tempObject.m_objectType = LorePiece;
-				else if (tempString == "Upgrade")
-					tempObject.m_objectType = Upgrade;*/
-
 				tempFloor.m_floorObjects.push_back(tempObject);
 			}
 
@@ -182,9 +183,10 @@ void Building::BuildBuilding(string fileName)
 
 void Building::DrawBuilding()
 {
+
 }
 
-void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
+void WorldSection::BuildWorldSection(RenderManager *graphics, string fileName)
 {
 	string tempString;
 	SectionLayer tempLayer;
@@ -223,7 +225,7 @@ void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 
 			m_layers.push_back(tempLayer);
 		}
-		
+
 		getline(inFile, tempString);
 		m_numberOfObjects = atoi(tempString.c_str());
 		for (int object = 0; object < m_numberOfObjects; object++)
@@ -242,16 +244,6 @@ void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 			tempObject.m_position.x = (float)atof(s2.c_str());
 			getline(ss, s2, ',');
 			tempObject.m_position.y = (float)atof(s2.c_str());
-
-
-			/*getline(inFile, tempString);
-			if (tempString == "Money")
-				tempObject.m_objectType = Money;
-			else if (tempString == "LorePiece")
-				tempObject.m_objectType = LorePiece;
-			else if (tempString == "Upgrade")
-				tempObject.m_objectType = Upgrade;*/
-
 			m_objects.push_back(tempObject);
 		}
 
@@ -261,10 +253,10 @@ void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 		{
 			getline(inFile, tempTrigger.m_name);
 			getline(inFile, tempString);
-			if (tempString == "MapToMap")
-				tempTrigger.m_triggerType = MapToMap;
-			else if (tempString == "MapToBuilding")
-				tempTrigger.m_triggerType = MapToBuilding;
+			if (tempString == "WorldToWorld")
+				tempTrigger.m_triggerType = WorldToWorld;
+			else if (tempString == "WorldToBuilding")
+				tempTrigger.m_triggerType = WorldToBuilding;
 			else if (tempString == "Tutorial")
 				tempTrigger.m_triggerType = TutorialTrigger;
 			else if (tempString == "CutScene")
@@ -294,7 +286,7 @@ void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 
 	for (int triggers = 0; triggers < m_numberOfTriggers; triggers++)
 	{
-		if (m_triggerPoints[triggers].m_triggerType == MapToBuilding)
+		if (m_triggerPoints[triggers].m_triggerType == WorldToBuilding)
 		{
 			tempBuilding.BuildBuilding(m_triggerPoints[triggers].m_name);
 			m_buildings.push_back(tempBuilding);
@@ -302,7 +294,7 @@ void MapSection::BuildMapSection(RenderManager *graphics, string fileName)
 	}
 }
 
-void MapSection::UpdateVelocity(int value)
+void WorldSection::UpdateVelocity(int value)
 {
 	vector<SectionLayer>::iterator layerIterator;
 
@@ -313,7 +305,7 @@ void MapSection::UpdateVelocity(int value)
 	}
 }
 
-void MapSection::UpdateMapSection(float delta)
+void WorldSection::UpdateWorldSection(float delta)
 {
 	vector<SectionLayer>::iterator layerIterator;
 
@@ -347,7 +339,25 @@ void MapSection::UpdateMapSection(float delta)
 	}
 }
 
-void MapSection::DrawMapSection()
+TriggerType WorldSection::CheckCollision(Vector2 position)
+{
+	SimpleMath::Rectangle triggerVolume;
+	vector<TriggerPoint>::iterator triggerIterator;
+
+	for (triggerIterator = m_triggerPoints.begin(); triggerIterator != m_triggerPoints.end(); triggerIterator++)
+	{
+		triggerVolume.x = triggerIterator->m_mapPosition.x - 2;
+		triggerVolume.y = triggerIterator->m_mapPosition.y - 2;
+		triggerVolume.width = triggerIterator->m_mapPosition.x + 2;
+		triggerVolume.height = triggerIterator->m_mapPosition.y + 2;
+
+		if (triggerVolume.Contains(position))
+			return triggerIterator->m_triggerType;
+	}
+	return TriggerNone;
+}
+
+void WorldSection::DrawWorldSection()
 {
 	vector<SectionLayer>::iterator layerIterator;
 	vector<Object>::iterator objectIterator;
