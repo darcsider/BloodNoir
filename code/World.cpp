@@ -14,7 +14,7 @@ World::~World()
 {
 }
 
-void World::InitializeMap(RenderManager *graphics, InputManager *input, string worldTextFile)
+void World::InitializeWorld(RenderManager *graphics, InputManager *input, string worldTextFile)
 {
 	m_graphicSystem = graphics;
 	m_input = input;
@@ -54,9 +54,21 @@ void World::MoveWorld(bool move, GameActions action)
 		m_currentSection.UpdateVelocity(0);
 }
 
-bool World::CheckCollission(Vector2 position, Vector2 velocity)
+Vector2 World::CheckCollission(Vector2 position, Vector2 velocity, float movementSpeed)
 {
-	return true;
+	if (((position.x + movementSpeed) * velocity.x) < 0)
+		position.x = 0;
+	
+	if (((position.x + movementSpeed) * velocity.x) > m_gameWidth)
+		position.x = m_gameWidth;
+
+	if (((position.y + movementSpeed) * velocity.y) < 0)
+		position.y = 0;
+
+	if (((position.y + movementSpeed) * velocity.y) > m_gameHeight)
+		position.y = m_gameHeight;
+
+	return position;
 }
 
 TriggerType World::CheckTriggerCollision(Vector2 position)
@@ -213,8 +225,8 @@ void WorldSection::BuildWorldSection(RenderManager *graphics, string fileName)
 				tempLayer.m_autoScroll = false;
 			tempLayer.m_sourceRectangle.x = 0;
 			tempLayer.m_sourceRectangle.y = 0;
-			tempLayer.m_sourceRectangle.width = 1920;
-			tempLayer.m_sourceRectangle.height = 1080;
+			tempLayer.m_sourceRectangle.width = m_gameWidth;
+			tempLayer.m_sourceRectangle.height = m_gameHeight;
 			textDesc = m_graphicSystem->getTextureDesc(tempLayer.m_textureName);
 			tempLayer.m_width = textDesc.Width;
 			tempLayer.m_height = textDesc.Height;

@@ -77,9 +77,6 @@
     <ClInclude Include="code\Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="code\Components.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="code\Win32_Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -137,9 +134,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\Actor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="code\Components.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\Win32_Platform.cpp">

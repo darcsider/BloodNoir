@@ -343,7 +343,8 @@ void NewGameState::BuildNewGameState()
 	inFile.close();
 
 	testWorld = new World();
-	testWorld->InitializeMap(m_graphics, m_input, mapFileName);
+	testWorld->InitializeWorld(m_graphics, m_input, mapFileName);
+	testWorld->SetGameWorldDimensions(m_gameWidth, m_gameHeight);
 	testWorld->BuildWorld();
 }
 

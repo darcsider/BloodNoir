@@ -35,6 +35,8 @@ class GameState
 		InputManager *m_input;
 		function<void(StateTypes)> m_stateChange;
 		StateTypes m_stateType;
+		int m_gameWidth;
+		int m_gameHeight;
 
 	public:
 		GameState() {}
@@ -44,6 +46,7 @@ class GameState
 		virtual void SetupInput() = 0;
 		virtual void Update(float delta) = 0;
 		virtual void Execute() = 0;
+		virtual void SetGameDimensions(int w, int h) = 0;
 };
 
 class BannerParadeState : public GameState
@@ -64,6 +67,12 @@ class BannerParadeState : public GameState
 		virtual void SetupInput();
 		virtual void Update(float delta);
 		virtual void Execute();
+
+		virtual void SetGameDimensions(int w, int h)
+		{
+			m_gameWidth = w;
+			m_gameHeight = h;
+		}
 };
 
 class MainMenuState : public GameState
@@ -88,6 +97,12 @@ class MainMenuState : public GameState
 		virtual void SetupInput();
 		virtual void Update(float delta);
 		virtual void Execute();
+
+		virtual void SetGameDimensions(int w, int h)
+		{
+			m_gameWidth = w;
+			m_gameHeight = h;
+		}
 };
 
 // New Game State in its current shape is not representative of what it will be in final version
@@ -109,6 +124,12 @@ class NewGameState : public GameState
 		virtual void SetupInput();
 		virtual void Update(float delta);
 		virtual void Execute();
+
+		virtual void SetGameDimensions(int w, int h)
+		{
+			m_gameWidth = w;
+			m_gameHeight = h;
+		}
 
 		//method for testing not staying
 		void SetupCharacter();
@@ -132,6 +153,12 @@ class OnExitState : public GameState
 		void Execute()
 		{
 			PostQuitMessage(0);
+		}
+
+		virtual void SetGameDimensions(int w, int h)
+		{
+			m_gameWidth = w;
+			m_gameHeight = h;
 		}
 };
 #endif

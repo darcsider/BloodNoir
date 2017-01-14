@@ -40,10 +40,12 @@ class GameStateManager
 		bool m_stateChange;
 		StateTypes m_currentStateType;
 		StateTypes m_previousStateType;
+		int m_gameWidth;
+		int m_gameHeight;
 
 	public:
 		GameStateManager() { }
-		GameStateManager(RenderManager *graphics, InputManager *input);
+		GameStateManager(RenderManager *graphics, InputManager *input, int width, int height);
 		~GameStateManager();
 		void BuildStateManager();
 		void ChangeState(StateTypes type);

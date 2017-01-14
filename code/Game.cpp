@@ -45,7 +45,7 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	m_audioSystem->SetBackgroundMusic("..\\Music\\Electro.wav");
 	m_audioSystem->AddEffect("heli", "..\\Music\\heli.wav");
 
-	m_stateManager = new GameStateManager(m_graphicSystem.get(), m_input.get());
+	m_stateManager = new GameStateManager(m_graphicSystem.get(), m_input.get(), m_gameWidth, m_gameHeight);
 	m_stateManager->BuildStateManager();
 
 	m_audioSystem->PlayBackgroundMusic();
@@ -100,7 +100,7 @@ void Game::CalculateFrameStats()
 	// average time it takes to render one frame.  These stats 
 	// are appended to the window caption bar.
 
-#if DEBUG || _DEBUG
+#if	WIN32 && _DEBUG
 	static int frameCnt = 0;
 	static float timeElapsed = 0.0f;
 	static string windowTitle = "Blood Noir 1.0";

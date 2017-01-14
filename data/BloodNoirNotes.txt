@@ -1277,6 +1277,16 @@ January 9th, 2017
 Day 137 of Development
 Today I have begun working on getting the component system up and running and getting them implemented into the actor class to get rid of any code that is specific to a specific character type.  I also along the way had to add collission checking code to the world class in order to be able to check for trigger points.  Interestingly enough this is an issue I wasn't sure how to handle yet and now I think I have it figured out.
 
-January 10th, 2017
+January 12th, 2017
 
 Day 138 of Development
+Today I worked more on the component system as well as doing more planning for the idea of using XML for storing data in the game instead of plain text files.  I'm still not 100% sure if I will use XML but I may give it a shot and see how well it works.  As far as components are concerned I have gotten them to compile and I know that the graphics component should work just fine, I started working on the Physics one but realized I haven't finished writing a collision checking method in the World class for checking if where something wants to move is an ok spot to move.  I started working on this piece of code and I will continue it tomorrow.
+
+January 13th, 2017
+
+Day 139 of Development
+Today I got some work done on the World class including getting the Physics method implemented but I realize I need to do more work on that as well as the Actor class because there is something wrong with how I'm handling the actor at this moment.  But I'm tired tonight and can no longer think clealy enough to come up with the answer.  So I will put this off until tomorrow where I need to do some planning for the map, specifically how buildings are going to be handled as well as triggers, and I also need to figure out some changes to the Actor because I'm trying to make it so that the Actor class is usable for all types of actors, player, npc's, enemies and bosses.
+
+January 14th, 2017
+
+Day 140 of Development

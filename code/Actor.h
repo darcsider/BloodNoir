@@ -10,8 +10,8 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Includes.h"
 #include "RenderManager.h"
 #include "InputManager.h"
-#include "Components.h"
 #include "Sprite.h"
+#include "World.h"
 
 enum MoveDirection
 {
@@ -21,6 +21,10 @@ enum MoveDirection
 	MoveUp,
 	MoveDown
 };
+
+class GraphicsComponent;
+class PhysicsComponent;
+class InputComponent;
 
 class Actor
 {
@@ -34,7 +38,7 @@ class Actor
 		float m_actorSpeed;
 		Vector2 m_velocity;
 		Vector2 m_position;
-		
+
 		GraphicsComponent *m_graphics;
 		PhysicsComponent *m_physics;
 		InputComponent *m_input;
@@ -44,35 +48,61 @@ class Actor
 		Actor(RenderManager *graphicsManager, InputManager *inputManager, GraphicsComponent *graphics, PhysicsComponent *physics, InputComponent *input, Sprite *sprite);
 		~Actor();
 		void BuildActor(int hp, float speed);
-		void MoveActor(MoveDirection direction = NotMoving);
+		void ChangeActorDirection(MoveDirection direction = NotMoving);
 		void UpdateActor(float deltaTime);
 		void UpdateActorVelocity(int value);
 		void DrawActor();
 		void MoveActor(bool pressed, GameActions action);
 
-		Sprite* GetActorSprite()
-		{
-			return m_sprite;
-		}
+		Sprite* GetActorSprite();
+		Vector2 GetActorPosition();
+		void SetActorPosition(Vector2 position);
+		Vector2 GetActorVelocity();
+		void SetActorVelocity(Vector2 velocity);
+};
 
-		Vector2 GetActorPosition()
-		{
-			return m_position;
-		}
+class GraphicsComponent
+{
+	public:
+		virtual void update(Actor &actor, RenderManager *graphics) = 0;
+};
 
-		void SetActorPosition(Vector2 position)
+class PlayerGraphicsComponent : public GraphicsComponent
+{
+	public:
+		virtual void update(Actor &actor, RenderManager *graphics)
 		{
-			m_position = position;
+			graphics->RenderObject(actor.GetActorSprite()->GetSpriteTexture(), actor.GetActorSprite()->GetSpriteRectangle(), actor.GetActorPosition());
 		}
+};
 
-		Vector2 GetActorVelocity()
+class PhysicsComponent
+{
+	public:
+		virtual void update(Actor &actor, World &world) = 0;
+};
+
+class PlayerPhysicsCompoonent : public PhysicsComponent
+{
+	public:
+		virtual void update(Actor &actor, World &world)
 		{
-			return m_velocity;
+
 		}
+};
 
-		void SetActorVelocity(Vector2 velocity)
+class InputComponent
+{
+	public:
+		virtual void update() = 0;
+};
+
+class PlayerInputComponent : public InputComponent
+{
+	public:
+		virtual void update()
 		{
-			m_velocity = velocity;
+
 		}
 };
 #endif // !ACTOR_H

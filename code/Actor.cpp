@@ -15,10 +15,10 @@ Actor::Actor(RenderManager *graphicsManager, InputManager *inputManager, Graphic
 {
 	m_graphicSystem = graphicsManager;
 	m_inputSystem = inputManager;
+	m_sprite = sprite;
 	m_graphics = graphics;
 	m_physics = physics;
 	m_input = input;
-	m_sprite = sprite;
 }
 
 Actor::~Actor()
@@ -32,7 +32,7 @@ void Actor::BuildActor(int hp, float speed)
 	m_actorSpeed = speed;
 }
 
-void Actor::MoveActor(MoveDirection direction)
+void Actor::ChangeActorDirection(MoveDirection direction)
 {
 	switch (direction)
 	{
@@ -72,7 +72,8 @@ void Actor::UpdateActorVelocity(int value)
 
 void Actor::DrawActor()
 {
-	m_graphics->update(this, m_graphicSystem);
+	//m_graphicSystem->RenderObject(m_sprite->GetSpriteTexture(), m_sprite->GetSpriteRectangle(), m_position);
+	m_graphics->update(*this, m_graphicSystem);
 }
 
 void Actor::MoveActor(bool pressed, GameActions action)
@@ -90,4 +91,30 @@ void Actor::MoveActor(bool pressed, GameActions action)
 		m_velocity.x = 0;
 		m_velocity.y = 0;
 	}
+}
+
+Sprite * Actor::GetActorSprite()
+{
+	if (m_sprite != NULL)
+		return m_sprite;
+}
+
+Vector2 Actor::GetActorPosition()
+{
+	return m_position;
+}
+
+void Actor::SetActorPosition(Vector2 position)
+{
+	m_position = position;
+}
+
+Vector2 Actor::GetActorVelocity()
+{
+	return m_velocity;
+}
+
+void Actor::SetActorVelocity(Vector2 velocity)
+{
+	m_velocity = velocity;
 }

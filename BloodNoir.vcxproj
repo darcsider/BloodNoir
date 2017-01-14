@@ -75,8 +75,8 @@
     <OutDir>$(SolutionDir)build\bin\</OutDir>
     <TargetName>$(ProjectName)D1_0</TargetName>
     <IntDir>$(SolutionDir)Intermediate\$(Configuration)\</IntDir>
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x86;C:\Program Files %28x86%29\Microsoft Visual Studio 14.0\VC\lib\win32</LibraryPath>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include;C:\PDSG Drive\BloodNoir\tinyXML\Include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x86;C:\Program Files %28x86%29\Microsoft Visual Studio 14.0\VC\lib\win32;C:\PDSG Drive\BloodNoir\tinyXML\Debug-Lib</LibraryPath>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <SourcePath>$(SolutionDir)code;$(SourcePath)</SourcePath>
@@ -92,8 +92,8 @@
     <OutDir>$(SolutionDir)build\bin\</OutDir>
     <TargetName>$(ProjectName)R1_0</TargetName>
     <IntDir>$(SolutionDir)Intermediate\$(Configuration)\</IntDir>
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x86</LibraryPath>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include;C:\PDSG Drive\BloodNoir\tinyXML\Include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)Lib\x86;C:\PDSG Drive\BloodNoir\tinyXML\Release-Lib</LibraryPath>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -179,7 +179,6 @@
   <ItemGroup>
     <ClInclude Include="code\Actor.h" />
     <ClInclude Include="code\AudioSystem.h" />
-    <ClInclude Include="code\Components.h" />
     <ClInclude Include="code\Console.h" />
     <ClInclude Include="code\EventManager.h" />
     <ClInclude Include="code\Game.h" />
@@ -202,7 +201,6 @@
   <ItemGroup>
     <ClCompile Include="code\Actor.cpp" />
     <ClCompile Include="code\AudioSystem.cpp" />
-    <ClCompile Include="code\Components.cpp" />
     <ClCompile Include="code\Console.cpp" />
     <ClCompile Include="code\EventManager.cpp" />
     <ClCompile Include="code\Game.cpp" />
