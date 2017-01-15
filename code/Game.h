@@ -35,9 +35,6 @@ class Game
 		Console *editorConsole;
 
 		GameStateManager *m_stateManager;
-
-		unique_ptr<InputManager> m_input;
-		unique_ptr<RenderManager> m_graphicSystem;
 		unique_ptr<AudioSystem> m_audioSystem;
 
 	public:

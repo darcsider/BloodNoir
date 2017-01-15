@@ -17,8 +17,16 @@ class InputManager
 	public:
 		InputManager();
 		~InputManager();
-		InputManager(InputManager const& copy);
-		InputManager& operator=(InputManager const& copy);
+
+		static InputManager& GetInstance()
+		{
+			static InputManager* gpSingleton = NULL;
+			if (gpSingleton == NULL)
+			{
+				gpSingleton = new InputManager();
+			}
+			return *gpSingleton;
+		}
 
 		void ProcessCommands();
 		void ClearFunctionPointers();

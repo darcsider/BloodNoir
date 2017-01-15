@@ -22,8 +22,16 @@ class RenderManager
 	public:
 		RenderManager();
 		~RenderManager();
-		RenderManager(RenderManager const& copy);
-		RenderManager& operator=(RenderManager const& copy);
+
+		static RenderManager& GetInstance()
+		{
+			static RenderManager* gpSingleton = NULL;
+			if (gpSingleton == NULL)
+			{
+				gpSingleton = new RenderManager();
+			}
+			return *gpSingleton;
+		}
 
 		void InitializeGraphics(HWND Window, int width, int height);
 

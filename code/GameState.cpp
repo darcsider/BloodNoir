@@ -11,10 +11,11 @@ BannerParadeState::BannerParadeState()
 
 }
 
-BannerParadeState::BannerParadeState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
+//BannerParadeState::BannerParadeState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
+BannerParadeState::BannerParadeState(function<void(StateTypes)> funcPoint, string filename)
 {
-	m_graphics = graphics;
-	m_input = input;
+	//m_graphics = graphics;
+	//m_input = input;
 	m_stateChange = funcPoint;
 	m_bannerDelay = 2.0f;
 	m_stateType = Banner;
@@ -56,7 +57,7 @@ void BannerParadeState::BuildBanners(string fileName)
 				skip = false;
 
 			m_banners.insert(pair<string, bool>(texture, skip));
-			m_graphics->AddTexture(filename, texture);
+			RenderManager::GetInstance().AddTexture(filename, texture);
 		}
 	}
 	inFile.close();
@@ -73,7 +74,7 @@ void BannerParadeState::InputCallBack(bool pressed, GameActions action)
 
 void BannerParadeState::SetupInput()
 {
-	m_input->ClearFunctionPointers();
+	InputManager::GetInstance().ClearFunctionPointers();
 }
 
 void BannerParadeState::Update(float delta)
@@ -102,18 +103,19 @@ void BannerParadeState::Update(float delta)
 
 void BannerParadeState::Execute()
 {
-	SimpleMath::Rectangle screenRect(0, 0, m_graphics->GetGameWidth(), m_graphics->GetGameHeight());
-	m_graphics->RenderObject(m_currentBanner, screenRect);
+	SimpleMath::Rectangle screenRect(0, 0, RenderManager::GetInstance().GetGameWidth(), RenderManager::GetInstance().GetGameHeight());
+	RenderManager::GetInstance().RenderObject(m_currentBanner, screenRect);
 }
 
 MainMenuState::MainMenuState()
 {
 }
 
-MainMenuState::MainMenuState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
+//MainMenuState::MainMenuState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
+MainMenuState::MainMenuState(function<void(StateTypes)> funcPoint, string filename)
 {
-	m_graphics = graphics;
-	m_input = input;
+	//m_graphics = graphics;
+	//m_input = input;
 	m_stateChange = funcPoint;
 	anyKeyPressed = false;
 	initialized = false;
@@ -142,13 +144,13 @@ void MainMenuState::BuildMainMenu(string filename)
 		getline(inFile, texture);
 
 		m_mainMenuBackground = texture;
-		m_graphics->AddTexture(file, texture);
+		RenderManager::GetInstance().AddTexture(file, texture);
 
 		getline(inFile, file);
 		getline(inFile, texture);
 
 		m_pressAnyKey = texture;
-		m_graphics->AddTexture(file, texture);
+		RenderManager::GetInstance().AddTexture(file, texture);
 
 		for (int i = 0; i < 8; i++)
 		{
@@ -156,7 +158,7 @@ void MainMenuState::BuildMainMenu(string filename)
 			getline(inFile, texture);
 
 			m_menuTextures.push_back(texture);
-			m_graphics->AddTexture(file, texture);
+			RenderManager::GetInstance().AddTexture(file, texture);
 		}
 	}
 	inFile.close();
@@ -223,11 +225,11 @@ void MainMenuState::InputCallBack(bool pressed, GameActions action)
 
 void MainMenuState::SetupInput()
 {
-	m_input->ClearFunctionPointers();
+	InputManager::GetInstance().ClearFunctionPointers();
 	function<void(bool, GameActions)> inputFunctionPointer = bind(&MainMenuState::InputCallBack, this, placeholders::_1, placeholders::_2);
-	m_input->AddKeyboardActionBinding(ActionAccept, inputFunctionPointer);
-	m_input->AddKeyboardActionBinding(ActionUp, inputFunctionPointer);
-	m_input->AddKeyboardActionBinding(ActionDown, inputFunctionPointer);
+	InputManager::GetInstance().AddKeyboardActionBinding(ActionAccept, inputFunctionPointer);
+	InputManager::GetInstance().AddKeyboardActionBinding(ActionUp, inputFunctionPointer);
+	InputManager::GetInstance().AddKeyboardActionBinding(ActionDown, inputFunctionPointer);
 }
 
 void MainMenuState::Update(float delta)
@@ -269,26 +271,26 @@ void MainMenuState::Execute()
 {
 	if (initialized)
 	{
-		SimpleMath::Rectangle screenRect(0, 0, m_graphics->GetGameWidth(), m_graphics->GetGameHeight());
+		SimpleMath::Rectangle screenRect(0, 0, RenderManager::GetInstance().GetGameWidth(), RenderManager::GetInstance().GetGameHeight());
 		vector<string>::iterator textureIterator;
-		float startX = (float)(m_graphics->GetGameWidth() / 3) + 150;
-		float startY = (float)(m_graphics->GetGameHeight() / 2);
+		float startX = (float)(RenderManager::GetInstance().GetGameWidth() / 3) + 150;
+		float startY = (float)(RenderManager::GetInstance().GetGameHeight() / 2);
 		float currX = startX;
 		float currY = startY;
-		int height = m_graphics->getTextureDesc(m_renderTextures.at(0).c_str()).Height;
+		int height = RenderManager::GetInstance().getTextureDesc(m_renderTextures.at(0).c_str()).Height;
 
-		m_graphics->RenderObject(m_mainMenuBackground, screenRect);
+		RenderManager::GetInstance().RenderObject(m_mainMenuBackground, screenRect);
 		if (anyKeyPressed)
 		{
 			for (textureIterator = m_renderTextures.begin(); textureIterator != m_renderTextures.end(); textureIterator++)
 			{
-				m_graphics->RenderObject((textureIterator)->c_str(), Vector2(currX, currY));
+				RenderManager::GetInstance().RenderObject((textureIterator)->c_str(), Vector2(currX, currY));
 				currY += height;
 			}
 		}
 		else
 		{
-			m_graphics->RenderObject(m_pressAnyKey, Vector2((float)(m_graphics->GetGameWidth() / 3), startY));
+			RenderManager::GetInstance().RenderObject(m_pressAnyKey, Vector2((float)(RenderManager::GetInstance().GetGameWidth() / 3), startY));
 		}
 	}
 }
@@ -297,10 +299,11 @@ NewGameState::NewGameState()
 {
 }
 
-NewGameState::NewGameState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
+//NewGameState::NewGameState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
+NewGameState::NewGameState(function<void(StateTypes)> funcPoint, string filename)
 {
-	m_graphics = graphics;
-	m_input = input;
+	//m_graphics = graphics;
+	//m_input = input;
 	m_stateChange = funcPoint;
 	m_fileName = filename;
 	m_stateType = NewGame;
@@ -336,15 +339,15 @@ void NewGameState::BuildNewGameState()
 		{
 			getline(inFile, filename);
 			getline(inFile, resourceName);
-			m_graphics->AddTexture(filename, resourceName);
+			RenderManager::GetInstance().AddTexture(filename, resourceName);
 		}
 		getline(inFile, mapFileName);
 	}
 	inFile.close();
 
 	testWorld = new World();
-	testWorld->InitializeWorld(m_graphics, m_input, mapFileName);
-	testWorld->SetGameWorldDimensions(m_gameWidth, m_gameHeight);
+	testWorld->InitializeWorld(mapFileName);
+	//testWorld->SetGameWorldDimensions(m_gameWidth, m_gameHeight);
 	testWorld->BuildWorld();
 }
 
@@ -357,18 +360,18 @@ void NewGameState::InputCallBack(bool pressed, GameActions action)
 
 void NewGameState::SetupInput()
 {
-	m_input->ClearFunctionPointers();
+	InputManager::GetInstance().ClearFunctionPointers();
 	
 	//Test code not staying this way
 	function<void(bool, GameActions)> funcPoint = bind(&NewGameState::InputCallBack, this, placeholders::_1, placeholders::_2);
-	m_input->AddKeyboardActionBinding(SystemTest, funcPoint);
+	InputManager::GetInstance().AddKeyboardActionBinding(SystemTest, funcPoint);
 
 	function<void(bool, GameActions)> closeGame = bind(&World::CloseGame, testWorld, placeholders::_1, placeholders::_2);
-	m_input->AddKeyboardActionBinding(SystemExitEarly, closeGame);
+	InputManager::GetInstance().AddKeyboardActionBinding(SystemExitEarly, closeGame);
 
 	function<void(bool, GameActions)> moveMap = bind(&World::MoveWorld, testWorld, placeholders::_1, placeholders::_2);
-	m_input->AddKeyboardActionBinding(ActionLeft, moveMap);
-	m_input->AddKeyboardActionBinding(ActionRight, moveMap);
+	InputManager::GetInstance().AddKeyboardActionBinding(ActionLeft, moveMap);
+	InputManager::GetInstance().AddKeyboardActionBinding(ActionRight, moveMap);
 
 	//SetupCharacter();
 }

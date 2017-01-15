@@ -33,8 +33,6 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 class GameStateManager
 {
 	protected:
-		RenderManager *m_graphicsSystem;
-		InputManager *m_inputHandler;
 		GameState *m_currentState;
 		vector<GameState*> m_gameStates;
 		bool m_stateChange;
@@ -44,8 +42,7 @@ class GameStateManager
 		int m_gameHeight;
 
 	public:
-		GameStateManager() { }
-		GameStateManager(RenderManager *graphics, InputManager *input, int width, int height);
+		GameStateManager();
 		~GameStateManager();
 		void BuildStateManager();
 		void ChangeState(StateTypes type);

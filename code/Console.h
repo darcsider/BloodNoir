@@ -19,8 +19,6 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 class Console
 {
 	private:
-		RenderManager					*m_graphicSystem;		// Graphics System variable
-		InputManager					*m_input;				// Input variable
 		string							m_commandString;		// string holding the command entered in by the user
 		string							m_prompt;				// the prompt that displays on the screen
 		string							m_textInput;			// the text that is being entered in by the keyboard
@@ -53,7 +51,7 @@ class Console
 		virtual ~Console();
 
 		// Initialize the Console
-		bool Initialize(RenderManager *graphics, InputManager *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor);
+		bool Initialize(Vector2 startPosition, int width, int height, XMFLOAT4 backColor);
 
 		void Draw();
 

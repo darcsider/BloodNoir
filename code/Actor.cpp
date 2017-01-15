@@ -11,25 +11,21 @@ Actor::Actor()
 
 }
 
-Actor::Actor(RenderManager *graphicsManager, InputManager *inputManager, GraphicsComponent *graphics, PhysicsComponent *physics, InputComponent *input, Sprite *sprite)
-{
-	m_graphicSystem = graphicsManager;
-	m_inputSystem = inputManager;
-	m_sprite = sprite;
-	m_graphics = graphics;
-	m_physics = physics;
-	m_input = input;
-}
-
 Actor::~Actor()
 {
 
 }
 
-void Actor::BuildActor(int hp, float speed)
+void Actor::BuildActor(int hp, int attack, int defense, float speed, GraphicsComponent *graphics, PhysicsComponent *physics, InputComponent *input, Sprite *sprite)
 {
 	m_hitPoints = hp;
+	m_attack = attack;
+	m_defense = defense;
 	m_actorSpeed = speed;
+	m_graphics = graphics;
+	m_physics = physics;
+	m_input = input;
+	m_sprite = sprite;
 }
 
 void Actor::ChangeActorDirection(MoveDirection direction)
@@ -72,8 +68,7 @@ void Actor::UpdateActorVelocity(int value)
 
 void Actor::DrawActor()
 {
-	//m_graphicSystem->RenderObject(m_sprite->GetSpriteTexture(), m_sprite->GetSpriteRectangle(), m_position);
-	m_graphics->update(*this, m_graphicSystem);
+	m_graphics->update(*this, &RenderManager::GetInstance());
 }
 
 void Actor::MoveActor(bool pressed, GameActions action)

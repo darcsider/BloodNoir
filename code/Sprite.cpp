@@ -11,11 +11,6 @@ Sprite::Sprite()
 
 }
 
-Sprite::Sprite(RenderManager *graphics)
-{
-	m_graphicSystem = graphics;
-}
-
 Sprite::~Sprite()
 {
 

@@ -6,13 +6,9 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "GameStateManager.h"
 
-GameStateManager::GameStateManager(RenderManager *graphics, InputManager *input, int width, int height)
+GameStateManager::GameStateManager()
 {
-	m_graphicsSystem = graphics;
-	m_inputHandler = input;
 	m_stateChange = false;
-	m_gameWidth = width;
-	m_gameHeight = height;
 }
 
 GameStateManager::~GameStateManager()
@@ -23,20 +19,16 @@ GameStateManager::~GameStateManager()
 void GameStateManager::BuildStateManager()
 {
 	function<void(StateTypes)> funcPointer = bind(&GameStateManager::ChangeState, this, placeholders::_1);
-	BannerParadeState *banner = new BannerParadeState(m_graphicsSystem, m_inputHandler, funcPointer, "..\\data\\BannerParade.txt");
-	banner->SetGameDimensions(m_gameWidth, m_gameHeight);
+	BannerParadeState *banner = new BannerParadeState(funcPointer, "..\\data\\BannerParade.txt");
 	m_gameStates.push_back(banner);
 
-	MainMenuState *menu = new MainMenuState(m_graphicsSystem, m_inputHandler, funcPointer, "..\\data\\MainMenu.txt");
-	menu->SetGameDimensions(m_gameWidth, m_gameHeight);
+	MainMenuState *menu = new MainMenuState(funcPointer, "..\\data\\MainMenu.txt");
 	m_gameStates.push_back(menu);
 
-	NewGameState *newG = new NewGameState(m_graphicsSystem, m_inputHandler, funcPointer, "..\\data\\NewGame.txt");
-	newG->SetGameDimensions(m_gameWidth, m_gameHeight);
+	NewGameState *newG = new NewGameState(funcPointer, "..\\data\\NewGame.txt");
 	m_gameStates.push_back(newG);
 
 	OnExitState *exit = new OnExitState();
-	exit->SetGameDimensions(m_gameWidth, m_gameHeight);
 	m_gameStates.push_back(exit);
 
 	m_currentState = m_gameStates.at(0);

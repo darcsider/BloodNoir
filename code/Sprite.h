@@ -8,7 +8,6 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #ifndef SPRITE_H
 #define SPRITE_H
 #include "Includes.h"
-#include "RenderManager.h"
 
 struct SpriteData
 {
@@ -36,11 +35,9 @@ class Sprite
 		SpriteData m_spriteInfo;
 		map<string, AnimatedAction> m_actionAnimations;
 		AnimatedAction m_currentAction;
-		RenderManager *m_graphicSystem;
 		
 	public:
 		Sprite();
-		Sprite(RenderManager *graphics);
 		~Sprite();
 		void UpdateSprite(float timeDelta);
 		void AddAction(int start, int end, float frameD, string name);

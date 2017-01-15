@@ -14,10 +14,11 @@ World::~World()
 {
 }
 
-void World::InitializeWorld(RenderManager *graphics, InputManager *input, string worldTextFile)
+//void World::InitializeWorld(RenderManager *graphics, InputManager *input, string worldTextFile)
+void World::InitializeWorld(string worldTextFile)
 {
-	m_graphicSystem = graphics;
-	m_input = input;
+	//m_graphicSystem = graphics;
+	//m_input = input;
 	m_worldFileName = worldTextFile;
 }
 
@@ -36,7 +37,8 @@ void World::BuildWorld()
 		{
 			getline(inFile, tempString);
 			WorldSection newSection;
-			newSection.BuildWorldSection(m_graphicSystem, tempString);
+			//newSection.BuildWorldSection(m_graphicSystem, tempString);
+			newSection.BuildWorldSection(tempString);
 			m_worldSections.push_back(newSection);
 		}
 	}
@@ -59,14 +61,14 @@ Vector2 World::CheckCollission(Vector2 position, Vector2 velocity, float movemen
 	if (((position.x + movementSpeed) * velocity.x) < 0)
 		position.x = 0;
 	
-	if (((position.x + movementSpeed) * velocity.x) > m_gameWidth)
-		position.x = m_gameWidth;
+	if (((position.x + movementSpeed) * velocity.x) > RenderManager::GetInstance().GetGameWidth())
+		position.x = RenderManager::GetInstance().GetGameWidth();
 
 	if (((position.y + movementSpeed) * velocity.y) < 0)
 		position.y = 0;
 
-	if (((position.y + movementSpeed) * velocity.y) > m_gameHeight)
-		position.y = m_gameHeight;
+	if (((position.y + movementSpeed) * velocity.y) > RenderManager::GetInstance().GetGameHeight())
+		position.y = RenderManager::GetInstance().GetGameHeight();
 
 	return position;
 }
@@ -198,7 +200,8 @@ void Building::DrawBuilding()
 
 }
 
-void WorldSection::BuildWorldSection(RenderManager *graphics, string fileName)
+//void WorldSection::BuildWorldSection(RenderManager *graphics, string fileName)
+void WorldSection::BuildWorldSection(string fileName)
 {
 	string tempString;
 	SectionLayer tempLayer;
@@ -206,7 +209,7 @@ void WorldSection::BuildWorldSection(RenderManager *graphics, string fileName)
 	TriggerPoint tempTrigger;
 	Building tempBuilding;
 	D3D11_TEXTURE2D_DESC textDesc;
-	m_graphicSystem = graphics;
+	//m_graphicSystem = graphics;
 
 	ifstream inFile(fileName);
 	if (inFile)
@@ -225,9 +228,9 @@ void WorldSection::BuildWorldSection(RenderManager *graphics, string fileName)
 				tempLayer.m_autoScroll = false;
 			tempLayer.m_sourceRectangle.x = 0;
 			tempLayer.m_sourceRectangle.y = 0;
-			tempLayer.m_sourceRectangle.width = m_gameWidth;
-			tempLayer.m_sourceRectangle.height = m_gameHeight;
-			textDesc = m_graphicSystem->getTextureDesc(tempLayer.m_textureName);
+			tempLayer.m_sourceRectangle.width = RenderManager::GetInstance().GetGameWidth();
+			tempLayer.m_sourceRectangle.height = RenderManager::GetInstance().GetGameHeight();
+			textDesc = RenderManager::GetInstance().getTextureDesc(tempLayer.m_textureName);
 			tempLayer.m_width = textDesc.Width;
 			tempLayer.m_height = textDesc.Height;
 			if (tempLayer.m_autoScroll)
@@ -331,13 +334,13 @@ void WorldSection::UpdateWorldSection(float delta)
 			if ((layerIterator)->m_sourceRectangle.x < 0)
 			{
 				(layerIterator)->m_sourceRectangle.x = 0;
-				(layerIterator)->m_sourceRectangle.width = (layerIterator)->m_sourceRectangle.y + m_graphicSystem->GetGameWidth();
+				(layerIterator)->m_sourceRectangle.width = (layerIterator)->m_sourceRectangle.y + RenderManager::GetInstance().GetGameWidth();
 			}
 
 			if ((layerIterator)->m_sourceRectangle.width >(layerIterator)->m_width)
 			{
 				(layerIterator)->m_sourceRectangle.width = (layerIterator)->m_width;
-				(layerIterator)->m_sourceRectangle.x = (layerIterator)->m_sourceRectangle.width - m_graphicSystem->GetGameWidth();
+				(layerIterator)->m_sourceRectangle.x = (layerIterator)->m_sourceRectangle.width - RenderManager::GetInstance().GetGameWidth();
 			}
 		}
 		else
@@ -345,7 +348,7 @@ void WorldSection::UpdateWorldSection(float delta)
 			if ((layerIterator)->m_sourceRectangle.width > (layerIterator)->m_width)
 			{
 				(layerIterator)->m_sourceRectangle.x = 0;
-				(layerIterator)->m_sourceRectangle.width = m_graphicSystem->GetGameWidth();
+				(layerIterator)->m_sourceRectangle.width = RenderManager::GetInstance().GetGameWidth();
 			}
 		}
 	}
@@ -376,11 +379,11 @@ void WorldSection::DrawWorldSection()
 
 	for (layerIterator = m_layers.begin(); layerIterator != m_layers.end(); layerIterator++)
 	{
-		m_graphicSystem->RenderObject((layerIterator)->m_textureName, (layerIterator)->m_sourceRectangle, Vector2(0.0, 0.0));
+		RenderManager::GetInstance().RenderObject((layerIterator)->m_textureName, (layerIterator)->m_sourceRectangle, Vector2(0.0, 0.0));
 	}
 
 	for (objectIterator = m_objects.begin(); objectIterator != m_objects.end(); objectIterator++)
 	{
-		m_graphicSystem->RenderObject((objectIterator)->m_textureName, (objectIterator)->m_position);
+		RenderManager::GetInstance().RenderObject((objectIterator)->m_textureName, (objectIterator)->m_position);
 	}
 }

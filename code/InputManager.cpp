@@ -18,11 +18,6 @@ InputManager::~InputManager()
 
 }
 
-InputManager::InputManager(InputManager const & copy)
-{
-
-}
-
 void InputManager::ProcessCommands()
 {
 #if _WIN32

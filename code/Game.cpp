@@ -11,13 +11,11 @@ Game::Game() :
 	m_gameWidth(1920),
 	m_gameHeight(1080)
 {
-	m_graphicSystem = make_unique<RenderManager>();
+
 }
 
 Game::~Game()
 {
-	m_graphicSystem.release();
-	m_input.release();
 	m_audioSystem.release();
 }
 
@@ -28,9 +26,7 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	m_gameWidth = max(width, 1);
 	m_gameHeight = max(height, 1);
 
-	m_graphicSystem->InitializeGraphics(m_window, width, height);
-
-	m_input = make_unique<InputManager>();
+	RenderManager::GetInstance().InitializeGraphics(m_window, width, height);
 
 	m_audioSystem = make_unique<AudioSystem>();
 	m_audioSystem->InitializeAudioSystem();
@@ -40,12 +36,12 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	// that other systems can subscribe to the Console class and can setup their own commands that the console
 	// will recognize and process.
 	editorConsole = new Console();
-	editorConsole->Initialize(m_graphicSystem.get(), m_input.get(), Vector2(0, 0), m_graphicSystem->GetGameWidth(), 200, XMFLOAT4(0, 0, 0, 0.8f));
+	editorConsole->Initialize(Vector2(0, 0), RenderManager::GetInstance().GetGameWidth(), 200, XMFLOAT4(0, 0, 0, 0.8f));
 	
 	m_audioSystem->SetBackgroundMusic("..\\Music\\Electro.wav");
 	m_audioSystem->AddEffect("heli", "..\\Music\\heli.wav");
 
-	m_stateManager = new GameStateManager(m_graphicSystem.get(), m_input.get(), m_gameWidth, m_gameHeight);
+	m_stateManager = new GameStateManager();
 	m_stateManager->BuildStateManager();
 
 	m_audioSystem->PlayBackgroundMusic();
@@ -56,7 +52,7 @@ bool Game::GameInitialize(HWND window, int width, int height)
 void Game::SystemsUpdate()
 {
 	m_audioSystem->AudioSystemUpdate();
-	m_input->ProcessCommands();
+	InputManager::GetInstance().ProcessCommands();
 }
 
 void Game::GameUpdate()
@@ -67,12 +63,12 @@ void Game::GameUpdate()
 
 void Game::DrawScene()
 {
-	m_graphicSystem->ClearScene();
-	m_graphicSystem->BeginScene();
+	RenderManager::GetInstance().ClearScene();
+	RenderManager::GetInstance().BeginScene();
 	m_stateManager->Execute();
-	m_graphicSystem->EndScene();
+	RenderManager::GetInstance().EndScene();
 	editorConsole->Draw();
-	m_graphicSystem->PresentScene();
+	RenderManager::GetInstance().PresentScene();
 }
 
 void Game::GameRun()
@@ -145,28 +141,28 @@ void Game::MouseProcess(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Game::OnActivated()
 {
-	m_input->GamePadResume();
+	InputManager::GetInstance().GamePadResume();
 	m_timer.Start();
 	m_appPaused = false;
 }
 
 void Game::OnDeactivated()
 {
-	m_input->GamePadSuspend();
+	InputManager::GetInstance().GamePadSuspend();
 	m_timer.Stop();
 	m_appPaused = true;
 }
 
 void Game::OnSuspending()
 {
-	m_input->GamePadSuspend();
+	InputManager::GetInstance().GamePadSuspend();
 	m_timer.Stop();
 	m_appPaused = true;
 }
 
 void Game::OnResuming()
 {
-	m_input->GamePadResume();
+	InputManager::GetInstance().GamePadResume();
 	m_timer.Start();
 	m_appPaused = false;
 }
@@ -175,5 +171,5 @@ void Game::OnWindowSizeChanged(int width, int height)
 {
 	m_gameWidth = max(width, 1);
 	m_gameHeight = max(height, 1);
-	m_graphicSystem->OnWindowSizeChange();
+	RenderManager::GetInstance().OnWindowSizeChange();
 }

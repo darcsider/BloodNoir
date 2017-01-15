@@ -15,15 +15,13 @@ Console::~Console()
 	onLostDevice();            // call onLostDevice() for every graphics item
 }
 
-bool Console::Initialize(RenderManager *graphics, InputManager *input, Vector2 startPosition, int width, int height, XMFLOAT4 backColor)
+bool Console::Initialize(Vector2 startPosition, int width, int height, XMFLOAT4 backColor)
 {
-	m_graphicSystem = graphics;
-	m_input = input;
 	m_consolePosition = startPosition;
 	m_width = width;
 	m_height = height;
 	m_backgroundColor = backColor;
-	m_lineSpacing = m_graphicSystem->GetLineSpacing();
+	m_lineSpacing = RenderManager::GetInstance().GetLineSpacing();
 	m_promptPosition = Vector2((startPosition.x + 10), (startPosition.x + 10));
 	m_textPosition = Vector2(m_promptPosition.x, (m_promptPosition.y + m_lineSpacing));
 	m_startTextPosition = Vector2((m_promptPosition.x + 10), m_promptPosition.y);
@@ -38,7 +36,7 @@ bool Console::Initialize(RenderManager *graphics, InputManager *input, Vector2 s
 	m_prompt = "|:>";
 
 	function<void(bool, GameActions)> funcPoint = bind(&Console::HideShow, this, placeholders::_1, placeholders::_2);
-	m_input->AddKeyboardActionBinding(SystemConsole, funcPoint);
+	InputManager::GetInstance().AddKeyboardActionBinding(SystemConsole, funcPoint);
 
 	return true;
 }
@@ -64,11 +62,11 @@ void Console::Draw()
 {
 	if (m_visible)
 	{
-		m_graphicSystem->RenderQuad(m_consolePosition, m_width, m_height, m_backgroundColor);
+		RenderManager::GetInstance().RenderQuad(m_consolePosition, m_width, m_height, m_backgroundColor);
 
 		m_textPosition = Vector2(m_promptPosition.x, (m_promptPosition.y + m_lineSpacing));
 
-		m_graphicSystem->BeginScene();
+		RenderManager::GetInstance().BeginScene();
 
 		if (!m_history.empty())
 		{
@@ -77,15 +75,15 @@ void Console::Draw()
 				m_textPosition = Vector2(m_promptPosition.x, (m_promptPosition.y + m_lineSpacing));
 				m_textPosition.y += (m_lineSpacing * float(line));
 
-				m_graphicSystem->RenderText(m_history[line], m_textPosition, Colors::Green);
+				RenderManager::GetInstance().RenderText(m_history[line], m_textPosition, Colors::Green);
 			}
 		}
 
 		m_prompt = "|:>";
 		m_prompt += m_textInput;
 
-		m_graphicSystem->RenderText(m_prompt, m_promptPosition, Colors::Green);
-		m_graphicSystem->EndScene();
+		RenderManager::GetInstance().RenderText(m_prompt, m_promptPosition, Colors::Green);
+		RenderManager::GetInstance().EndScene();
 	}
 }
 

@@ -89,12 +89,9 @@ class Building
 class WorldSection
 {
 	protected:
-		RenderManager			*m_graphicSystem;
 		int						m_numberOfLayers;
 		int						m_numberOfObjects;
 		int						m_numberOfTriggers;
-		int						m_gameWidth;
-		int						m_gameHeight;
 		vector<SectionLayer>	m_layers;
 		vector<Object>			m_objects;
 		vector<TriggerPoint>	m_triggerPoints;
@@ -107,34 +104,24 @@ class WorldSection
 		{ }
 
 		void UpdateVelocity(int value);
-		void BuildWorldSection(RenderManager *graphics, string fileName);
+		void BuildWorldSection(string fileName);
 		void DrawWorldSection();
 		void UpdateWorldSection(float delta);
 		TriggerType CheckCollision(Vector2 position);
-
-		void SetGameWorldDimensions(int w, int h)
-		{
-			m_gameWidth = w;
-			m_gameHeight = h;
-		}
 };
 
 class World
 {
 	protected:
-		RenderManager			*m_graphicSystem;
-		InputManager			*m_input;
 		string					m_worldName;
 		vector<WorldSection>	m_worldSections;
 		WorldSection			m_currentSection;
 		string					m_worldFileName;
-		int						m_gameWidth;
-		int						m_gameHeight;
 
 	public:
 		World();
 		~World();
-		void InitializeWorld(RenderManager *graphics, InputManager *input, string worldTextFile);
+		void InitializeWorld(string worldTextFile);
 		void BuildWorld();
 		void UpdateWorld(float timeDelta);
 		void DrawWorld();
@@ -142,12 +129,6 @@ class World
 		void MoveWorld(bool move, GameActions action);
 		Vector2 CheckCollission(Vector2 position, Vector2 velocity, float movementSpeed);
 		TriggerType CheckTriggerCollision(Vector2 position);
-
-		void SetGameWorldDimensions(int w, int h)
-		{
-			m_gameWidth = w;
-			m_gameHeight = h;
-		}
 
 		void CloseGame(bool pressed, GameActions action)
 		{

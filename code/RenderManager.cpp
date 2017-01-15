@@ -18,10 +18,6 @@ RenderManager::~RenderManager()
 
 }
 
-RenderManager::RenderManager(RenderManager const & copy)
-{
-}
-
 void RenderManager::AddTexture(string filename, string name)
 {
 #if _WIN32

@@ -29,12 +29,12 @@ class InputComponent;
 class Actor
 {
 	protected:
-		RenderManager *m_graphicSystem;
-		InputManager *m_inputSystem;
 		Sprite *m_sprite;
 
 		string m_characterName;
 		int m_hitPoints;
+		int m_attack;
+		int m_defense;
 		float m_actorSpeed;
 		Vector2 m_velocity;
 		Vector2 m_position;
@@ -45,9 +45,8 @@ class Actor
 
 	public:
 		Actor();
-		Actor(RenderManager *graphicsManager, InputManager *inputManager, GraphicsComponent *graphics, PhysicsComponent *physics, InputComponent *input, Sprite *sprite);
 		~Actor();
-		void BuildActor(int hp, float speed);
+		void BuildActor(int hp, int attack, int defense, float speed, GraphicsComponent *graphics, PhysicsComponent *physics, InputComponent *input, Sprite *sprite);
 		void ChangeActorDirection(MoveDirection direction = NotMoving);
 		void UpdateActor(float deltaTime);
 		void UpdateActorVelocity(int value);
