@@ -103,7 +103,7 @@ class WorldSection
 		~WorldSection()
 		{ }
 
-		void UpdateVelocity(int value);
+		void UpdateVelocity(float value);
 		void BuildWorldSection(string fileName);
 		void DrawWorldSection();
 		void UpdateWorldSection(float delta);

@@ -38,6 +38,7 @@ class Actor
 		float m_actorSpeed;
 		Vector2 m_velocity;
 		Vector2 m_position;
+		World *m_currentWorld;
 
 		GraphicsComponent *m_graphics;
 		PhysicsComponent *m_physics;
@@ -47,17 +48,19 @@ class Actor
 		Actor();
 		~Actor();
 		void BuildActor(int hp, int attack, int defense, float speed, GraphicsComponent *graphics, PhysicsComponent *physics, InputComponent *input, Sprite *sprite);
-		void ChangeActorDirection(MoveDirection direction = NotMoving);
-		void UpdateActor(float deltaTime);
-		void UpdateActorVelocity(int value);
+		void Update(float deltaTime);
 		void DrawActor();
 		void MoveActor(bool pressed, GameActions action);
 
+		void SetActorDirection(MoveDirection direction = NotMoving);
+		void SetActorCurrentWorld(World *world);
 		Sprite* GetActorSprite();
 		Vector2 GetActorPosition();
 		void SetActorPosition(Vector2 position);
 		Vector2 GetActorVelocity();
 		void SetActorVelocity(Vector2 velocity);
+		float GetActorMovementSpeed();
+		void SetActorMovementSpeed(float speed);
 };
 
 class GraphicsComponent
@@ -78,30 +81,82 @@ class PlayerGraphicsComponent : public GraphicsComponent
 class PhysicsComponent
 {
 	public:
-		virtual void update(Actor &actor, World &world) = 0;
+		virtual void update(Actor &actor, float timeDelta, World &world) = 0;
 };
 
 class PlayerPhysicsCompoonent : public PhysicsComponent
 {
 	public:
-		virtual void update(Actor &actor, World &world)
+		virtual void update(Actor &actor, float timeDelta, World &world)
 		{
-
+			Vector2 velocity = actor.GetActorVelocity();
+			Vector2 position = actor.GetActorPosition();
+			position.x = velocity.x * timeDelta;
+			position.y = velocity.y * timeDelta;
+			position = world.CheckCollission(position, velocity, actor.GetActorMovementSpeed());
+			actor.SetActorPosition(position);
 		}
 };
 
 class InputComponent
 {
 	public:
-		virtual void update() = 0;
+		virtual void update(Actor &actor, bool pressed, GameActions action) = 0;
 };
 
 class PlayerInputComponent : public InputComponent
 {
 	public:
-		virtual void update()
+		virtual void update(Actor &actor, bool pressed, GameActions action)
 		{
-
+			if (pressed)
+			{
+				switch (action)
+				{
+					case ActionUp:
+						break;
+					case ActionDown:
+						break;
+					case ActionLeft:
+						break;
+					case ActionRight:
+						break;
+					case ActionAccept:
+						break;
+					case ActionCancel:
+						break;
+					case CharacterAttack:
+						break;
+					case CharacterDefense:
+						break;
+					case DirectionMoveLeft:
+						actor.SetActorVelocity(Vector2(-1, actor.GetActorVelocity().y));
+						actor.SetActorDirection(MoveLeft);
+						break;
+					case DirectionMoveRight:
+						actor.SetActorVelocity(Vector2(1, actor.GetActorVelocity().y));
+						actor.SetActorDirection(MoveRight);
+						break;
+					case DirectionMoveUp:
+						actor.SetActorVelocity(Vector2(actor.GetActorVelocity().x, -1));
+						actor.SetActorDirection(MoveUp);
+						break;
+					case DirectionMoveDown:
+						actor.SetActorVelocity(Vector2(actor.GetActorVelocity().x, 1));
+						actor.SetActorDirection(MoveDown);
+						break;
+					case SystemTest:
+						break;
+					case SystemExitEarly:
+						break;
+					case SystemConsole:
+						break;
+					default:
+						actor.SetActorVelocity(Vector2(0, 0));
+						actor.SetActorDirection(NotMoving);
+						break;
+				}
+			}
 		}
 };
 #endif // !ACTOR_H

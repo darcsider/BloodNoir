@@ -1292,3 +1292,6 @@ January 14th, 2017
 Day 140 of Development
 Today I began working on the updates that I had decided on doing yesterday and then started looking at some code that I was using in certain systems in the engine and realized that I was placing unnecessary functions in certain systems and passing data around from system to system to system just to get it to one spot that uses it once all because I was trying to avoid using a singleton design pattern because I was told they are evil.  Then I did some more research and the true answer about singleton design pattern is that they are often abused which is why people call them evil but as I read if implemented proplerly and not for every system in the code then they are fine so I decided to turn 2 of my systems into singleton's because it makes more sense to me to have them be that.  With this I was able to remove a lot of unnecessary code from the engine.
 
+January 16th, 2017
+
+Day 141 of Development

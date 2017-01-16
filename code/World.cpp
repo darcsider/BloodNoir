@@ -14,11 +14,8 @@ World::~World()
 {
 }
 
-//void World::InitializeWorld(RenderManager *graphics, InputManager *input, string worldTextFile)
 void World::InitializeWorld(string worldTextFile)
 {
-	//m_graphicSystem = graphics;
-	//m_input = input;
 	m_worldFileName = worldTextFile;
 }
 
@@ -37,7 +34,6 @@ void World::BuildWorld()
 		{
 			getline(inFile, tempString);
 			WorldSection newSection;
-			//newSection.BuildWorldSection(m_graphicSystem, tempString);
 			newSection.BuildWorldSection(tempString);
 			m_worldSections.push_back(newSection);
 		}
@@ -61,14 +57,14 @@ Vector2 World::CheckCollission(Vector2 position, Vector2 velocity, float movemen
 	if (((position.x + movementSpeed) * velocity.x) < 0)
 		position.x = 0;
 	
-	if (((position.x + movementSpeed) * velocity.x) > RenderManager::GetInstance().GetGameWidth())
-		position.x = RenderManager::GetInstance().GetGameWidth();
+	if (((position.x + movementSpeed) * velocity.x) > (float)RenderManager::GetInstance().GetGameWidth())
+		position.x = (float)RenderManager::GetInstance().GetGameWidth();
 
 	if (((position.y + movementSpeed) * velocity.y) < 0)
 		position.y = 0;
 
-	if (((position.y + movementSpeed) * velocity.y) > RenderManager::GetInstance().GetGameHeight())
-		position.y = RenderManager::GetInstance().GetGameHeight();
+	if (((position.y + movementSpeed) * velocity.y) > (float)RenderManager::GetInstance().GetGameHeight())
+		position.y = (float)RenderManager::GetInstance().GetGameHeight();
 
 	return position;
 }
@@ -200,7 +196,6 @@ void Building::DrawBuilding()
 
 }
 
-//void WorldSection::BuildWorldSection(RenderManager *graphics, string fileName)
 void WorldSection::BuildWorldSection(string fileName)
 {
 	string tempString;
@@ -209,7 +204,6 @@ void WorldSection::BuildWorldSection(string fileName)
 	TriggerPoint tempTrigger;
 	Building tempBuilding;
 	D3D11_TEXTURE2D_DESC textDesc;
-	//m_graphicSystem = graphics;
 
 	ifstream inFile(fileName);
 	if (inFile)
@@ -309,7 +303,7 @@ void WorldSection::BuildWorldSection(string fileName)
 	}
 }
 
-void WorldSection::UpdateVelocity(int value)
+void WorldSection::UpdateVelocity(float value)
 {
 	vector<SectionLayer>::iterator layerIterator;
 
@@ -361,10 +355,10 @@ TriggerType WorldSection::CheckCollision(Vector2 position)
 
 	for (triggerIterator = m_triggerPoints.begin(); triggerIterator != m_triggerPoints.end(); triggerIterator++)
 	{
-		triggerVolume.x = triggerIterator->m_mapPosition.x - 2;
-		triggerVolume.y = triggerIterator->m_mapPosition.y - 2;
-		triggerVolume.width = triggerIterator->m_mapPosition.x + 2;
-		triggerVolume.height = triggerIterator->m_mapPosition.y + 2;
+		triggerVolume.x = (long)(triggerIterator->m_mapPosition.x - 2);
+		triggerVolume.y = (long)(triggerIterator->m_mapPosition.y - 2);
+		triggerVolume.width = (long)(triggerIterator->m_mapPosition.x + 2);
+		triggerVolume.height = (long)(triggerIterator->m_mapPosition.y + 2);
 
 		if (triggerVolume.Contains(position))
 			return triggerIterator->m_triggerType;

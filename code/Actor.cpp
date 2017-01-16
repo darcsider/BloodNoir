@@ -28,7 +28,23 @@ void Actor::BuildActor(int hp, int attack, int defense, float speed, GraphicsCom
 	m_sprite = sprite;
 }
 
-void Actor::ChangeActorDirection(MoveDirection direction)
+void Actor::Update(float deltaTime)
+{
+	m_sprite->UpdateSprite(deltaTime);
+	m_physics->update(*this, deltaTime, *m_currentWorld);
+}
+
+void Actor::DrawActor()
+{
+	m_graphics->update(*this, &RenderManager::GetInstance());
+}
+
+void Actor::MoveActor(bool pressed, GameActions action)
+{
+	m_input->update(*this, pressed, action);
+}
+
+void Actor::SetActorDirection(MoveDirection direction)
 {
 	switch (direction)
 	{
@@ -53,39 +69,9 @@ void Actor::ChangeActorDirection(MoveDirection direction)
 	}
 }
 
-void Actor::UpdateActor(float deltaTime)
+void Actor::SetActorCurrentWorld(World * world)
 {
-	m_sprite->UpdateSprite(deltaTime);
-	m_position.x += m_velocity.x * deltaTime;
-	m_position.y += m_velocity.y * deltaTime;
-}
-
-void Actor::UpdateActorVelocity(int value)
-{
-	m_velocity.x = m_actorSpeed * value;
-	m_velocity.y = m_actorSpeed * value;
-}
-
-void Actor::DrawActor()
-{
-	m_graphics->update(*this, &RenderManager::GetInstance());
-}
-
-void Actor::MoveActor(bool pressed, GameActions action)
-{
-	if (pressed && action == DirectionMoveLeft)
-		m_velocity.x = -1;
-	else if (pressed && action == DirectionMoveRight)
-		m_velocity.x = 1;
-	else if (pressed && action == DirectionMoveUp)
-		m_velocity.y = -1;
-	else if (pressed && action == DirectionMoveDown)
-		m_velocity.y = 1;
-	else
-	{
-		m_velocity.x = 0;
-		m_velocity.y = 0;
-	}
+	m_currentWorld = world;
 }
 
 Sprite * Actor::GetActorSprite()
@@ -112,4 +98,14 @@ Vector2 Actor::GetActorVelocity()
 void Actor::SetActorVelocity(Vector2 velocity)
 {
 	m_velocity = velocity;
+}
+
+float Actor::GetActorMovementSpeed()
+{
+	return m_actorSpeed;
+}
+
+void Actor::SetActorMovementSpeed(float speed)
+{
+	m_actorSpeed = speed;
 }
