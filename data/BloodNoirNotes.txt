@@ -1295,4 +1295,12 @@ Today I began working on the updates that I had decided on doing yesterday and t
 January 16th, 2017
 
 Day 141 of Development
-I am happy to say that I have an Actor sprite displaying on the screen finally and it also animates correctly, I haven't got any abilities displaying attacks or defense but I have it on the screen and moving around like it is supposed to and I couldn't be happier than I am today. All the hard work I have put into this is paying off as I get the project one step closer to completion.  A grand achievement for the project and for me. 
+I am happy to say that I have an Actor sprite displaying on the screen finally and it also animates correctly, I haven't got any abilities displaying attacks or defense but I have it on the screen and moving around like it is supposed to and I couldn't be happier than I am today. All the hard work I have put into this is paying off as I get the project one step closer to completion, a grand achievement for the project and for me. The next step in this part of the system is to change the input system for the map so that you no longer move the map with keyboard commands but it only moves when the player moves the actor sprite, when the character reaches close to the edge of the screen have it move the map until the map is at the edge of the textures for it and then allow the player character to reach the edge of the screen.
+
+Once I get that working then I want to work on defining the moveable region for the actor class that defines where the player can move based on where they are for example if they are out on the street in the world then they can only move left and right most of the time unless near a spot to move from one world section to another and also when moving into buildings and alleys.
+
+Code Line Count: 4,591
+
+January 17th, 2017
+
+Day 142 of Development
