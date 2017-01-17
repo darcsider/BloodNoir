@@ -30,7 +30,6 @@ class Actor
 {
 	protected:
 		Sprite *m_sprite;
-
 		string m_characterName;
 		int m_hitPoints;
 		int m_attack;
@@ -38,6 +37,7 @@ class Actor
 		float m_actorSpeed;
 		Vector2 m_velocity;
 		Vector2 m_position;
+		MoveDirection m_currentDirection;
 		World *m_currentWorld;
 
 		GraphicsComponent *m_graphics;
@@ -55,26 +55,33 @@ class Actor
 		void SetActorDirection(MoveDirection direction = NotMoving);
 		void SetActorCurrentWorld(World *world);
 		Sprite* GetActorSprite();
+		MoveDirection GetActorDirection();
 		Vector2 GetActorPosition();
 		void SetActorPosition(Vector2 position);
 		Vector2 GetActorVelocity();
 		void SetActorVelocity(Vector2 velocity);
 		float GetActorMovementSpeed();
 		void SetActorMovementSpeed(float speed);
+		GraphicsComponent* GetGraphicsComponent();
+		void SetGraphicsComponent(GraphicsComponent *graphics);
+		PhysicsComponent* GetPhysicsComponent();
+		void SetPhysicsComponent(PhysicsComponent *physics);
+		InputComponent* GetInputComponent();
+		void SetInputComponent(InputComponent *input);
 };
 
 class GraphicsComponent
 {
 	public:
-		virtual void update(Actor &actor, RenderManager *graphics) = 0;
+		virtual void update(Actor &actor, RenderManager &graphics) = 0;
 };
 
 class PlayerGraphicsComponent : public GraphicsComponent
 {
 	public:
-		virtual void update(Actor &actor, RenderManager *graphics)
+		virtual void update(Actor &actor, RenderManager &graphics)
 		{
-			graphics->RenderObject(actor.GetActorSprite()->GetSpriteTexture(), actor.GetActorSprite()->GetSpriteRectangle(), actor.GetActorPosition());
+			graphics.RenderObject(actor.GetActorSprite()->GetSpriteTexture(), actor.GetActorSprite()->GetSpriteRectangle(), actor.GetActorPosition());
 		}
 };
 
@@ -91,9 +98,9 @@ class PlayerPhysicsCompoonent : public PhysicsComponent
 		{
 			Vector2 velocity = actor.GetActorVelocity();
 			Vector2 position = actor.GetActorPosition();
-			position.x = velocity.x * timeDelta;
-			position.y = velocity.y * timeDelta;
-			position = world.CheckCollission(position, velocity, actor.GetActorMovementSpeed());
+			position.x += (velocity.x * actor.GetActorMovementSpeed()) * timeDelta;
+			position.y += (velocity.y * actor.GetActorMovementSpeed()) * timeDelta;
+			position = world.CheckCollission(position, actor.GetActorSprite());
 			actor.SetActorPosition(position);
 		}
 };
@@ -101,61 +108,32 @@ class PlayerPhysicsCompoonent : public PhysicsComponent
 class InputComponent
 {
 	public:
-		virtual void update(Actor &actor, bool pressed, GameActions action) = 0;
+		virtual void update(Actor &actor) = 0;
 };
 
 class PlayerInputComponent : public InputComponent
 {
 	public:
-		virtual void update(Actor &actor, bool pressed, GameActions action)
+		virtual void update(Actor &actor)
 		{
-			if (pressed)
+			switch (actor.GetActorDirection())
 			{
-				switch (action)
-				{
-					case ActionUp:
-						break;
-					case ActionDown:
-						break;
-					case ActionLeft:
-						break;
-					case ActionRight:
-						break;
-					case ActionAccept:
-						break;
-					case ActionCancel:
-						break;
-					case CharacterAttack:
-						break;
-					case CharacterDefense:
-						break;
-					case DirectionMoveLeft:
-						actor.SetActorVelocity(Vector2(-1, actor.GetActorVelocity().y));
-						actor.SetActorDirection(MoveLeft);
-						break;
-					case DirectionMoveRight:
-						actor.SetActorVelocity(Vector2(1, actor.GetActorVelocity().y));
-						actor.SetActorDirection(MoveRight);
-						break;
-					case DirectionMoveUp:
-						actor.SetActorVelocity(Vector2(actor.GetActorVelocity().x, -1));
-						actor.SetActorDirection(MoveUp);
-						break;
-					case DirectionMoveDown:
-						actor.SetActorVelocity(Vector2(actor.GetActorVelocity().x, 1));
-						actor.SetActorDirection(MoveDown);
-						break;
-					case SystemTest:
-						break;
-					case SystemExitEarly:
-						break;
-					case SystemConsole:
-						break;
-					default:
-						actor.SetActorVelocity(Vector2(0, 0));
-						actor.SetActorDirection(NotMoving);
-						break;
-				}
+				case MoveLeft:
+					actor.SetActorVelocity(Vector2(-1, actor.GetActorVelocity().y));
+					break;
+				case MoveRight:
+					actor.SetActorVelocity(Vector2(1, actor.GetActorVelocity().y));
+					break;
+				case MoveUp:
+					actor.SetActorVelocity(Vector2(actor.GetActorVelocity().x, -1));
+					break;
+				case MoveDown:
+					actor.SetActorVelocity(Vector2(actor.GetActorVelocity().x, 1));
+					break;
+				case NotMoving:
+				default:
+					actor.SetActorVelocity(Vector2(0, 0));
+					break;
 			}
 		}
 };

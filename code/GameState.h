@@ -94,7 +94,8 @@ class NewGameState : public GameState
 {
 	protected:
 		World *testWorld;
-		//Actor *testCharacter;
+		Actor *testCharacter;
+		Sprite *testCharacterSprite;
 		string m_fileName;
 
 	public:

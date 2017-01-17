@@ -30,18 +30,65 @@ void Actor::BuildActor(int hp, int attack, int defense, float speed, GraphicsCom
 
 void Actor::Update(float deltaTime)
 {
-	m_sprite->UpdateSprite(deltaTime);
+	m_input->update(*this);
 	m_physics->update(*this, deltaTime, *m_currentWorld);
+	m_sprite->UpdateSprite(deltaTime);
 }
 
 void Actor::DrawActor()
 {
-	m_graphics->update(*this, &RenderManager::GetInstance());
+	m_graphics->update(*this, RenderManager::GetInstance());
 }
 
 void Actor::MoveActor(bool pressed, GameActions action)
 {
-	m_input->update(*this, pressed, action);
+	if (pressed)
+	{
+		switch (action)
+		{
+			case ActionUp:
+				break;
+			case ActionDown:
+				break;
+			case ActionLeft:
+				break;
+			case ActionRight:
+				break;
+			case ActionAccept:
+				break;
+			case ActionCancel:
+				break;
+			case CharacterAttack:
+				break;
+			case CharacterDefense:
+				break;
+			case DirectionMoveLeft:
+				SetActorDirection(MoveLeft);
+				break;
+			case DirectionMoveRight:
+				SetActorDirection(MoveRight);
+				break;
+			case DirectionMoveUp:
+				SetActorDirection(MoveUp);
+				break;
+			case DirectionMoveDown:
+				SetActorDirection(MoveDown);
+				break;
+			case SystemTest:
+				break;
+			case SystemExitEarly:
+				break;
+			case SystemConsole:
+				break;
+			default:
+				SetActorDirection(NotMoving);
+				break;
+		}
+	}
+	else
+	{
+		SetActorDirection(NotMoving);
+	}
 }
 
 void Actor::SetActorDirection(MoveDirection direction)
@@ -67,6 +114,7 @@ void Actor::SetActorDirection(MoveDirection direction)
 			m_sprite->SetCurrentAction("notMoving");
 			break;
 	}
+	m_currentDirection = direction;
 }
 
 void Actor::SetActorCurrentWorld(World * world)
@@ -76,8 +124,12 @@ void Actor::SetActorCurrentWorld(World * world)
 
 Sprite * Actor::GetActorSprite()
 {
-	if (m_sprite != NULL)
-		return m_sprite;
+	return m_sprite;
+}
+
+MoveDirection Actor::GetActorDirection()
+{
+	return m_currentDirection;
 }
 
 Vector2 Actor::GetActorPosition()
@@ -108,4 +160,34 @@ float Actor::GetActorMovementSpeed()
 void Actor::SetActorMovementSpeed(float speed)
 {
 	m_actorSpeed = speed;
+}
+
+GraphicsComponent * Actor::GetGraphicsComponent()
+{
+	return m_graphics;
+}
+
+void Actor::SetGraphicsComponent(GraphicsComponent * graphics)
+{
+	m_graphics = graphics;
+}
+
+PhysicsComponent * Actor::GetPhysicsComponent()
+{
+	return m_physics;
+}
+
+void Actor::SetPhysicsComponent(PhysicsComponent * physics)
+{
+	m_physics = physics;
+}
+
+InputComponent * Actor::GetInputComponent()
+{
+	return m_input;
+}
+
+void Actor::SetInputComponent(InputComponent * input)
+{
+	m_input = input;
 }

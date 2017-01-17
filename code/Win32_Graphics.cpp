@@ -351,9 +351,8 @@ void Win32_Graphics::DrawTextToScreen(string text, Vector2 position, const XMVEC
 	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, color);
 }
 
-void Win32_Graphics::DrawObject(string textureName, SimpleMath::Rectangle destRect, const XMVECTORF32& color)
+void Win32_Graphics::DrawObject(string textureName, RECT destRect, const XMVECTORF32& color)
 {
-	RECT source = destRect;
 	if (graphicsInitialized)
 	{
 		if (!textureName.empty())
@@ -361,7 +360,7 @@ void Win32_Graphics::DrawObject(string textureName, SimpleMath::Rectangle destRe
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), source, color);
+				m_spriteBatch->Draw(textureIndex->second.Get(), destRect, color);
 			}
 		}
 	}
@@ -382,10 +381,8 @@ void Win32_Graphics::DrawObject(string textureName, Vector2 position, const XMVE
 	}
 }
 
-void Win32_Graphics::DrawObject(string textureName, SimpleMath::Rectangle sourceRect, Vector2 position, const XMVECTORF32& color)
+void Win32_Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 position, const XMVECTORF32& color)
 {
-	RECT source = sourceRect;
-
 	if (graphicsInitialized)
 	{
 		if (!textureName.empty())
@@ -393,7 +390,7 @@ void Win32_Graphics::DrawObject(string textureName, SimpleMath::Rectangle source
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), position, &source, color);
+				m_spriteBatch->Draw(textureIndex->second.Get(), position, &sourceRect, color);
 			}
 		}
 	}

@@ -21,6 +21,7 @@ void Sprite::UpdateSprite(float timeDelta)
 	if (m_currentAction.endFrame - m_currentAction.startFrame > 0)
 	{
 		m_currentAction.animationTimer += timeDelta;
+
 		if (m_currentAction.animationTimer > m_currentAction.frameDelay)
 		{
 			m_currentAction.animationTimer -= m_currentAction.frameDelay;
@@ -34,20 +35,23 @@ void Sprite::UpdateSprite(float timeDelta)
 	}
 }
 
-void Sprite::AddAction(int start, int end, float frameD, string name)
+void Sprite::AddAction(int start, int end, double frameD, string name)
 {
 	AnimatedAction tempAction{ start, end, 0, frameD };
 	m_actionAnimations.insert(pair<string, AnimatedAction>(name, tempAction));
 }
 
-void Sprite::BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string name)
+void Sprite::BuildSprite(int w, int h, int cols, int rows, float scale, string name)
 {
-	m_spriteInfo.width = w;
-	m_spriteInfo.height = h;
+	m_spriteInfo.width = w / cols;
+	m_spriteInfo.height = h / rows;
 	m_spriteInfo.scale = scale;
 	m_spriteInfo.textureName = name;
 	m_spriteInfo.columns = cols;
 	m_spriteInfo.rows = rows;
+
+	SetCurrentAction("notMoving");
+	SetSourceRectangle();
 }
 
 void Sprite::SetCurrentAction(string name)
@@ -56,6 +60,8 @@ void Sprite::SetCurrentAction(string name)
 
 	if (actionIndex != m_actionAnimations.end())
 		m_currentAction = actionIndex->second;
+
+	m_currentAction.currentFrame = m_currentAction.startFrame;
 }
 
 void Sprite::SetCurrentFrame(int frame)
@@ -69,8 +75,8 @@ void Sprite::SetCurrentFrame(int frame)
 
 void Sprite::SetSourceRectangle()
 {
-	m_spriteInfo.sourceRect.x = (m_currentAction.currentFrame % m_spriteInfo.columns) * m_spriteInfo.width;
-	m_spriteInfo.sourceRect.width = m_spriteInfo.sourceRect.x + m_spriteInfo.width;
-	m_spriteInfo.sourceRect.y = (m_currentAction.currentFrame / m_spriteInfo.columns) * m_spriteInfo.height;
-	m_spriteInfo.sourceRect.height = m_spriteInfo.sourceRect.y + m_spriteInfo.height;
+	m_spriteInfo.sourceRect.left = (m_currentAction.currentFrame % m_spriteInfo.columns) * m_spriteInfo.width;
+	m_spriteInfo.sourceRect.right = m_spriteInfo.sourceRect.left + m_spriteInfo.width;
+	m_spriteInfo.sourceRect.top = (m_currentAction.currentFrame / m_spriteInfo.columns) * m_spriteInfo.height;
+	m_spriteInfo.sourceRect.bottom = m_spriteInfo.sourceRect.top + m_spriteInfo.height;
 }

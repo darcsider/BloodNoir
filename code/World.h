@@ -10,7 +10,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #include "Includes.h"
 #include "RenderManager.h"
 #include "InputManager.h"
-#include <tinyxml2.h>
+#include "Sprite.h"
 
 enum TriggerType
 {
@@ -48,7 +48,7 @@ struct SectionLayer
 	bool					m_autoScroll;
 	int						m_width;
 	int						m_height;
-	SimpleMath::Rectangle	m_sourceRectangle;
+	RECT					m_sourceRectangle;
 	int GetWidth()
 	{
 		return m_width;
@@ -127,7 +127,7 @@ class World
 		void DrawWorld();
 		void SetCurrentWorldSection(int worldSection);
 		void MoveWorld(bool move, GameActions action);
-		Vector2 CheckCollission(Vector2 position, Vector2 velocity, float movementSpeed);
+		Vector2 CheckCollission(Vector2 position, Sprite *sprite);
 		TriggerType CheckTriggerCollision(Vector2 position);
 
 		void CloseGame(bool pressed, GameActions action)

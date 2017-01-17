@@ -44,7 +44,7 @@ bool Game::GameInitialize(HWND window, int width, int height)
 	m_stateManager = new GameStateManager();
 	m_stateManager->BuildStateManager();
 
-	m_audioSystem->PlayBackgroundMusic();
+	//m_audioSystem->PlayBackgroundMusic();
 	m_gameInitialized = true;
 	return true;
 }

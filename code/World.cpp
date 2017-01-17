@@ -52,19 +52,19 @@ void World::MoveWorld(bool move, GameActions action)
 		m_currentSection.UpdateVelocity(0);
 }
 
-Vector2 World::CheckCollission(Vector2 position, Vector2 velocity, float movementSpeed)
+Vector2 World::CheckCollission(Vector2 position, Sprite *sprite)
 {
-	if (((position.x + movementSpeed) * velocity.x) < 0)
+	if (position.x < 0)
 		position.x = 0;
 	
-	if (((position.x + movementSpeed) * velocity.x) > (float)RenderManager::GetInstance().GetGameWidth())
-		position.x = (float)RenderManager::GetInstance().GetGameWidth();
+	if (position.x + (float)sprite->GetSpriteWidth() > (float)RenderManager::GetInstance().GetGameWidth())
+		position.x = (float)RenderManager::GetInstance().GetGameWidth() - (float)sprite->GetSpriteWidth();
 
-	if (((position.y + movementSpeed) * velocity.y) < 0)
+	if (position.y < 0)
 		position.y = 0;
 
-	if (((position.y + movementSpeed) * velocity.y) > (float)RenderManager::GetInstance().GetGameHeight())
-		position.y = (float)RenderManager::GetInstance().GetGameHeight();
+	if (position.y + (float)sprite->GetSpriteHeight() > (float)RenderManager::GetInstance().GetGameHeight())
+		position.y = (float)RenderManager::GetInstance().GetGameHeight() - (float)sprite->GetSpriteHeight();
 
 	return position;
 }
@@ -220,10 +220,10 @@ void WorldSection::BuildWorldSection(string fileName)
 				tempLayer.m_autoScroll = true;
 			else
 				tempLayer.m_autoScroll = false;
-			tempLayer.m_sourceRectangle.x = 0;
-			tempLayer.m_sourceRectangle.y = 0;
-			tempLayer.m_sourceRectangle.width = RenderManager::GetInstance().GetGameWidth();
-			tempLayer.m_sourceRectangle.height = RenderManager::GetInstance().GetGameHeight();
+			tempLayer.m_sourceRectangle.left = 0;
+			tempLayer.m_sourceRectangle.top = 0;
+			tempLayer.m_sourceRectangle.right = RenderManager::GetInstance().GetGameWidth();
+			tempLayer.m_sourceRectangle.bottom = RenderManager::GetInstance().GetGameHeight();
 			textDesc = RenderManager::GetInstance().getTextureDesc(tempLayer.m_textureName);
 			tempLayer.m_width = textDesc.Width;
 			tempLayer.m_height = textDesc.Height;
@@ -320,29 +320,29 @@ void WorldSection::UpdateWorldSection(float delta)
 
 	for (layerIterator = m_layers.begin(); layerIterator != m_layers.end(); layerIterator++)
 	{
-		(layerIterator)->m_sourceRectangle.x += (LONG)((layerIterator)->m_velocity * delta);
-		(layerIterator)->m_sourceRectangle.width += (LONG)((layerIterator)->m_velocity * delta);
+		(layerIterator)->m_sourceRectangle.left += (LONG)((layerIterator)->m_velocity * delta);
+		(layerIterator)->m_sourceRectangle.right += (LONG)((layerIterator)->m_velocity * delta);
 
 		if (!(layerIterator)->m_autoScroll)
 		{
-			if ((layerIterator)->m_sourceRectangle.x < 0)
+			if ((layerIterator)->m_sourceRectangle.left < 0)
 			{
-				(layerIterator)->m_sourceRectangle.x = 0;
-				(layerIterator)->m_sourceRectangle.width = (layerIterator)->m_sourceRectangle.y + RenderManager::GetInstance().GetGameWidth();
+				(layerIterator)->m_sourceRectangle.left = 0;
+				(layerIterator)->m_sourceRectangle.right = (layerIterator)->m_sourceRectangle.top + RenderManager::GetInstance().GetGameWidth();
 			}
 
-			if ((layerIterator)->m_sourceRectangle.width >(layerIterator)->m_width)
+			if ((layerIterator)->m_sourceRectangle.right >(layerIterator)->m_width)
 			{
-				(layerIterator)->m_sourceRectangle.width = (layerIterator)->m_width;
-				(layerIterator)->m_sourceRectangle.x = (layerIterator)->m_sourceRectangle.width - RenderManager::GetInstance().GetGameWidth();
+				(layerIterator)->m_sourceRectangle.right = (layerIterator)->m_width;
+				(layerIterator)->m_sourceRectangle.left = (layerIterator)->m_sourceRectangle.right - RenderManager::GetInstance().GetGameWidth();
 			}
 		}
 		else
 		{
-			if ((layerIterator)->m_sourceRectangle.width > (layerIterator)->m_width)
+			if ((layerIterator)->m_sourceRectangle.right > (layerIterator)->m_width)
 			{
-				(layerIterator)->m_sourceRectangle.x = 0;
-				(layerIterator)->m_sourceRectangle.width = RenderManager::GetInstance().GetGameWidth();
+				(layerIterator)->m_sourceRectangle.left = 0;
+				(layerIterator)->m_sourceRectangle.right = RenderManager::GetInstance().GetGameWidth();
 			}
 		}
 	}

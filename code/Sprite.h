@@ -16,7 +16,7 @@ struct SpriteData
 	int columns;
 	int rows;
 	float scale;
-	SimpleMath::Rectangle sourceRect;
+	RECT sourceRect;
 	string textureName;
 };
 
@@ -25,8 +25,8 @@ struct AnimatedAction
 	int startFrame;
 	int endFrame;
 	int currentFrame;
-	float frameDelay;
-	float animationTimer;
+	double frameDelay;
+	double animationTimer;
 };
 
 class Sprite
@@ -40,8 +40,8 @@ class Sprite
 		Sprite();
 		~Sprite();
 		void UpdateSprite(float timeDelta);
-		void AddAction(int start, int end, float frameD, string name);
-		void BuildSprite(int w, int h, int cols, int rows, float scale, float startx, float starty, string name);
+		void AddAction(int start, int end, double frameD, string name);
+		void BuildSprite(int w, int h, int cols, int rows, float scale, string name);
 		void SetCurrentAction(string name);
 		void SetCurrentFrame(int frame);
 		void SetSourceRectangle();
@@ -61,7 +61,7 @@ class Sprite
 			return m_spriteInfo.height;
 		}
 
-		SimpleMath::Rectangle GetSpriteRectangle()
+		RECT GetSpriteRectangle()
 		{
 			return m_spriteInfo.sourceRect;
 		}

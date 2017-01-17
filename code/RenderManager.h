@@ -43,9 +43,9 @@ class RenderManager
 
 		void AddTexture(string filename, string name);
 		
-		void RenderObject(string name, SimpleMath::Rectangle destRect, const XMVECTORF32& color = Colors::White);
+		void RenderObject(string name, RECT destRect, const XMVECTORF32& color = Colors::White);
 		void RenderObject(string name, Vector2 position = Vector2(0.0, 0.0), const XMVECTORF32& color = Colors::White);
-		void RenderObject(string name, SimpleMath::Rectangle sourceRect, Vector2 position, const XMVECTORF32& color = Colors::White);
+		void RenderObject(string name, RECT sourceRect, Vector2 position, const XMVECTORF32& color = Colors::White);
 		void RenderText(string text, Vector2 position, const XMVECTORF32& color = Colors::Black);
 
 		void OnWindowSizeChange();

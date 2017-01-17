@@ -188,7 +188,6 @@
     <ClInclude Include="code\Includes.h" />
     <ClInclude Include="code\InputManager.h" />
     <ClInclude Include="code\NVGSAInterface.h" />
-    <ClInclude Include="code\Physics.h" />
     <ClInclude Include="code\RenderManager.h" />
     <ClInclude Include="code\Sprite.h" />
     <ClInclude Include="code\Win32_Audio.h" />
@@ -208,7 +207,6 @@
     <ClCompile Include="code\GameTiming.cpp" />
     <ClCompile Include="code\InputManager.cpp" />
     <ClCompile Include="code\NVGSAInterface.cpp" />
-    <ClCompile Include="code\Physics.cpp" />
     <ClCompile Include="code\RenderManager.cpp" />
     <ClCompile Include="code\Sprite.cpp" />
     <ClCompile Include="code\Win32_Audio.cpp" />

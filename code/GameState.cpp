@@ -11,11 +11,8 @@ BannerParadeState::BannerParadeState()
 
 }
 
-//BannerParadeState::BannerParadeState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
 BannerParadeState::BannerParadeState(function<void(StateTypes)> funcPoint, string filename)
 {
-	//m_graphics = graphics;
-	//m_input = input;
 	m_stateChange = funcPoint;
 	m_bannerDelay = 2.0f;
 	m_stateType = Banner;
@@ -111,11 +108,8 @@ MainMenuState::MainMenuState()
 {
 }
 
-//MainMenuState::MainMenuState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
 MainMenuState::MainMenuState(function<void(StateTypes)> funcPoint, string filename)
 {
-	//m_graphics = graphics;
-	//m_input = input;
 	m_stateChange = funcPoint;
 	anyKeyPressed = false;
 	initialized = false;
@@ -299,11 +293,8 @@ NewGameState::NewGameState()
 {
 }
 
-//NewGameState::NewGameState(RenderManager * graphics, InputManager * input, function<void(StateTypes)> funcPoint, string filename)
 NewGameState::NewGameState(function<void(StateTypes)> funcPoint, string filename)
 {
-	//m_graphics = graphics;
-	//m_input = input;
 	m_stateChange = funcPoint;
 	m_fileName = filename;
 	m_stateType = NewGame;
@@ -347,7 +338,6 @@ void NewGameState::BuildNewGameState()
 
 	testWorld = new World();
 	testWorld->InitializeWorld(mapFileName);
-	//testWorld->SetGameWorldDimensions(m_gameWidth, m_gameHeight);
 	testWorld->BuildWorld();
 }
 
@@ -373,32 +363,42 @@ void NewGameState::SetupInput()
 	InputManager::GetInstance().AddKeyboardActionBinding(ActionLeft, moveMap);
 	InputManager::GetInstance().AddKeyboardActionBinding(ActionRight, moveMap);
 
-	//SetupCharacter();
+	SetupCharacter();
 }
 
 void NewGameState::SetupCharacter()
 {
-	/*function<void(bool)> funcMoveLeft = bind(&Actor::MoveActorLeft, &testCharacter, placeholders::_1);
-	m_input->AddKeyboardActionBinding(ActionLeft, funcMoveLeft);
+	testCharacter = new Actor();
+	testCharacterSprite = new Sprite();
 
-	function<void(bool)> funcMoveRight = bind(&Actor::MoveActorLeft, &testCharacter, placeholders::_1);
-	m_input->AddKeyboardActionBinding(ActionRight, funcMoveRight);
+	// NONE of this will stay this way simply testing that character can display on screen and move around properly.
+	D3D11_TEXTURE2D_DESC charDesc = RenderManager::GetInstance().getTextureDesc("TestCharacter");
+	testCharacterSprite->BuildSprite(charDesc.Width, charDesc.Height, 12, 8, 1, "TestCharacter");
+	testCharacterSprite->AddAction(12, 14, 0.15, "moveLeft");
+	testCharacterSprite->AddAction(24, 26, 0.15, "moveRight");
+	testCharacterSprite->AddAction(36, 38, 0.15, "moveUp");
+	testCharacterSprite->AddAction(0, 2, 0.15, "moveDown");
+	testCharacterSprite->AddAction(0, 0, 0.15, "notMoving");
+	testCharacterSprite->SetCurrentFrame(0);
+	testCharacter->BuildActor(100, 100, 100, 100, new PlayerGraphicsComponent, new PlayerPhysicsCompoonent, new PlayerInputComponent, testCharacterSprite);
+	testCharacter->SetActorPosition(Vector2(100, 100));
+	testCharacter->SetActorCurrentWorld(testWorld);
 
-	function<void(bool)> funcMoveUp = bind(&Actor::MoveActorLeft, &testCharacter, placeholders::_1);
-	m_input->AddKeyboardActionBinding(ActionUp, funcMoveUp);
-
-	function<void(bool)> funcMoveDown = bind(&Actor::MoveActorLeft, &testCharacter, placeholders::_1);
-	m_input->AddKeyboardActionBinding(ActionDown, funcMoveDown);*/
+	function<void(bool, GameActions)> moveActor = bind(&Actor::MoveActor, testCharacter, placeholders::_1, placeholders::_2);
+	InputManager::GetInstance().AddKeyboardActionBinding(DirectionMoveLeft, moveActor);
+	InputManager::GetInstance().AddKeyboardActionBinding(DirectionMoveRight, moveActor);
+	InputManager::GetInstance().AddKeyboardActionBinding(DirectionMoveUp, moveActor);
+	InputManager::GetInstance().AddKeyboardActionBinding(DirectionMoveDown, moveActor);
 }
 
 void NewGameState::Update(float delta)
 {
 	testWorld->UpdateWorld(delta);
-	//testCharacter->UpdateActor(delta);
+	testCharacter->Update(delta);
 }
 
 void NewGameState::Execute()
 {
 	testWorld->DrawWorld();
-	//testCharacter->DrawActor();
+	testCharacter->DrawActor();
 }
