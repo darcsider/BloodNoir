@@ -30,11 +30,7 @@ class Console
 		RECT							m_textLayout;			// layout of the text within the console window
 		unsigned int					m_width;				// width of the console
 		unsigned int					m_height;				// height of the console
-		unsigned int					m_columns;
-		unsigned int					m_rows;
-		unsigned int					m_currentColumn;
-		unsigned int					m_currentLine;
-		float							m_lineSpacing;
+		float							m_lineSpacing;			// what is the spacing between lines for the active font
 		char							m_characterInput;		// recent character entered in (not sure if I'm going to use this)
 		bool							m_newline;				// did the end user hit enter? yes=process command, no=keep inputing
 		bool							m_visible;				// should the console be displayed or not?
@@ -53,8 +49,10 @@ class Console
 		// Initialize the Console
 		bool Initialize(Vector2 startPosition, int width, int height, XMFLOAT4 backColor);
 
+		// draw the console to the screen and any text being typed
 		void Draw();
 
+		// hide or show the console window from the screen when button pressed
 		void HideShow(bool notUsed, GameActions action)
 		{
 			if (notUsed)
@@ -64,21 +62,19 @@ class Console
 			}
 		}
 
+		// get whether or not the window is currently set to visible
 		bool IsVisible()
 		{
 			return m_visible;
 		}
 
+		// get the text currently being typed in and add it to buffer
 		void TextInput(WPARAM wParam);
 
+		// add the specific command to the set of commands that can be typed into console
 		void AddCommand(string commandName, function<void()> funcPoint);
 
+		// process the specific command being passed in
 		void ProcessCommand(std::string CommandName);
-
-		// Call when graphics device is lost.
-		void onLostDevice();
-
-		// Call when graphics device is reset.
-		void onResetDevice();
 };
 #endif

@@ -6,18 +6,21 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "GameStateManager.h"
 
-GameStateManager::GameStateManager()
+GameStateManager::GameStateManager() :
+	m_stateChange(false)
 {
-	m_stateChange = false;
+	// left blank for now
 }
 
 GameStateManager::~GameStateManager()
 {
-
+	// left blank for now
 }
 
 void GameStateManager::BuildStateManager()
 {
+	// build the state manager adding all states to the state manager
+	// and passing each state its text file to be used to build itself
 	function<void(StateTypes)> funcPointer = bind(&GameStateManager::ChangeState, this, placeholders::_1);
 	BannerParadeState *banner = new BannerParadeState(funcPointer, "..\\data\\BannerParade.txt");
 	m_gameStates.push_back(banner);
@@ -36,48 +39,14 @@ void GameStateManager::BuildStateManager()
 
 void GameStateManager::ChangeState(StateTypes type)
 {
-	StateTypes newType;
-	switch (type)
-	{
-		case Banner:
-			newType = Banner;
-			break;
-		case MainMenu:
-			newType = MainMenu;
-			break;
-		case NewGame:
-			newType = NewGame;
-			break;
-		case Tutorial:
-			newType = Tutorial;
-			break;
-		case MapSelect:
-			newType = MapSelect;
-			break;
-		case InGame:
-			newType = InGame;
-			break;
-		case Paused:
-			newType = Paused;
-			break;
-		case LoadSave:
-			newType = LoadSave;
-			break;
-		case Options:
-			newType = Options;
-			break;
-		case OnExit:
-			newType = OnExit;
-			break;
-	}
-
+	// change the current state based on what is passed in
 	vector<GameState*>::iterator stateIterator;
 
 	for (stateIterator = m_gameStates.begin(); stateIterator != m_gameStates.end(); stateIterator++)
 	{
-		if ((*stateIterator)->GetStateType() == newType)
+		if ((*stateIterator)->GetStateType() == type)
 		{
-			m_currentStateType = newType;
+			m_currentStateType = type;
 			m_stateChange = true;
 			break;
 		}
@@ -86,11 +55,13 @@ void GameStateManager::ChangeState(StateTypes type)
 
 void GameStateManager::Update(float delta)
 {
+	// update the current state
 	m_currentState->Update(delta);
 }
 
 void GameStateManager::Execute()
 {
+	// execute the currentState then check for stateChange happening
 	m_currentState->Execute();
 	if (m_stateChange)
 	{

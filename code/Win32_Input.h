@@ -9,6 +9,8 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #define WININPUT_H
 #include "Includes.h"
 
+// enumeration for XBOXOne Game Pads
+// used so I can tie Actions to the buttons of the controller
 enum XBOXOneGamePad
 {
 	XBOXOneUp = 1,
@@ -29,6 +31,8 @@ enum XBOXOneGamePad
 	XBOXOneB = 16
 };
 
+// enumeration of Mouse Buttons
+// used to tie actions to the mouse buttons
 enum MouseButtons
 {
 	LeftButton,
@@ -36,6 +40,8 @@ enum MouseButtons
 	RightButton
 };
 
+// enumeration of Game Actions that
+// I can tie keyboard, mouse, and gamepad buttons to
 enum GameActions
 {
 	ActionUp = 1,
@@ -55,46 +61,59 @@ enum GameActions
 	SystemConsole = 15
 };
 
+// windows platform specific input class
 class Win32Input
 {
 	protected:
-		unique_ptr<GamePad> m_gamePad;
-		GamePad::ButtonStateTracker m_gamePadTracker;
+		unique_ptr<GamePad> m_gamePad;	// XBOXOne gamepad object
+		GamePad::ButtonStateTracker m_gamePadTracker;	// tracker used to get the state of buttons on gamepad
 
-		unique_ptr<Keyboard> m_keyboard;
-		Keyboard::Keys m_key;
-		Keyboard::KeyboardStateTracker m_keyboardTracker;
+		unique_ptr<Keyboard> m_keyboard;	// directxTK keyboard object
+		Keyboard::Keys m_key;				// directTK key object
+		Keyboard::KeyboardStateTracker m_keyboardTracker;	// directTK keyboard state tracker
 
-		map<GameActions, XBOXOneGamePad> m_gpBindings;
+		map<GameActions, XBOXOneGamePad> m_gpBindings;	// collection of actions to gamepad controls bindings
 
-		map<GameActions, Keyboard::Keys> m_keyBindings;
-		map<GameActions, function<void(bool, GameActions)>> m_gameActionBindings;
+		map<GameActions, Keyboard::Keys> m_keyBindings;	// collection of actions to keyboard keys bindings
+		map<GameActions, function<void(bool, GameActions)>> m_gameActionBindings;	// collection of actions to function pointers
 
+		// build a default set of bindings for testing purposes will change to better
+		// control scheme
 		void BuildDefaultBindings();
 
 	public:
+		// constructor initializes DirectXTK input objects
 		Win32Input();
+		// destructor does nothing currently
 		~Win32Input();
+		// clear out all currnet function pointers
 		void ClearFunctionPointers();
+		// process the current set of commands
 		void ProcessCommands();
 
-		// testing functions
+		// change what key is bound to what action in the collection
 		void ChangeKeybinding(GameActions action, Keyboard::Keys key);
-		void AddKeyboardActionBinding(GameActions action, function<void(bool,GameActions)> funcPoint);
+		// add a new game action binding
+		void AddGameActionBinding(GameActions action, function<void(bool,GameActions)> funcPoint);
 
+		// process keyboard commands
 		void ProcessKeyboard();
+		// process gamepad commands
 		void ProcessGamePad();
 
+		// if the game looses focus stop reading game pad
 		void GamePadSuspend()
 		{
 			m_gamePad->Suspend();
 		}
 
+		// when game regains focus start reading game pad
 		void GamePadResume()
 		{
 			m_gamePad->Resume();
 		}
 
+		// get the gamepad object
 		GamePad* GetGamePad()
 		{
 			return m_gamePad.get();

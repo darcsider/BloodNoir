@@ -6,6 +6,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 =====================================================================================*/
 #include "AudioSystem.h"
 
+// constructor instantiate the active platform audio system
 AudioSystem::AudioSystem()
 {
 #if _WIN32
@@ -13,6 +14,7 @@ AudioSystem::AudioSystem()
 #endif
 }
 
+// destructor release the active platform's audio system
 AudioSystem::~AudioSystem()
 {
 #if _WIN32
@@ -20,10 +22,7 @@ AudioSystem::~AudioSystem()
 #endif
 }
 
-AudioSystem::AudioSystem(AudioSystem const & copy)
-{
-}
-
+// initialize the active platforms audio system
 void AudioSystem::InitializeAudioSystem()
 {
 #if _WIN32
@@ -31,6 +30,7 @@ void AudioSystem::InitializeAudioSystem()
 #endif
 }
 
+// called every frame update the audio engine for the active platform
 void AudioSystem::AudioSystemUpdate()
 {
 #if _WIN32
@@ -38,6 +38,7 @@ void AudioSystem::AudioSystemUpdate()
 #endif
 }
 
+// set the background music to be played through out menus, levels, etc...
 void AudioSystem::SetBackgroundMusic(string file)
 {
 #if _WIN32
@@ -45,6 +46,7 @@ void AudioSystem::SetBackgroundMusic(string file)
 #endif
 }
 
+// add an effect to the container of effects for the active platforms audio system
 void AudioSystem::AddEffect(string name, string file)
 {
 #if _WIN32
@@ -52,6 +54,7 @@ void AudioSystem::AddEffect(string name, string file)
 #endif
 }
 
+// play an effect passed in by name
 void AudioSystem::PlayEffect(string name)
 {
 #if _WIN32
@@ -59,6 +62,7 @@ void AudioSystem::PlayEffect(string name)
 #endif
 }
 
+// start playing the background music that is currently set
 void AudioSystem::PlayBackgroundMusic()
 {
 #if _WIN32
@@ -66,6 +70,7 @@ void AudioSystem::PlayBackgroundMusic()
 #endif
 }
 
+// stop playing the background music
 void AudioSystem::StopBackgroundMusic()
 {
 #if _WIN32
@@ -73,6 +78,7 @@ void AudioSystem::StopBackgroundMusic()
 #endif
 }
 
+// set the volume level of the background music
 void AudioSystem::SetBGVolume(float value)
 {
 #if _WIN32
@@ -80,6 +86,7 @@ void AudioSystem::SetBGVolume(float value)
 #endif
 }
 
+// set the volume level for all effects
 void AudioSystem::SetEffectVolume(float value)
 {
 #if _WIN32

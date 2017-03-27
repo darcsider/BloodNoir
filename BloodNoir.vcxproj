@@ -187,6 +187,7 @@
     <ClInclude Include="code\GameTiming.h" />
     <ClInclude Include="code\Includes.h" />
     <ClInclude Include="code\InputManager.h" />
+    <ClInclude Include="code\Item.h" />
     <ClInclude Include="code\NVGSAInterface.h" />
     <ClInclude Include="code\RenderManager.h" />
     <ClInclude Include="code\Sprite.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="code\GameStateManager.cpp" />
     <ClCompile Include="code\GameTiming.cpp" />
     <ClCompile Include="code\InputManager.cpp" />
+    <ClCompile Include="code\Item.cpp" />
     <ClCompile Include="code\NVGSAInterface.cpp" />
     <ClCompile Include="code\RenderManager.cpp" />
     <ClCompile Include="code\Sprite.cpp" />

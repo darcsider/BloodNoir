@@ -8,6 +8,7 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 
 Win32_Graphics::Win32_Graphics()
 {
+	// set initial values for certain properties
 	m_window = nullptr;
 	graphicsInitialized = false;
 	m4xMsaaQuality = 0;
@@ -17,6 +18,7 @@ Win32_Graphics::Win32_Graphics()
 
 Win32_Graphics::~Win32_Graphics()
 {
+	// release all of the DirectX11 objects
 	m_depthStencil.Reset();
 	m_depthStencilView.Reset();
 	m_renderTargetView.Reset();
@@ -31,6 +33,7 @@ Win32_Graphics::~Win32_Graphics()
 
 bool Win32_Graphics::InitDirectXTKObjects()
 {
+	// initialize the DirectXTK objects, SpriteBatch, SpriteFont, and various states it needs to function
 	m_graphicStates.reset(new CommonStates(m_d3dDevice.Get()));
 	m_effectFactory.reset(new EffectFactory(m_d3dDevice.Get()));
 	m_effectSystem.reset(new BasicEffect(m_d3dDevice.Get()));
@@ -57,6 +60,8 @@ bool Win32_Graphics::InitDirectXTKObjects()
 
 bool Win32_Graphics::InitializeGraphics(HWND Window, int width, int height)
 {
+	// set the window handle and width and height of the screen then initialize other
+	// things in a specific order that needs to be kept
 	m_window = Window;
 	m_gameWidth = width;
 	m_gameHeight = height;
@@ -264,12 +269,13 @@ void Win32_Graphics::CreateResources()
 
 	CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2DMS);
 	DX::ThrowIfFailed(m_d3dDevice->CreateDepthStencilView(depthStencil.Get(), &depthStencilViewDesc, m_depthStencilView.ReleaseAndGetAddressOf()));
-
-	// TODO Initialize windows' size dependent objects here.
 }
 
 bool Win32_Graphics::AddTexture(string filename, string name)
 {
+	// check to see if the texture is already part of the collection
+	// if so return false meaning it doesn't need to be added
+	// if not then add the new texture to the collection and return true
 	ComPtr<ID3D11ShaderResourceView> texture;
 	wstring convFilename = ConvertSTRtoWSTR(filename);
 
@@ -303,6 +309,7 @@ bool Win32_Graphics::AddTexture(string filename, string name)
 
 void Win32_Graphics::BeginScene()
 {
+	// start the spriteBatch
 	if (m_spriteBatch != NULL)
 	{
 		m_spriteBatch->Begin();
@@ -342,55 +349,65 @@ void Win32_Graphics::PresentScene()
 
 void Win32_Graphics::EndScene()
 {
+	// end the spriteBatch Scene
 	m_spriteBatch->End();
 }
 
 void Win32_Graphics::DrawTextToScreen(string text, Vector2 position, const XMVECTORF32& color)
 {
-
+	// draw the specific string to the screen at the specific location
 	m_spriteFont->DrawString(m_spriteBatch.get(), ConvertSTRtoWSTR(text).c_str(), position, color);
 }
 
-void Win32_Graphics::DrawObject(string textureName, RECT destRect, const XMVECTORF32& color)
+void Win32_Graphics::DrawObject(string textureName, Vector2 position)
 {
+	// check that graphics has been initialized
 	if (graphicsInitialized)
 	{
+		// make sure that the texturename has a value
 		if (!textureName.empty())
 		{
+			// find the texture in collection and then draw it to the screen
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), destRect, color);
+				m_spriteBatch->Draw(textureIndex->second.Get(), position);
 			}
 		}
 	}
 }
 
-void Win32_Graphics::DrawObject(string textureName, Vector2 position, const XMVECTORF32& color)
+void Win32_Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 position)
 {
+	// check that graphics has been initialized
 	if (graphicsInitialized)
 	{
+		// make sure that the texturename has a value
 		if (!textureName.empty())
 		{
+			// find the texture in collection and then draw it to the screen
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), position, color);
+				m_spriteBatch->Draw(textureIndex->second.Get(), position, &sourceRect);
 			}
 		}
 	}
 }
 
-void Win32_Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 position, const XMVECTORF32& color)
+void Win32_Graphics::DrawObject(string textureName, RECT sourceRect, RECT destRect)
 {
+	// check that graphics has been initialized
 	if (graphicsInitialized)
 	{
+		// make sure that the texturename has a value
 		if (!textureName.empty())
 		{
+			// find the texture in collection and then draw it to the screen
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
-				m_spriteBatch->Draw(textureIndex->second.Get(), position, &sourceRect, color);
+				m_spriteBatch->Draw(textureIndex->second.Get(), destRect, &sourceRect);
 			}
 		}
 	}
@@ -398,6 +415,7 @@ void Win32_Graphics::DrawObject(string textureName, RECT sourceRect, Vector2 pos
 
 void Win32_Graphics::DrawQuad(Vector2 position, int width, int height, XMFLOAT4 color)
 {
+	// calculate the vertex's for the 2 triangles for drawing a quad(rectangle) to the screen
 	float startX = position.x;
 	float startY = position.y;
 
@@ -409,6 +427,7 @@ void Win32_Graphics::DrawQuad(Vector2 position, int width, int height, XMFLOAT4 
 	VertexPositionColor v3(XMFLOAT3(endX, endY, 0), color);
 	VertexPositionColor v4(XMFLOAT3(startX, endY, 0), color);
 
+	// set necessary blend and depth state's
 	m_d3dContext.Get()->OMSetBlendState(m_graphicStates.get()->AlphaBlend(), nullptr, 0xFFFFFFFF);
 	m_d3dContext.Get()->OMSetDepthStencilState(m_graphicStates.get()->DepthNone(), 0);
 	m_d3dContext.Get()->RSSetState(m_graphicStates.get()->CullNone());
@@ -416,6 +435,7 @@ void Win32_Graphics::DrawQuad(Vector2 position, int width, int height, XMFLOAT4 
 	m_effectSystem->Apply(m_d3dContext.Get());
 	m_d3dContext.Get()->IASetInputLayout(m_inputLayout.Get());
 
+	// darw the primitive to the screen
 	m_primitiveBatch->Begin();
 	m_primitiveBatch->DrawQuad(v1, v2, v3, v4);
 	m_primitiveBatch->End();
@@ -428,13 +448,19 @@ D3D11_TEXTURE2D_DESC Win32_Graphics::getTextureDesc(string textureName)
 	ComPtr<ID3D11Resource> resource;
 	D3D11_RESOURCE_DIMENSION dim;
 
+	// check graphics has been initialized
 	if (graphicsInitialized)
 	{
+		// make sure the texture name isn't empty
 		if (!textureName.empty())
 		{
+			// verify that the texture exists in the container
 			auto textureIndex = m_textures.find(textureName);
 			if (textureIndex != m_textures.end())
 			{
+				// get the texture Resource View of the texture
+				// then convert to D3D11Resource
+				// and get the Description for that Resource
 				textureIndex->second.Get()->GetResource(resource.GetAddressOf());
 				resource->GetType(&dim);
 				if (dim != D3D11_RESOURCE_DIMENSION_TEXTURE2D)
@@ -489,6 +515,8 @@ bool Win32_Graphics::IsAMDChipset()
 
 void Win32_Graphics::OnDeviceLost()
 {
+	// if the graphics device was lost then reset all objects that need to be reset
+	// and attempt to get back up and running
 	m_depthStencil.Reset();
 	m_depthStencilView.Reset();
 	m_renderTargetView.Reset();

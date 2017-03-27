@@ -8,6 +8,8 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 #if _WIN32
 bool InitWindowClass(HINSTANCE program)
 {
+	// fill out the WNDCLASSEX structure for the window
+	// setting various properties for the window
 	WNDCLASSEX WindowClass;
 	WindowClass.cbSize = sizeof(WNDCLASSEX);
 	WindowClass.style = CS_HREDRAW | CS_VREDRAW;
@@ -22,6 +24,7 @@ bool InitWindowClass(HINSTANCE program)
 	WindowClass.lpszClassName = className.c_str();
 	WindowClass.hIconSm = NULL;		// Will replace this later with a small icon
 
+	// check to see if the window class can be created
 	if (RegisterClassEx(&WindowClass) == 0)
 	{
 		return false;
@@ -32,6 +35,7 @@ bool InitWindowClass(HINSTANCE program)
 
 	RECT currentDesktop;
 
+	// get the actual window width and height and pass into the game class
 	const HWND hDesktop = GetDesktopWindow();
 	GetWindowRect(hDesktop, &currentDesktop);
 	if (w < currentDesktop.right || w > currentDesktop.right)
@@ -51,8 +55,10 @@ bool InitWindowClass(HINSTANCE program)
 	rc.right = static_cast<LONG>(w);
 	rc.bottom = static_cast<LONG>(h);
 
+	// set the window RECT to whatever value has been calculated in last step
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
+	// create the window with all information that has been built before this step
 	m_window = CreateWindow(
 		className.c_str(),
 		windowTitle.c_str(),
@@ -66,6 +72,7 @@ bool InitWindowClass(HINSTANCE program)
 		program,
 		nullptr);
 
+	// if the handle is null then something went wrong and time to bail
 	if (!m_window)
 		return false;
 
@@ -84,6 +91,7 @@ int WINAPI wWinMain(_In_ HINSTANCE Program, _In_opt_ HINSTANCE PreviousProgram, 
 		return 1;
 #endif
 
+	// make sure this is the only instance of this game running on the computer if not then close application
 	const char szUniqueNamedMutex[] = "punchdrunksquirrelgames_bloodnoir";
 	HANDLE hHandle = CreateMutex(NULL, TRUE, szUniqueNamedMutex);
 	if (ERROR_ALREADY_EXISTS == GetLastError())
@@ -92,20 +100,24 @@ int WINAPI wWinMain(_In_ HINSTANCE Program, _In_opt_ HINSTANCE PreviousProgram, 
 		return(1); // Exit program
 	}
 
-
+	// create the game object
 	m_game = make_unique<Game>();
 
+	// initialize the window class
 	if (!InitWindowClass(Program))
 		return 1;
 
+	// display the window on the screen
 	ShowWindow(m_window, SW_MAXIMIZE);
 	SetWindowLongPtr(m_window, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(m_game.get()));
 
 	GetClientRect(m_window, &rc);
 
+	// initialize the game
 	if (!m_game->GameInitialize(m_window, rc.right - rc.left, rc.bottom - rc.top))
 		return 0;
 
+	// enter the message loop only leaving it when the Quit message is received
 	MSG msg = { 0 };
 	while (msg.message != WM_QUIT)
 	{
@@ -119,8 +131,10 @@ int WINAPI wWinMain(_In_ HINSTANCE Program, _In_opt_ HINSTANCE PreviousProgram, 
 			m_game->GameRun();
 		}
 	}
+	// if loop exists then reset game object
 	m_game.reset();
 
+	// release things that need to be released and return control to windows
 	CoUninitialize();
 	ReleaseMutex(hHandle); // Explicitly release mutex
 	CloseHandle(hHandle); // close handle before terminating
@@ -138,125 +152,126 @@ LRESULT CALLBACK WndProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam
 
 	auto game = reinterpret_cast<Game*>(GetWindowLongPtr(window, GWLP_USERDATA));
 
+	// process messages accordingly
 	switch (message)
 	{
-	case WM_PAINT:
-		hdc = BeginPaint(window, &ps);
-		EndPaint(window, &ps);
-		break;
+		case WM_PAINT:
+			hdc = BeginPaint(window, &ps);
+			EndPaint(window, &ps);
+			break;
 
-	case WM_SIZE:
-		if (wParam == SIZE_MINIMIZED)
-		{
-			if (!s_minimized)
+		case WM_SIZE:
+			if (wParam == SIZE_MINIMIZED)
 			{
-				s_minimized = true;
-				if (!s_in_suspend && game)
-					game->OnSuspending();
-				s_in_suspend = true;
+				if (!s_minimized)
+				{
+					s_minimized = true;
+					if (!s_in_suspend && game)
+						game->OnSuspending();
+					s_in_suspend = true;
+				}
 			}
-		}
-		else if (s_minimized)
-		{
-			s_minimized = false;
-			if (s_in_suspend && game)
-				game->OnResuming();
-			s_in_suspend = false;
-		}
-		else if (!s_in_sizemove && game)
-		{
-			game->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
-		}
-		break;
-
-	case WM_ENTERSIZEMOVE:
-		s_in_sizemove = true;
-		break;
-
-	case WM_EXITSIZEMOVE:
-		s_in_sizemove = false;
-		if (game)
-		{
-			GetClientRect(window, &rc);
-
-			game->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
-		}
-		break;
-
-	case WM_GETMINMAXINFO:
-	{
-		auto info = reinterpret_cast<MINMAXINFO*>(lParam);
-		info->ptMinTrackSize.x = 1920;
-		info->ptMinTrackSize.y = 1080;
-	}
-	break;
-
-	case WM_ACTIVATEAPP:
-		if (game)
-		{
-			if (wParam)
+			else if (s_minimized)
 			{
-				game->OnActivated();
-				game->MouseProcess(message, wParam, lParam);
-				game->KeyboardProcess(message, wParam, lParam);
-			}
-			else
-			{
-				game->OnDeactivated();
-			}
-		}
-		break;
-
-	case WM_POWERBROADCAST:
-		switch (wParam)
-		{
-		case PBT_APMQUERYSUSPEND:
-			if (!s_in_suspend && game)
-				game->OnSuspending();
-			s_in_suspend = true;
-			return true;
-
-		case PBT_APMRESUMESUSPEND:
-			if (!s_minimized)
-			{
+				s_minimized = false;
 				if (s_in_suspend && game)
 					game->OnResuming();
 				s_in_suspend = false;
 			}
-			return true;
+			else if (!s_in_sizemove && game)
+			{
+				game->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
+			}
+			break;
+
+		case WM_ENTERSIZEMOVE:
+			s_in_sizemove = true;
+			break;
+
+		case WM_EXITSIZEMOVE:
+			s_in_sizemove = false;
+			if (game)
+			{
+				GetClientRect(window, &rc);
+
+				game->OnWindowSizeChanged(rc.right - rc.left, rc.bottom - rc.top);
+			}
+			break;
+
+		case WM_GETMINMAXINFO:
+		{
+			auto info = reinterpret_cast<MINMAXINFO*>(lParam);
+			info->ptMinTrackSize.x = 1920;
+			info->ptMinTrackSize.y = 1080;
 		}
 		break;
 
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
+		case WM_ACTIVATEAPP:
+			if (game)
+			{
+				if (wParam)
+				{
+					game->OnActivated();
+					game->MouseProcess(message, wParam, lParam);
+					game->KeyboardProcess(message, wParam, lParam);
+				}
+				else
+				{
+					game->OnDeactivated();
+				}
+			}
+			break;
 
-	case WM_INPUT:
-	case WM_MOUSEMOVE:
-	case WM_LBUTTONDOWN:
-	case WM_LBUTTONUP:
-	case WM_RBUTTONDOWN:
-	case WM_RBUTTONUP:
-	case WM_MBUTTONDOWN:
-	case WM_MBUTTONUP:
-	case WM_MOUSEWHEEL:
-	case WM_XBUTTONDOWN:
-	case WM_XBUTTONUP:
-	case WM_MOUSEHOVER:
-		game->MouseProcess(message, wParam, lParam);
-		break;
+		case WM_POWERBROADCAST:
+			switch (wParam)
+			{
+				case PBT_APMQUERYSUSPEND:
+					if (!s_in_suspend && game)
+						game->OnSuspending();
+					s_in_suspend = true;
+					return true;
 
-	case WM_KEYDOWN:
-	case WM_SYSKEYDOWN:
-	case WM_KEYUP:
-	case WM_SYSKEYUP:
-		game->KeyboardProcess(message, wParam, lParam);
-		break;
+				case PBT_APMRESUMESUSPEND:
+					if (!s_minimized)
+					{
+						if (s_in_suspend && game)
+							game->OnResuming();
+						s_in_suspend = false;
+					}
+					return true;
+			}
+			break;
 
-	case WM_CHAR:
-		game->CharactersInput(wParam);
-		break;
-	}
-	return DefWindowProc(window, message, wParam, lParam);
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
+
+		case WM_INPUT:
+		case WM_MOUSEMOVE:
+		case WM_LBUTTONDOWN:
+		case WM_LBUTTONUP:
+		case WM_RBUTTONDOWN:
+		case WM_RBUTTONUP:
+		case WM_MBUTTONDOWN:
+		case WM_MBUTTONUP:
+		case WM_MOUSEWHEEL:
+		case WM_XBUTTONDOWN:
+		case WM_XBUTTONUP:
+		case WM_MOUSEHOVER:
+			game->MouseProcess(message, wParam, lParam);
+			break;
+
+		case WM_KEYDOWN:
+		case WM_SYSKEYDOWN:
+		case WM_KEYUP:
+		case WM_SYSKEYUP:
+			game->KeyboardProcess(message, wParam, lParam);
+			break;
+
+		case WM_CHAR:
+			game->CharactersInput(wParam);
+			break;
+		}
+		return DefWindowProc(window, message, wParam, lParam);
 }
 #endif

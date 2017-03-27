@@ -33,20 +33,26 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 class GameStateManager
 {
 	protected:
-		GameState *m_currentState;
-		vector<GameState*> m_gameStates;
-		bool m_stateChange;
-		StateTypes m_currentStateType;
-		StateTypes m_previousStateType;
-		int m_gameWidth;
-		int m_gameHeight;
+		GameState*			m_currentState;			// holds the currentState in the manager
+		vector<GameState*>	m_gameStates;			// collection of GameStates
+		bool				m_stateChange;			// is the state changing?
+		StateTypes			m_currentStateType;		// what is the currentStates Type
+		StateTypes			m_previousStateType;	// what is the previous States Type
+		int					m_gameWidth;			// what is the game width
+		int					m_gameHeight;			// what is the game height
 
 	public:
+		// Constructor set default value for state change left blank otherwise
 		GameStateManager();
+		// destructor left blank
 		~GameStateManager();
+		// build the state manager adding all states
 		void BuildStateManager();
+		// change the current state to the state type specified
 		void ChangeState(StateTypes type);
+		// update the current state
 		void Update(float delta);
+		// execute / process the current state
 		void Execute();
 };
 #endif

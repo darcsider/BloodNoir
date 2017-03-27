@@ -1301,6 +1301,306 @@ Once I get that working then I want to work on defining the moveable region for 
 
 Code Line Count: 4,591
 
-January 17th, 2017
+January 20th, 2017
 
 Day 142 of Development
+I have spent the past few days working and when I could I put ideas and thoughts into my development notebook. One thought that has come up today is the question of how will I handle the idea of moving from world section to world section and from world section to buildings??? Because the way it stands now I don't know that the way I represent everything would work specifically for the buildings on a world. The movement from World Section to World Section actually should be fairly easy just changing which section is the current section in the vector of sections. Thought on this topic that just came to me is maybe the answer is to make buildings just another world section? maybe the World class is a container class so to speak of World Sections and buildings are just another section that you move to and from other world sections. The Section Layers could easily be modified to have a visibility property that decides if that layer is rendered and 1 of those layers could be the collission map Vector that decides which "squares" that the Actor can move on... I need to expand on this idea tomorrow and see what I can do with it.
+
+January 21st, 2017
+
+Day 143 of Development
+Today I have begun the work to re work the world class to change it over to where buildings are just sections. I am working on re setting up the data and methods for the World Section class to be able to work as both a building and a section. I feel that this will be the easiest way to handle this whole situation and leave me with the best chance of everything functioning properly. I will continue my work tomorrow and hopefully get the game compiling and running again in the next day or 2 tops with new functionality working.
+
+January 22nd, 2017
+
+Day 144 of Development
+I'm working on the world class and all things related to it today and a thought crossed my mind about the World Section class maybe I don't need a building floor array because each floor of a building would simply be another Section object. Because I have decided recently that a building is not going to be made up of a tile map anymore because there is no need for this I will simply have a collission map array that defines what pixels so to speak the actors can move on to and not and where trigger points and objects could be placed as well. This collission map would have the possibility of several values 0 = walk, 1 = no walk, 2 = trigger point, and 3 = object placement. There may be more values in the future but for now just those values. I still can't decide if I will need to have a property that defines whether a section is a city block or a building floor section. Another thought is that maybe the world class could have 2 "arrays" of world sections 1 that represents the city blocks of the world and 1 that could be a map map<string,WorldSection> that would hold buildings and each "floor" of a building would be tied to a name that would link it to a specific building which would link back to a specific spot on the city blocks.
+
+January 25th, 2017
+
+Day 145 of Development
+I have spent the past few days trying to figure out the whole World, and World Section system and everything related to it and I'm struggling really badly with it.  Trying to figure out how to handle the physics and everything else realted to it.  I am off work tomorrow so hopefully I can get a grip on this situation and get refocused and get this project moving forward.
+
+March 1st, 2017
+
+Day 146 of Development
+Today is the first day I have gotten back to work on this version of the game.  As a team we are debating about moving the game over to 3D instead of 2D and using Unreal Engine instead of a homebrew engine.  Even so my desire as a programmer to get this working the way I want it to work is to high to not keep working on this.  Luckily the time I have spent working with the unreal engine has given me some new ideas about how to make this game engine and game work properly.  Even if Blood Noir doesn't end up being a 2D side scroling game what I build in this project will be useful in other projects that both I and the company want to build in the future.
+
+Now the epiphany if you want to call it that I have come to realize is that games like Mega Man and other 2D platformers actually use tiles for everything in the game and this is something that I kind of already knew from earlier studying in trying to figure out how to make this game but earlier I couldn't figure out why they did it like that and why they didn't just use baked images.  Why if you know how you want the level to look would you break down the end result into tiles and then have to build it in a tile map editor.  Well after spending SOOOO much time lately trying to figure out Actor's, and Collission within the world and trying to get the Actor moving around in the world and getting the world to move properly and everything I came to a realization that using a tilemap would solve many of my issues.  The issue of how to check if the Actor can move to the tile they are trying to move to regardless of direction it is and whether it is a player controlled Actor or an AI controller Actor would be SOOOOOOOOOO much simpler if I used a tilemap for displaying the world around the character.
+
+The reason for this is that instead of having to check some Rectangular region that the player can move around in or set a rectangular region for every Actor you simply use a collission checking algorithm that simply says if the tiles value at the location the Actor is trying to move is whatever acceptable range of values then allow the Actor to move to that tile, but if it is a value that is not moveable then stop the Actor from moving to that tile.  This will also solve the issue of the Actor's Sprite updating to point in the direction the player is trying to move regardless if they can move in that direction in the area they are in or not.  The Actor would simply use for collission a check that would call into the world and check can I move to the specified location or not if yes update animations and move if not stay where your at and don't change animation.
+
+This issue would also solve the problem I have with scrolling backgrounds resetting back to their original position, if the background is an auto scrolling layer when it reaches the last tile for that row of data it simple goes back to the beginning of that row of data and starts grabbing values from there again to display on the screen.  If it is not an auto scroll layer then it simply just keeps grabbing values until the last value is on screen and stops grabbing more values and displaying them.
+
+So with all this being said my goal for right now is to spend the next few days trying to convert the World system over to using a tilemap, get it rendering properly again and get the player Actor moving properly on the screen as well.
+
+Each World will be made of of World Section's each World Section will have multiple layers, there will not be a set number of layers for each section as they can be made up of as many or as few as needed for that section.  But one constant will be that the last layer of each section will be a collission, trigger points, and objects layer.  This layer will be invisible to the player as it will only be used to define to the code whether each spot in the world section or building or alley is a moveable spot, a non moveable spot, a trigger point, or an object.  If it is moveable then it will allow any Actor that is trying to move onto that tile to move onto that tile, if not then it will prevent movement onto that tile, if it is a trigger point it will be one of a set of values.
+
+Universal plan for the engine:
+tile value = 0 = moveable
+tile value = 1 = not moveable
+tile value = 2 = object
+tile value = 3 = spawnPoint
+tile value = 4 = trigger point WorldToWorld
+tile value = 5 = trigger point WorldToBuilding
+tile value = 6 = trigger point BuildingToWorld
+tile value = 7 = trigger point FloorToFloor - used in both buildings and alleys
+tile value = 8 = trigger point Tutorial? - these most likely wont stay in here
+tile value = 9 = trigger point CutScene? - these most likely wont stay in here
+
+In the text files for the World Section's the data for the buildings and alleys will be the number of them and then a text file that describes the data for it(texture, tilemap, etc...), but for the SectionToSection data it will be the number of SectionToSection Triggers, the World the Section belongs to, and then the Section Number to help connect it to which section it is connected to.????? or is this wrong must do more planning tomorrow.
+
+March 2nd, 2017
+
+Day 147 of Development
+Today I'm getting back to work on the redesign of the World system the files, and everything.  My goal for today is to get it completed and implemented and if I have enough time I will try to get the redesign started and hopefully completed of the Actor system.
+
+The challenge that I am running into in how to handle all of this is how to handle the transition between rendering a building and rendering a world section also I need to make sure that the state of the world section persists when it is left.
+
+World - Pseudocode/Data planning - class
+The world will be the container for the WorldSections, the buildings, and the Alleys, 
+string m_worldID
+vector<WorldSection*> m_worldSections
+vector<Building*> m_worldBuildings
+vector<Alley*> m_worldAlleys
+WorldSection* m_currentWorldSection
+Building* m_currentBuilding
+Alley* m_currentAlley
+SetCurrentSection(string sectionID)
+SetCurrentBuilding(string buildingID)
+SetCurrentAlley(string alleyID)
+
+
+WorldSection - class
+The world section will be the meat and potato's so to speak of the data and functionality of the World's.  It will contain a container of Layers, a container of Buildings, a container of Alleys, a container of Objects, and then a container of Triggers.
+string m_sectionID
+string m_worldID
+World* m_currentWorld
+vector<Layer> m_sectionLayers
+vector<Object> m_sectionObjects
+vector<Trigger> m_sectionTriggers
+
+Layer - struct
+string m_layerID
+vector<int> m_tileMapData
+int m_numberOfRows
+int m_numberOfColumns
+string m_tileMapTextureName
+bool m_isVisible
+
+Alley - struct
+string m_AlleyID
+string m_sectionID
+World* m_currentWorld
+vector<Layer> m_alleyLayers
+vector<Object> m_alleyObjects
+vector<Trigger> m_alleyTriggers
+
+Object - struct
+string m_objectID
+Item* m_item - if this is null then the Object was just destroyable not collectable aka trash can with nothing in it
+
+BuildingFloor - struct
+string m_floorID
+string m_buildingID
+vector<Layer> m_floorLayers
+vector<Object> m_floorObjects
+vector<Trigger> m_floorTriggers
+
+Building - struct
+string m_buildingID
+string m_sectionID
+World* m_currentWorld
+map<int,BuildingFloor> m_buildingFloors
+
+Trigger - struct
+string m_triggerID
+string m_currentLocationID
+string m_destinationLocationID
+TriggerType m_triggerType
+
+World Tile Map Version
+
+World Text File - WorldName.txt
+- WorldID - String
+- Number of World Sections - Integer non zero positive
+- WorldNameSection#.txt
+- Number of Buildings - Integer non negative
+- Location Index - Integer non negative - might not be needed
+- WorldNameSection#Building#.txt
+- END - junk data to end loop
+- Number of Alleys - Integer non negative
+- Location Index - Integer non negative - might not be needed
+- WorldNameSection#Alley#.txt
+- END - junk data to end loop
+
+World Section Text File - WorldNameSection#.txt
+- SectionID - String
+- Number of Layers - Integer non negative
+- Layer# Texture Name - String
+- Layer# Speed - Integer non negative
+- Layer# is Visible - bool - string in text file
+- Layer# Rows - Integer non negative
+- Layer# Columns - Integer non negative
+- Layer# data - Integer CDL array(Vector<int>)
+- END - junk data to end loop
+- Number of Objects - Integer non negative
+- ObjectName.txt
+- END - junk data to end loop
+- Number of Triggers - Integer non negative
+- Trigger Type - TriggerType Enum value - string in text file
+- Location Index - Integer non negative
+- LocationID - String
+- DestinationID - String
+- Destination Index - Integer non negative
+- END - junk data to end loop
+
+Building Text File - WorldNameSection#Building#.txt - thought for later can I combine logic for Buildings and Alleys?
+- BuildingID - String
+- Number of Floors - Integer non negative
+- FloorID - String
+- Number Of Layers - Integer non negative
+- Layer# Texture Name - String
+- Layer# Speed - Integer non negative
+- Layer# is Visible - bool - string in text file
+- Layer# Rows - Integer non negative
+- Layer# Columns - Integer non negative
+- Layer# data - Integer CDL array(Vector<int>)
+- END - junk data to end loop
+- Number of Objects - Integer non negative
+- ObjectName.txt
+- END - junk data to end loop
+- Number of Triggers - Integer non negative
+- Trigger Type - TriggerType Enum value - string in text file
+- Location Index - Integer non negative
+- LocationID - String
+- DestinationID - String
+- Destination Index - Integer non negative
+- END - junk data to end loop
+
+Alley Text File - WorldNameSection#Alley#.txt - thought for later can I combine logic for Buildings and Alleys?
+- AlleyID - String
+- Layer# LayerType - Enum LayerType
+- Layer# Texture Name - String
+- Layer# Speed - Integer non negative
+- Layer# is Visible - bool - string in text file
+- Layer# Rows - Integer non negative
+- Layer# Columns - Integer non negative
+- Number Of Layers - Integer non negative
+- Layer# data - Integer CDL array(Vector<int>)
+- END - junk data to end loop
+- Number of Objects - Integer non negative
+- ObjectName.txt
+- END - junk data to end loop
+- Number of Triggers - Integer non negative
+- Trigger Type - TriggerType Enum value - string in text file
+- Location Index - Integer non negative
+- LocationID - String
+- DestinationID - String
+- Destination Index - Integer non negative
+- END - junk data to end loop
+
+Object Text File - ObjectName.txt
+- Location Index - Integer non negative
+- ObjectID - String
+- Item Info - need to fill in this section later for now Objects are not going to get built in the world
+
+Wow, wow, wow the work that I have done today with re working the World.  Soooooo much information to sort through so much stuff to deal with trying to figure out the best way to lay out the data, into structures, and classes, and how the text files will be laid out and then how to read that data in and fill the data structures.  How to handle displaying things and updating things, and who should be responsible for what.  I was hoping to complete this task today but I think I will have to concede and continue my work on it tomorrow. This is just to much stuff to complete in one programming session I guess if I had spent the entire day working on it with no breaks, no food and nothing else I maybe could have gotten it done.  Whatever time to call it a night and continue my work tomorrow.
+
+March 5th, 2017
+
+Day 148 of Development
+Getting back to work on this updates again today after a couple days of working. I'm going to attempt to get more work done on World, WorldSection, Buildings, Alley's and all the other pieces related to the system responsible of managing the levels that the game is played in.
+
+So unfortunately I was not able to complete the World class and all of its other pieces including WorldSections, Buildings, Alleys, and everything else.  But I did make great progress including fully documenting everything that I have completed so far making comments for everything in the code at this point the piece I have left is to write the Update and Render methods for WorldSection, Building, and Alley, I need to write the BuildObject method as well but that will have to be built in a unfinished state because I still need to write the Item class and figure out how I want to handle Items in the game engine.
+
+So much work to be done but I am making progress.
+
+Lines of Code: 5323
+
+March 6th, 2017
+
+Day 149 of Development
+More work has been done on the project today, I believe I have the method figured out for rendering Sections which should translate over to Buildings and Alleys with the only exception being that Alleys will scroll vertically and the starting point will be at the bottom of the screen and move down to make it appear the player is moving up.  I have more work to do on this my goal at this point is to get this system complete by the end of the weekend.  At least get World's displaying on the screen again and possibly moving and animating around again.
+
+March 9th, 2017
+
+Day 150 of Development
+Today I'm working on getting the code for updating and rendering working for Buildings, and Alley's and Sections.  Of course I can't guarantee that there are no bugs and in fact if there are no bugs when I compile and run it for the first time I feel like I probably did something wrong because I just can't imagine this large of a change not having issues at first.  But none the less I have taken what I believe will work for WorldSections Update and Render and made it work for Buildings and Alleys.  I don't know that I will get anything else done tonight because the next step is to write a Collission checking method for Alleys, Buildings, and WorldSection's and that is going to require more brain function than I have tonight.
+
+Lines of Code: 5610
+
+March 12th, 2017
+
+Day 151 of Development
+Today I'm doing some touch up work on various stuff within the world code, I obviously didn't get the World done like I was hoping by this weekend but then again I underestimated the magnitude and scope of this system in the engine.  And on top of that personal problems got in the way of me doing very much programming but I'm moving forward.  I am starting to work on the collission checking plan for the world system.
+
+March 17th, 2017
+
+Day 152 of Development
+Dont feel like doing much coding today so I'm taking the time to clean up code in other systems, updating adding comments to all systems so that when I have to come back to some of it I know what the hell is going on.
+
+I think I'm done with comments for the night I got through quite a few systems did some clean up, added comments where it made sense.  Tomorrow I will pick up where I left off in InputManager.
+
+March 19th, 2017
+
+Day 153 of Development
+I have completed my cleanup and commenting of all current system in the state they are now, I will continue to keep up on comments and such as I move forward with the project.
+
+I also updated the Actor class to use the new world collission checking system, I do not have triggers and object's hooked up and don't plan on getting that part done until I get a test level built which will probably be my goal for the remainder of this week because without a test level built that I can use, I can't verify the main functionality of the world and of the actor.  So my goal for the remainder of the week by March 25th, 2017 I am going to try to have a test world built.  The sooner I get it done and get things tested the sooner I can hook up Triggers and verify they work.
+
+Objects on the other hand are not high on my list of priorities right now because I need to build the Item class before I can get Objects working.
+
+March 20th, 2017
+
+Day 154 of Development
+After doing some research on tile map scrolling / drawing I see that I have some heavy work to do on my update and render methods for this project before I can even think of testing it out with a test map.  So my goal tomorrow is to fix the issues I have and then get to work on building a test world to use.
+
+No more looking at this issue tonight because my head is starting to hurt the more I try to wrap it around the issue at hand.
+
+March 21st, 2017
+
+Day 155 of Development
+So last night as I was trying to fall asleep something occured to me about how I am handling Worlds...  It seems that my decision to use tilemap's again may not be needed.  A few weeks back when I decided to switch over to a tilemap system I did so because I thought it would solve a lot of issues I was having with trying to figure out buildings, and alleys, and everything else.  And in a way it did because it forced me to think about the world's in a different light and helped me come up with better plans for certain aspects of the engine.  But as I was thinking about things last night I realized that the only actual tilemap that I really need to use in this system is... the collission map.  Because it is what tells if the position the Actor wants to move to is a valid spot to move to.  The way I was doing things before with static images was broken the way I was doing it but it was closer to what I should be doing with this engine I believe.  I am going to spend today exploring this idea and see if I should keep things the way they are now or if I should move to a hybrid of the old and the new like I am leaning towards now.
+
+March 23nd, 2017
+
+Day 156 of Development
+Today I have finished my re-redesign of the world system with the changes back to the idea of using static images but hybrid with a collission map that defines where an actor can and can't move.  I have not implemented the collission part into the design yet but I'm working on it my first step is to update the class and update the update and render methods for floors, alleys, and sections and then to update the build methods for all areas as well.  Once I fix this issue then I will move on to adding the collission map into the design again and fixing the collission checking and trigger and object checking aspects of the system.
+
+One thought is that because of the change over to a non tilemap system I will have to do some rework on the object, and trigger system only removing the use of index points and shift them over to world position and then will have to do a calculation when converting world position to screen position.
+
+So far on my quest to complete this re-redesign of this system I have completed the update, and render methods for all parts of this system.  And I have semi finished the Build method for all sub parts to the system.  I say semi because I still need to incorporate spawn points into the sub parts and once I add spawn points then I can finish the Build method as well as fully complete triggers.  Collission I can do without the spawn points but ultimately I can't test it out without spawn points working as well so...  My next task / goal for tonight and tomorrow now is to write the collision checking part of the system and then to start working on spawn points and triggers again.  I was going to try to have this up and working by the end of the weekend well now my goal is to try to finish writing Collission map, triggers, and spawn points into the system and then get to work on a test map graphics so that I can try out the various pieces of this once I hook up triggers to the player actor.
+
+I have started the collission logic I will finish it tomorrow and then move on to triggers and spawn points.
+
+March 24th, 2017
+
+Day 157 of Development
+Starting to work on this again today my goal is to get collission logic finished as well as triggers and then I can move on to spawn points hopefully have them at least planned out before the end of the day.
+
+Wow, wow, wow so much work done so much inspiration flowing through my brain today, I have figured out Collission logic, and Trigger logic, and also decided how I want to handle Spawn Points and even implemented the logic for it for all systems.  I have also began updating the Build methods for all sub systems to have the spawn points read in and built for each area.  I also decided to move the logic for building a single floor out to BuildingFloor.  Each floor will be a seperate text file and will build itself.  The Building Textfile was getting WAY to big because of all the stuff involved into an area in the World.  Tomorrow I need to add the logic to all Build methods for the Collission array of data that will be stored in the text files for parsing out that data and adding to the vector<int>.  The nice part about how I'm handling things is that once I figure it out for one area I can simply copy and paste it to the other areas without really any changes.
+
+Once I add the Collission map data logic to Build then I also need to add the logic to Build for figuring out the starting currentPosition and SourceRectangle to Build based on where the PlayerStartSpawn Point is set for each area.  Once I get this part done then I will have to update Actor logic so that it sets its position at construction of the Actor based on what type of Actor it is.  And I will then have to go into GIMP and build a test world with sections, buildings, and alleys for testing and then build the text files for reading in.
+
+So much to do and thankfully because of recent events I have all the time in the world for the next week to work on this stuff.
+
+Lines of Code: 6954
+
+March 25th, 2017
+
+Day 158 of Development
+I believe I have come up with the correct logic for filling the collission map, and I also believe I have figured out setting the starting current position and source rectangle.  Obviously I will not know for sure until I get a test map completed and the necessary text files built to be able to test out the new system.  The next step I may finish tonight is changing Actor to get its position from world when constructed.
+
+I will get more done tomorrow on this.
+
+March 26th, 2017
+
+Day 159 of Development
+Today I have worked on getting the Actor class updated, adding Abilities to the class, and adding functionality for building Actor's from text files. I have added the Abilities to the Actor class but have not hooked up any logic for being able to use the ability's or having them effect another Actor.  I still have a lot of work to be done to Actor class.  More progress completed today but as always more work to be done.  I also got around to cleaning up the Actor class, adding the comments, and making sure all methods that are needed for getting and setting properties are there.
+
+Tomorrow I will move on to more tasks on this quest to completion.
+
+March 27th, 2017
+
+Day 160 of Development

@@ -8,10 +8,17 @@ $Notice: (C) Copyright 2015 by Punch Drunk Squirrel Games LLC. All Rights Reserv
 
 Win32Input::Win32Input()
 {
+	// initialize keyboard and gamepad objects
 	m_keyboard = make_unique<Keyboard>();
 	m_gamePad = make_unique<GamePad>();
 
+	// build the defualt bindings for the game
 	BuildDefaultBindings();
+}
+
+Win32Input::~Win32Input()
+{
+
 }
 
 void Win32Input::BuildDefaultBindings()
@@ -46,36 +53,41 @@ void Win32Input::BuildDefaultBindings()
 	m_gpBindings.insert(pair<GameActions, XBOXOneGamePad>(SystemExitEarly, XBOXOneRightBumper));
 }
 
-Win32Input::~Win32Input()
-{
-}
-
 void Win32Input::ClearFunctionPointers()
 {
+	// clear the function pointer to game actions
 	m_gameActionBindings.clear();
 }
 
 void Win32Input::ProcessCommands()
 {
+	// process keyboard and gamepad commands
 	ProcessKeyboard();
 	ProcessGamePad();
 }
 
 void Win32Input::ChangeKeybinding(GameActions action, Keyboard::Keys key)
 {
+	// find the binding that is associated with the specific action
 	auto actionIndex = m_keyBindings.find(action);
 
+	// if it exists then change the key associated with the action
+	// to the new key
 	if (actionIndex != m_keyBindings.end())
 		actionIndex->second = key;
 }
 
-void Win32Input::AddKeyboardActionBinding(GameActions action, function<void(bool,GameActions)> funcPoint)
+void Win32Input::AddGameActionBinding(GameActions action, function<void(bool,GameActions)> funcPoint)
 {
+	// add the new game action to function pointer binding
 	m_gameActionBindings.insert(pair<GameActions, function<void(bool,GameActions)>>(action, funcPoint));
 }
 
 void Win32Input::ProcessKeyboard()
 {
+	// loop through all keyboard actions bindings and check if they are pressed
+	// if so then call function pointer and pass in true
+	// if not true then still call function pointer and pass in false
 	map<GameActions, Keyboard::Keys>::iterator keyboardInputIterator;
 
 	auto keyboardState = Keyboard::Get().GetState();
@@ -85,17 +97,14 @@ void Win32Input::ProcessKeyboard()
 	{
 		auto funcPointIndex = m_gameActionBindings.find((keyboardInputIterator)->first);
 
-		if (m_keyboardTracker.IsKeyPressed((keyboardInputIterator)->second))
+		if (funcPointIndex != m_gameActionBindings.end())
 		{
-			if (funcPointIndex != m_gameActionBindings.end())
+			if ((m_keyboardTracker.IsKeyPressed((keyboardInputIterator)->second)))
 			{
-				if (funcPointIndex != m_gameActionBindings.end())
-					funcPointIndex->second(true,funcPointIndex->first);
+				funcPointIndex->second(true, funcPointIndex->first);
 			}
-		}
-		else if (m_keyboardTracker.IsKeyReleased((keyboardInputIterator)->second))
-		{
-			if (funcPointIndex != m_gameActionBindings.end())
+
+			if (m_keyboardTracker.IsKeyReleased((keyboardInputIterator)->second))
 			{
 				funcPointIndex->second(false, funcPointIndex->first);
 			}
@@ -105,6 +114,9 @@ void Win32Input::ProcessKeyboard()
 
 void Win32Input::ProcessGamePad()
 {
+	// loop through the game pad bindings and check if they are pressed
+	// if true then call function pointer and pass in true
+	// if not true then call function pointer and pass in false
 	auto state = GamePad::Get().GetState(0);
 
 	map<GameActions, XBOXOneGamePad>::iterator gamepadInputIterator;
