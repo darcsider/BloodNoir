@@ -1601,6 +1601,9 @@ Today I have worked on getting the Actor class updated, adding Abilities to the 
 
 Tomorrow I will move on to more tasks on this quest to completion.
 
-March 27th, 2017
+March 29th, 2017
 
 Day 160 of Development
+I'm facing an interesting question today, as things stand right now we are not planning on making this version of this game... A 2D version of Bloor Noir is kind of cancelled.  I only moved back to this project because it bugged me that I couldn't solve some of the issues I was having.  I had reached a road block in how to handle certain tasks, now I have broken through my mental block and been able to move forward again.  But at what point does it no longer become worth my time to do so?  Because there are no projects in plans that match the needs that this game has.  So if I go to far into it although I'm learning I'm not gaining too much that would be transferable.
+
+I think I have answered my question already although I won't destroy this project because certain aspects will be useful in the future and everything I have learned will help me immensly.  But I think for now I'm going to stop working on this project and start working on another project that I wanted to develop, one that I will very likely release.
